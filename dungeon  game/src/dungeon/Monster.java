@@ -1,9 +1,8 @@
 package dungeon;
 
-import java.util.Random;
 
 public class Monster extends Character{
-//the most common danger in the dungeon. Monster are meant to have a given chance of appaearing in the dungeon. This percentage will be linked to the name and attack value of the monster.
+
 	private String name;
 	private int attack;
 

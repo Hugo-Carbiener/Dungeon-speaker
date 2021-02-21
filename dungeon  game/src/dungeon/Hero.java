@@ -14,7 +14,4 @@ public class Hero extends Character{
 		xp = 0;
 		//xpCap = getxpCap(int level);
 	}
-	
-	
-	
 }

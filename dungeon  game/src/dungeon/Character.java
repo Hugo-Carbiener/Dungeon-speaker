@@ -1,7 +1,7 @@
 package dungeon;
 
 public class Character {
-	
+
 	private int health;
 	private int mana;
 	//speed may be used to determine who attacks first during an ecounter
