@@ -3,7 +3,8 @@
 # Text-based dungeon crawler
 </span>
 
-This is a dev project for the sake of the first year of engineering cursus at [Telecom Sudparis](https://www.telecom-sudparis.eu/).
+This is a student project for the sake of the first year of engineering cursus at [Telecom Sudparis](https://www.telecom-sudparis.eu/).
+It is inspired from the amazing [AI dungeon](play.aidungeon.io).
  
 ---
 <span style="color:lightblue">
