@@ -7,6 +7,7 @@ public class Item {
 	boolean equipable;
 	boolean consummable;
 	boolean throwable;
+	boolean equipped = false;
 	
 	
 	public boolean isEquipable() {
@@ -15,7 +16,7 @@ public class Item {
 	public boolean isConsummable() {
 		return this.consummable;
 	}
-	public boolean isthrowable() {
+	public boolean isThrowable() {
 		return this.throwable;
 	}
 	

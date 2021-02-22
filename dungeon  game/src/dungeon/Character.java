@@ -1,5 +1,8 @@
 package dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Character {
 
 	private int health;
@@ -7,8 +10,8 @@ public class Character {
 	//speed may be used to determine who attacks first during an ecounter
 	public double speed;
 	//the character can equip items such as weapons, spells, torches...
-	public Item equipedItem;
-	public Item[] inventory;
+	public Item equippedItem;
+	public List<Item> inventory;
 	int inventorySize;
 	
 	//default settings of a new character
@@ -16,9 +19,9 @@ public class Character {
 		this.health = health;
 		this.mana = mana;
 		this.speed = speed;
-		equipedItem = null;
+		equippedItem = null;
 		inventorySize = 10;
-		inventory = new Item[this.inventorySize];
+		inventory = new ArrayList<Item>(this.inventorySize);
 	}
 	
 	

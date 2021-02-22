@@ -12,11 +12,11 @@ public class Main {
 		System.out.println("Le héros s'appelle " + hero.username);
 		System.out.print("Il a " + health + " points de vie");
 		System.out.println(" et " + mana + " points de mana");
-		System.out.println("Il tient " + hero.equipedItem);
-		System.out.println("Son inventaire contient ");
-		for (Item temp : hero.inventory) {
-			System.out.println(temp + ",");
-		}
+		System.out.println("Il tient " + hero.equippedItem);
+		/*System.out.println("Son inventaire contient ");
+		for (int i = 0; i<hero.inventorySize; i++) {
+			System.out.println(hero.inventory.get(i) + ",");
+		}*/
 		
 		Monster monster1 = generateMonster();
 		System.out.println("Au secours un monstre est apparu");
