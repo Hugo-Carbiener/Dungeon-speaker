@@ -1,4 +1,4 @@
-package dungeon;
+package player;
 
 public class Hero extends Character{
 	String username;
@@ -14,6 +14,9 @@ public class Hero extends Character{
 		xp = 0;
 		//xpCap = getxpCap(int level);
 	}
+	
+	public String getUsername() {return this.username;}
+	public int getLevel() {return this.level;}
 	
 	public void equipItem(Item item) {
 		if (item.isEquipable()|| item.isThrowable()) {

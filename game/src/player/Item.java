@@ -1,4 +1,4 @@
-package dungeon;
+package player;
 
 public class Item {
 
