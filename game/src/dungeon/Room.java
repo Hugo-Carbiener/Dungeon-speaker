@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Room {
 	
-	private List<Room> nextRooms = new ArrayList<Room>();
-    private Room previousRoom;
-    private boolean visited = false;
-    private String id; 
+	private List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
+    private Room previousRoom;									//Room considered "parent"of the current room
+    private boolean visited = false;							//determines if the player as already been through this room
+    private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
+    private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
     
-    private int level;
     
     public Room(String id, int level) {
     	this.id = id;
@@ -20,17 +20,15 @@ public class Room {
     	this.previousRoom = this;
     }
     
-    public Room getPreviousRoom() {
-    	return this.previousRoom;
-    }
-    
-    public void setPreviousRoom(Room previousRoom) {
-    	this.previousRoom = previousRoom;
-    }
-    
-    public List<Room> getNextRooms() {
-        return nextRooms;
-    }
+    public Room getPreviousRoom() {return this.previousRoom;}
+    public void setPreviousRoom(Room previousRoom) {this.previousRoom = previousRoom;}
+    public List<Room> getNextRooms() {return nextRooms;}
+    public String getId() {return this.id;}
+    public void setId(String id) {this.id = id;}
+    public int getLevel() {return this.level;}
+    public void setLevel(int level) {this.level = level;}
+    public boolean wasVisited() {return visited;}
+    public void setAsVisited() {this.visited = true;}
     
     public List<Room> getRoomFamily() {// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
     	Room prev = this.previousRoom;
@@ -68,16 +66,5 @@ public class Room {
     		prev = prev.previousRoom;
     	}
     	return indicator;
-    }
-    
-    
-    
-    public String getId() {return this.id;}
-    public void setId(String id) {this.id = id;}
-    public int getLevel() {return this.level;}
-    public void setLevel(int level) {this.level = level;}
-    
-    public boolean wasVisited() {return visited;}
-    public void setAsVisited() {this.visited = true;}
-    	
+    }	
 }

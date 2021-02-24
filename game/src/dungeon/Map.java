@@ -4,9 +4,10 @@ import java.util.List;
 
 public class Map {
 	private Room startingRoom = new Room("0", 0);		//map.startingRoom is the root node 
-	private int endLevel; 			//determines how many "floors" the dungeon will have
-	private int maxExitNumber; 		//determines how many exits a room can have. 
-	private int roomAmount;			//tells how many rooms the dungeon contains, starting room included.
+	private int endLevel; 								//determines how many "floors" the dungeon will have
+	private int maxExitNumber; 							//determines how many exits a room can have. 
+	private int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
+	
 	
 	public Map(int endLevel,int maxExitNumber) { 
 		//this constructor generates a map as well as a basic tree architecture displayable using displayFromRoom(map.getStartingRoom())
