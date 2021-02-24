@@ -1,11 +1,14 @@
 package dungeon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Room {
+	
 	private List<Room> nextRooms = new ArrayList<Room>();
-    private Room previousRoom = null;
+    private Room previousRoom;
     private boolean visited = false;
     private String id; 
     
@@ -14,6 +17,7 @@ public class Room {
     public Room(String id, int level) {
     	this.id = id;
     	this.level = level;
+    	this.previousRoom = this;
     }
     
     public Room getPreviousRoom() {
@@ -33,6 +37,28 @@ public class Room {
     	nextRoom.previousRoom = this;
     	this.nextRooms.add(nextRoom);
     }
+    
+    public List<Boolean> lastChildIndicator() {//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level
+    	Room cur = this;
+    	Room prev = this.previousRoom;
+    	int level = this.getLevel();
+    	List<Boolean> indicator = new ArrayList<Boolean>(Arrays.asList(new Boolean[level]));
+    	Collections.fill(indicator, Boolean.FALSE);
+
+    	
+    	for (int i = level - 1; i >= 0; i--) {
+    		List<Room> neighborRooms = prev.nextRooms;
+    		
+    		if (neighborRooms.indexOf(cur) == neighborRooms.size()-1) { //then it is the last child of the level
+    			indicator.set(i, true);
+    		}
+    		cur = cur.previousRoom;
+    		prev = prev.previousRoom;
+    	}
+    	return indicator;
+    }
+    
+    
     
     public String getId() {return this.id;}
     public void setId(String id) {this.id = id;}

@@ -6,7 +6,7 @@ import dungeon.Map;
 public class Main {
 
 	public static void main(String[] args) {
-		Map map = new Map(15,4);
+		Map map = new Map(5,3);
 		map.displayFromRoom(map.getStartingRoom());
 	}
 }
