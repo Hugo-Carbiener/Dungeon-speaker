@@ -32,6 +32,18 @@ public class Room {
         return nextRooms;
     }
     
+    public List<Room> getRoomFamily() {// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
+    	Room prev = this.previousRoom;
+    	if (prev == null) {
+    		List<Room> temp = new ArrayList<Room>();
+    		temp.add(this);
+    		return temp;
+    	}
+    	else {
+    	return prev.nextRooms;
+    	}
+    }
+    
     public void addRoom(String id, int level) {
     	Room nextRoom = new Room(id, level);
     	nextRoom.previousRoom = this;

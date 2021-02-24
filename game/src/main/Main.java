@@ -2,12 +2,17 @@ package main;
 
 
 import dungeon.Map;
+import dungeon.Room;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Map map = new Map(5,3);
-		map.displayFromRoom(map.getStartingRoom());
+		Map map = new Map(5,4);
+		Room root = map.getStartingRoom();
+		map.displayFromRoom(root);
+		
+		System.out.println(map.getRoomNumber());
+		
 	}
 }
 	
