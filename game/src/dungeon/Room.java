@@ -9,6 +9,7 @@ public class Room {
 	
 	private List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
     private Room previousRoom;									//Room considered "parent"of the current room
+    private List<Room> accessibleRooms = new ArrayList<Room>();
     private boolean visited = false;							//determines if the player as already been through this room
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
@@ -18,15 +19,16 @@ public class Room {
     	this.id = id;
     	this.level = level;
     	this.previousRoom = this;
+    	
     }
     
+    
+    public List<Room> getNextRooms() {return nextRooms;}
     public Room getPreviousRoom() {return this.previousRoom;}
     public void setPreviousRoom(Room previousRoom) {this.previousRoom = previousRoom;}
-    public List<Room> getNextRooms() {return nextRooms;}
+    public List<Room> getAccessibleRooms(){return this.accessibleRooms;}
     public String getId() {return this.id;}
-    public void setId(String id) {this.id = id;}
     public int getLevel() {return this.level;}
-    public void setLevel(int level) {this.level = level;}
     public boolean wasVisited() {return visited;}
     public void setAsVisited() {this.visited = true;}
     
@@ -45,7 +47,9 @@ public class Room {
     public void addRoom(String id, int level) {
     	Room nextRoom = new Room(id, level);
     	nextRoom.previousRoom = this;
-    	this.nextRooms.add(nextRoom);
+    	nextRoom.accessibleRooms.add(nextRoom.previousRoom);	//Add the previous room as an accessible room
+    	this.accessibleRooms.add(nextRoom);						//Add the new room as an accessible room to the previous room
+    	this.nextRooms.add(nextRoom);							//Add the new room to the list of children of the previous room
     }
     
     public List<Boolean> lastChildIndicator() {//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level

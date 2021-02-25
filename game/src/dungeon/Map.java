@@ -101,4 +101,21 @@ public class Map {
 			displayFromRoom(each);
 		}
 	}	
+	
+	public Room getRoom(String id, Room root) { //returns the room that is defined by id. root must be set at startingRoom
+		if (id.equals(root.getId())) {
+			return root;
+		} else {
+			for (Room each : root.getNextRooms()) {
+				Room foundRoom = getRoom(id, each);
+				if (foundRoom != null) {
+					//System.out.println("found");
+					return foundRoom;
+				}
+			}
+		return null;
+		}
+	}
+	
+	
 }
