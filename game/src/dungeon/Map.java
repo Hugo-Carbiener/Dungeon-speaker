@@ -26,6 +26,7 @@ public class Map {
 	public int getRoomNumber() {return this.roomAmount;}
 	
 	public void generateBasicTree(int level, Room root) {
+		//add x rooms as children of the room passed as root. x is between 0 and maxExitNumber
 		if (level < this.endLevel) {
 			int nbOfRoom = (int) (Math.random() * this.maxExitNumber);
 			for (int i = 0; i < nbOfRoom; i++) { 					//generate the x rooms, children of root
@@ -101,7 +102,7 @@ public class Map {
 					System.out.println(string);
 				}
 			}
-			
+			//--------------------------------------------------
 			
 			//OLD VERSION 
 			//--------------------------------------------------
@@ -126,7 +127,9 @@ public class Map {
 	}	
 	
 	
-	public Room getRoom(String id, Room root) { //returns the room that is defined by id. root must be set at startingRoom
+	public Room getRoom(String id, Room root) { 
+		//returns the room that is defined by id. root must be set at startingRoom
+		
 		if (id.equals(root.getId())) {
 			return root;
 		} else {
@@ -143,6 +146,8 @@ public class Map {
 	
 	
 	public void addNeighborLink(Room root, double probability) {
+		//Applies Room.addNeighborLink to every room of the dungeon
+		
 		for (Room each : root.getNextRooms()) { 
 			each.addNeighborLink(this, probability);
 			this.addNeighborLink(each, probability);

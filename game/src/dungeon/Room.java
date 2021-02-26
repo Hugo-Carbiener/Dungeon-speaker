@@ -24,7 +24,6 @@ public class Room {
     	
     }
     
-    
     public List<Room> getNextRooms() {return nextRooms;}
     public Room getPreviousRoom() {return this.previousRoom;}
     public void setPreviousRoom(Room previousRoom) {this.previousRoom = previousRoom;}
@@ -34,7 +33,8 @@ public class Room {
     public boolean wasVisited() {return visited;}
     public void setAsVisited() {this.visited = true;}
     
-    public List<Room> getRoomFamily() {// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
+    public List<Room> getRoomFamily() {
+    	// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
     	Room prev = this.previousRoom;
     	if (prev == null) {
     		List<Room> temp = new ArrayList<Room>();
@@ -47,6 +47,7 @@ public class Room {
     }
     
     public void addRoom(String id, int level) {
+    	//Add a room. It is considered a child of this 
     	Room nextRoom = new Room(id, level);
     	nextRoom.previousRoom = this;
     	nextRoom.accessibleRooms.add(nextRoom.previousRoom);	//Add the previous room as an accessible room
@@ -94,7 +95,8 @@ public class Room {
     }
     
     
-    public List<Boolean> lastChildIndicator() {//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level
+    public List<Boolean> lastChildIndicator() {
+    	//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level
     	Room cur = this;
     	Room prev = this.previousRoom;
     	int level = this.getLevel();
@@ -115,6 +117,7 @@ public class Room {
     
     
     public void addNeighborLink(Map map, double probability) {
+    	//Check each room to see if it has left and right neighbors. If so it generate a links between the room and its neighbor with a probability 
     	if (probability < 0) {
     		probability = 0;
     	} else if (probability > 1) {

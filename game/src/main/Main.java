@@ -14,7 +14,7 @@ public class Main {
 		Room root = map.getStartingRoom();
 		
 		
-		map.addNeighborLink(root, 1);
+		map.addNeighborLink(root, 0.5);
 		map.displayFromRoom(root);		
 		System.out.println();System.out.println();
 		
@@ -36,15 +36,7 @@ public class Main {
 		System.out.println();
 		System.out.println("Room has neighbors ?");
 		System.out.println(testRoom.getNeighbor(map));
-		
-		System.out.println();		
-		testRoom.addNeighborLink(map, 0.5);
-		System.out.println("Accessible rooms after addition : ");
-		for (Room each : testRoom.getAccessibleRooms()) {
-			System.out.println(each.getId());
-		}
-		
-		
+				
 	}
 }
 	
