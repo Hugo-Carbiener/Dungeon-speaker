@@ -37,21 +37,21 @@ public class Main {
 		System.out.println("Room has neighbors ?");
 		System.out.println(testRoom.getNeighbor(map));
 		
-		System.out.println();
-		System.out.println("before adding");
-		List<Room> accessibleRooms = testRoom.getAccessibleRooms();
-		for (Room each : accessibleRooms) {
-			System.out.println(each.getId());
-		}
+		System.out.println();		
 		testRoom.addNeighborLink(map, 0.5);
-		accessibleRooms = testRoom.getAccessibleRooms();
-		System.out.println("after adding");
-		for (Room each : accessibleRooms) {
+		System.out.println("Accessible rooms after addition : ");
+		for (Room each : testRoom.getAccessibleRooms()) {
 			System.out.println(each.getId());
 		}
 		
-		/*Room room1 = map.getRoom("010", root);
-		Room room2 = map.getRoom("011", root);
+		Room room = map.getRoom("010", root);
+		System.out.println();		
+		room.addNeighborLink(map, 0.5);
+		System.out.println("Accessible rooms for 010 : ");
+		for (Room each : room.getAccessibleRooms()) {
+			System.out.println(each.getId());
+		}
+		/*Room room2 = map.getRoom("011", root);
 		Room room3 = map.getRoom("020", root);
 		Room room4 = map.getRoom("0101", root);
 		Room room5 = map.getRoom("01", root);

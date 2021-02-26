@@ -55,7 +55,11 @@ public class Room {
     }
     
     
-    public List<Pair<String, Boolean>> getNeighbor(Map map) {								//Returns a list of 2 pairs (id, boolean) that respectively indicates if room has a left neighbor and a right neighbor 
+    public List<Pair<String, Boolean>> getNeighbor(Map map) {	
+    	//Returns a list of 2 pairs (id, boolean) that respectively indicates if room has a left neighbor and a right neighbor. 
+    	//id for the right neighbor (second pair) may be nonsense but will not be used afterwards as long as it's boolean is at false
+    	
+    	
     	List<Pair<String, Boolean>> neighbors = new ArrayList<>();
     	String roomId = this.getId();
     	char curLastChar = roomId.charAt(roomId.length()-1);
@@ -67,17 +71,10 @@ public class Room {
     	Pair<String, Boolean> leftNeighbor;
     	Pair<String, Boolean> rightNeighbor;
     	
-    	if (Character.getNumericValue(curLastChar) == 0) {									//it is the first child, no need to look for a right neighbor
-    		leftLastChar = Integer.toString((Character.getNumericValue(curLastChar) + 1));
-    		leftId = tempId + leftLastChar;
-    		rightId = null;
-    		
-    	} else {
     	leftLastChar = Integer.toString((Character.getNumericValue(curLastChar) + 1));
     	rightLastChar = Integer.toString((Character.getNumericValue(curLastChar) - 1));
     	leftId = tempId + leftLastChar;
     	rightId = tempId + rightLastChar;
-    	}
     	
     	if (map.getRoom(leftId, map.getStartingRoom()) != null){							//left neighbor exists
     		leftNeighbor = new Pair<>(leftId, true);
@@ -85,11 +82,12 @@ public class Room {
     		leftNeighbor = new Pair<>(leftId, false);
     	}
     	
-    	if (map.getRoom(rightId, map.getStartingRoom()) != null && rightId != null) {		//right neighbor exists
+    	if (map.getRoom(rightId, map.getStartingRoom()) != null) {							//right neighbor exists
     		rightNeighbor = new Pair<>(rightId, true);
     	} else { 
     		rightNeighbor = new Pair<>(rightId, false);
     	}
+    	
     	neighbors.add(leftNeighbor);
     	neighbors.add(rightNeighbor);
     	return neighbors;
@@ -129,9 +127,10 @@ public class Room {
     	
     	for (Pair<String, Boolean> eachNeighbor : neighbors) {
     		id = eachNeighbor.getKey();
-    		currentNeighbor = map.getRoom(id, root);
     		
-    		if (currentNeighbor != null) {									//check if the neighbor exists
+    		
+    		if (eachNeighbor.getValue() == true) {									//check if the neighbor exists
+    			currentNeighbor = map.getRoom(id, root);
 	    		if (!this.accessibleRooms.contains(currentNeighbor)) {		//check if the neighbor is already somehow accessible
 	    			double r = Math.random();
 	    			if (r <= probability) {									//we add the link with a given probability (allows to generate more or less opened dungeons)
