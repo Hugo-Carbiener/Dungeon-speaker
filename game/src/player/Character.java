@@ -6,10 +6,10 @@ import java.util.List;
 public class Character {
 
 	public int health; //je l'ai rendu public pour pouvoir le modfier pendant le combat 
-	private int mana;
+	public int mana;
 	//speed may be used to determine who attacks first during an ecounter
 	public double speed;
-	private int baseDamage;
+	public int baseDamage;
 	//the character can equip items such as weapons, spells, torches...
 	public Item equippedItem;
 	public List<Item> inventory;
@@ -26,26 +26,7 @@ public class Character {
 		inventory = new ArrayList<Item>(this.inventorySize);
 	}
 	
-	
-	public int getHealth() {
-		return this.health;
-	}
-	
-	public int getMana() {
-		return this.mana;
-	}
-	
-	public int getDamage() {
-		return this.baseDamage;
-	}
-	
-	public int modifyHealth(int damageOrRegen) {
-		return (this.health + damageOrRegen);
-	}
-	
-	public int modifyMana(int consoOrRegen) {
-		return (this.mana + consoOrRegen);
-	}
+
 	
 	
 }
