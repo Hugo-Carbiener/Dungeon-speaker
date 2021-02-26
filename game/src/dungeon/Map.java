@@ -42,6 +42,7 @@ public class Map {
 		}
 	}
 	
+	
 	public void displayFromRoom(Room room) {
 		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
 		char bottomCorner = '\u2559';
@@ -101,6 +102,7 @@ public class Map {
 			displayFromRoom(each);
 		}
 	}	
+	
 	
 	public Room getRoom(String id, Room root) { //returns the room that is defined by id. root must be set at startingRoom
 		if (id.equals(root.getId())) {

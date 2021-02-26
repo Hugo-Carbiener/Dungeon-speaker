@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.util.Pair;
+
+
 public class Room {
 	
 	private List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
@@ -52,6 +55,48 @@ public class Room {
     	this.nextRooms.add(nextRoom);							//Add the new room to the list of children of the previous room
     }
     
+    
+    public List<Pair<String, Boolean>> getNeighbor(Map map) {								//Returns a list of 2 pairs (id, boolean) that respectively indicates if room has a left neighbor and a right neighbor 
+    	List<Pair<String, Boolean>> neighbors = new ArrayList<>();
+    	String roomId = this.getId();
+    	char curLastChar = roomId.charAt(roomId.length()-1);
+    	String leftLastChar;
+    	String rightLastChar;
+    	String tempId = roomId.substring(0, roomId.length() - 1);
+    	String leftId;
+    	String rightId;
+    	Pair<String, Boolean> leftNeighbor;
+    	Pair<String, Boolean> rightNeighbor;
+    	
+    	if (Character.getNumericValue(curLastChar) == 0) {									//it is the first child, no need to look for a right neighbor
+    		leftLastChar = Integer.toString((Character.getNumericValue(curLastChar) + 1));
+    		leftId = tempId + leftLastChar;
+    		rightId = null;
+    		
+    	} else {
+    	leftLastChar = Integer.toString((Character.getNumericValue(curLastChar) + 1));
+    	rightLastChar = Integer.toString((Character.getNumericValue(curLastChar) - 1));
+    	leftId = tempId + leftLastChar;
+    	rightId = tempId + rightLastChar;
+    	}
+    	
+    	if (map.getRoom(leftId, map.getStartingRoom()) != null){							//left neighbor exists
+    		leftNeighbor = new Pair<>(leftId, true);
+    	} else {
+    		leftNeighbor = new Pair<>(leftId, false);
+    	}
+    	
+    	if (map.getRoom(rightId, map.getStartingRoom()) != null && rightId != null) {		//right neighbor exists
+    		rightNeighbor = new Pair<>(rightId, true);
+    	} else { 
+    		rightNeighbor = new Pair<>(rightId, false);
+    	}
+    	neighbors.add(leftNeighbor);
+    	neighbors.add(rightNeighbor);
+    	return neighbors;
+    }
+    
+    
     public List<Boolean> lastChildIndicator() {//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level
     	Room cur = this;
     	Room prev = this.previousRoom;
@@ -62,7 +107,6 @@ public class Room {
     	
     	for (int i = level - 1; i >= 0; i--) {
     		List<Room> neighborRooms = prev.nextRooms;
-    		
     		if (neighborRooms.indexOf(cur) == neighborRooms.size()-1) { //then it is the last child of the level
     			indicator.set(i, true);
     		}
@@ -70,5 +114,12 @@ public class Room {
     		prev = prev.previousRoom;
     	}
     	return indicator;
-    }	
+    }
+    
+    /*public void addNeighborLink(Map map, long probability) {
+    	if (this.getLevel() == map.getEndLevel()) {
+    		List<Boolean> neighbors = this.hasNeighbor(map);
+    		
+    	}
+    }*/
 }
