@@ -126,8 +126,8 @@ public class Map {
 	
 	public void addNeighborLink(Room root, double probability) {
 		for (Room each : root.getNextRooms()) { 
-			System.out.println(each.getId());
 			each.addNeighborLink(this, probability);
+			this.addNeighborLink(each, probability);
 		}
 	}
 	

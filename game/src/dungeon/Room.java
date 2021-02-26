@@ -113,6 +113,7 @@ public class Room {
     	return indicator;
     }
     
+    
     public void addNeighborLink(Map map, double probability) {
     	if (probability < 0) {
     		probability = 0;
@@ -127,8 +128,7 @@ public class Room {
     	
     	for (Pair<String, Boolean> eachNeighbor : neighbors) {
     		id = eachNeighbor.getKey();
-    		
-    		
+  
     		if (eachNeighbor.getValue() == true) {									//check if the neighbor exists
     			currentNeighbor = map.getRoom(id, root);
 	    		if (!this.accessibleRooms.contains(currentNeighbor)) {		//check if the neighbor is already somehow accessible

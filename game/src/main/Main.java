@@ -9,9 +9,9 @@ import dungeon.Room;
 public class Main {
 
 	public static void main(String[] args) {
-		Map map = new Map(4,4);
+		Map map = new Map(4,6);
 		while (map.getRoom("011", map.getStartingRoom()) == null) {
-			map = new Map(4,4);
+			map = new Map(4,6);
 		}
 		
 		Room root = map.getStartingRoom();
@@ -44,34 +44,7 @@ public class Main {
 			System.out.println(each.getId());
 		}
 		
-		Room room = map.getRoom("010", root);
-		System.out.println();		
-		room.addNeighborLink(map, 0.5);
-		System.out.println("Accessible rooms for 010 : ");
-		for (Room each : room.getAccessibleRooms()) {
-			System.out.println(each.getId());
-		}
-		/*Room room2 = map.getRoom("011", root);
-		Room room3 = map.getRoom("020", root);
-		Room room4 = map.getRoom("0101", root);
-		Room room5 = map.getRoom("01", root);
-		List<Room> accessibleRooms1 = room1.getAccessibleRooms();
-		List<Room> accessibleRooms2 = room2.getAccessibleRooms();
-		List<Room> accessibleRooms3 = room3.getAccessibleRooms();
-		List<Room> accessibleRooms4 = room4.getAccessibleRooms();
-		List<Room> accessibleRooms5 = room5.getAccessibleRooms();
-		
-		System.out.print("Room 1 accessible rooms : ");
-		System.out.println(accessibleRooms1);
-		System.out.print("Room 2 accessible rooms : ");
-		System.out.println(accessibleRooms2);
-		System.out.print("Room 3 accessible rooms : ");
-		System.out.println(accessibleRooms3);
-		System.out.print("Room 4 accessible rooms : ");
-		System.out.println(accessibleRooms4);
-		System.out.print("Room 5 accessible rooms : ");
-		System.out.println(accessibleRooms5);*/
-		
+		map.addNeighborLink(root, 1);
 	}
 }
 	
