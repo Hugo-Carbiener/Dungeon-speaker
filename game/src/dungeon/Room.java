@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import javafx.util.Pair;
 
 
@@ -116,10 +115,39 @@ public class Room {
     	return indicator;
     }
     
-    /*public void addNeighborLink(Map map, long probability) {
-    	if (this.getLevel() == map.getEndLevel()) {
-    		List<Boolean> neighbors = this.hasNeighbor(map);
-    		
+    public void addNeighborLink(Map map, double probability) {
+    	if (probability < 0) {
+    		probability = 0;
+    	} else if (probability > 1) {
+    		probability = 1;
     	}
-    }*/
+    	
+    	List<Pair<String, Boolean>> neighbors = this.getNeighbor(map);
+    	Room root = map.getStartingRoom();
+    	Room currentNeighbor;
+    	String id;
+    	
+    	for (Pair<String, Boolean> eachNeighbor : neighbors) {
+    		id = eachNeighbor.getKey();
+    		currentNeighbor = map.getRoom(id, root);
+    		
+    		if (currentNeighbor != null) {									//check if the neighbor exists
+	    		if (!this.accessibleRooms.contains(currentNeighbor)) {		//check if the neighbor is already somehow accessible
+	    			double r = Math.random();
+	    			if (r <= probability) {									//we add the link with a given probability (allows to generate more or less opened dungeons)
+	    				System.out.println("Adding room " + currentNeighbor.id);
+	    				currentNeighbor.accessibleRooms.add(this);
+	    				this.accessibleRooms.add(currentNeighbor);
+	    			}
+	    		}
+    		}
+    	}
+    }
+    
+    
+    
+    
+    
+    
+    
 }
