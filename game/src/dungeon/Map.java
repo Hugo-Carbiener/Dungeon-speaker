@@ -58,21 +58,25 @@ public class Map {
 			List<Boolean> indicatorList = each.lastChildIndicator();
 			for (int i = 0; i < indicatorList.size(); i++) {
 				Boolean indicator = indicatorList.get(i);
-				if(i == indicatorList.size()-1) {
+				if(i == indicatorList.size()-1) {		//Last character
 					if (indicator) {
+						System.out.print(" ");
 						System.out.print(bottomCorner);
 						System.out.print(horizontalLine);
 					}
 					else {
+						System.out.print(" ");
 						System.out.print(crossSection);
 						System.out.print(horizontalLine);
 					}
 				}
-				else {
+				else {									//previous characters
 					if (indicator) {
+						System.out.print(" ");
 						System.out.print("  ");
 					}
 					else {
+						System.out.print(" ");
 						System.out.print(verticalLine);
 						System.out.print(" "); 
 					}
