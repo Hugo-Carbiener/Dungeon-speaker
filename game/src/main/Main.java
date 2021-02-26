@@ -1,20 +1,20 @@
 package main;
 
 
-import java.util.List;
-
 import dungeon.Map;
 import dungeon.Room;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Map map = new Map(4,6);
+		Map map = new Map(4,4);
 		while (map.getRoom("011", map.getStartingRoom()) == null) {
-			map = new Map(4,6);
+			map = new Map(4,4);
 		}
-		
 		Room root = map.getStartingRoom();
+		
+		
+		map.addNeighborLink(root, 1);
 		map.displayFromRoom(root);		
 		System.out.println();System.out.println();
 		
@@ -44,7 +44,7 @@ public class Main {
 			System.out.println(each.getId());
 		}
 		
-		map.addNeighborLink(root, 1);
+		
 	}
 }
 	

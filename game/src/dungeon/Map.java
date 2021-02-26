@@ -53,36 +53,54 @@ public class Map {
 		if (room == this.getStartingRoom()) {System.out.println("0");}
 		for (Room each : room.getNextRooms()) {
 			
-			//NEW VERSION
-			//--------------------------------------------------
+			
+			//DISPLAY ONE LINE WITH THE ID AT THE END
 			List<Boolean> indicatorList = each.lastChildIndicator();
+			String string = "";
 			for (int i = 0; i < indicatorList.size(); i++) {
 				Boolean indicator = indicatorList.get(i);
+				
 				if(i == indicatorList.size()-1) {		//Last character
 					if (indicator) {
-						System.out.print(" ");
-						System.out.print(bottomCorner);
-						System.out.print(horizontalLine);
+						string += (" ");
+						string += (bottomCorner);
+						string += (horizontalLine);
 					}
 					else {
-						System.out.print(" ");
-						System.out.print(crossSection);
-						System.out.print(horizontalLine);
+						string += (" ");
+						string += (crossSection);
+						string += (horizontalLine);
 					}
 				}
 				else {									//previous characters
 					if (indicator) {
-						System.out.print(" ");
-						System.out.print("  ");
+						string += (" ");
+						string += ("  ");
 					}
 					else {
-						System.out.print(" ");
-						System.out.print(verticalLine);
-						System.out.print(" "); 
+						string += (" ");
+						string += (verticalLine);
+						string += (" "); 
 					}
 				}
 			}
+			System.out.print(string.substring(1)); //substring to remove first space
+			System.out.println(each.getId());
+			
 			//--------------------------------------------------
+			//DISPLAY NEIGHBOR LINK FOR LAST LEVEL ROOMS 
+			//We check if the room under each has a neighbor link with each and if so print a custom string underneath
+			
+			if (each.getLevel() == this.endLevel) {
+				String neighborId = (each.getNeighbor(this).get(0).getKey());
+				if (each.getAccessibleRooms().contains(this.getRoom(neighborId, this.startingRoom))) {	
+					//check if the neighbor room is an accessible room (if it is, this link was made by Map.addNeighborLink)
+					string = string.substring(1, string.length()-2) + verticalLine; //remove first space, remove cross section, add vertical line
+					for (int i = 0; i < each.getLevel() + 1; i += 2) {string += " ";}
+					string += verticalLine;
+					System.out.println(string);
+				}
+			}
 			
 			
 			//OLD VERSION 
@@ -102,7 +120,7 @@ public class Map {
 			}*/
 			//--------------------------------------------------
 			
-			System.out.println(each.getId());		
+					
 			displayFromRoom(each);
 		}
 	}	

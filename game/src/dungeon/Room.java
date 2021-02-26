@@ -131,10 +131,10 @@ public class Room {
   
     		if (eachNeighbor.getValue() == true) {									//check if the neighbor exists
     			currentNeighbor = map.getRoom(id, root);
-	    		if (!this.accessibleRooms.contains(currentNeighbor)) {		//check if the neighbor is already somehow accessible
+	    		if (!this.accessibleRooms.contains(currentNeighbor)) {				//check if the neighbor is already somehow accessible
 	    			double r = Math.random();
-	    			if (r <= probability) {									//we add the link with a given probability (allows to generate more or less opened dungeons)
-	    				System.out.println("Adding room " + currentNeighbor.id);
+	    			if (r <= probability) {											//we add the link with a given probability (allows to generate more or less opened dungeons)
+	    				//Add room
 	    				currentNeighbor.accessibleRooms.add(this);
 	    				this.accessibleRooms.add(currentNeighbor);
 	    			}
