@@ -6,22 +6,28 @@ public class Map {
 	private Room startingRoom = new Room("0", 0);		//map.startingRoom is the root node 
 	private int endLevel; 								//determines how many "floors" the dungeon will have
 	private int maxExitNumber; 							//determines how many exits a room can have. 
+	private double neighborLinkProbability;				//determines the probability of generating a link between neighbor rooms 
 	private int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
 	
 	
-	public Map(int endLevel,int maxExitNumber) { 
+	
+	public Map(int endLevel,int maxExitNumber, double neighborLinkProbability) { 
 		//this constructor generates a map as well as a basic tree architecture displayable using displayFromRoom(map.getStartingRoom())
 		this.endLevel = endLevel;
 		this.maxExitNumber = maxExitNumber;
+		this.neighborLinkProbability = neighborLinkProbability;
 		this.roomAmount = 1;
 		
 		//GENERATION OF THE TREE
-		generateBasicTree(0, this.startingRoom);
+		this.generateBasicTree(0, this.startingRoom);
+		//GENERATION OF NEIGHBOR LINKS
+		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
 	}
 	
 	public Room getStartingRoom() {return this.startingRoom;}
 	public int getEndLevel() {return this.endLevel;}
 	public int getMaxExitNumber() {return this.maxExitNumber;}
+	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
 	public int getRoomNumber() {return this.roomAmount;}
 	
 	public void generateBasicTree(int level, Room root) {

@@ -7,14 +7,12 @@ import dungeon.Room;
 public class Main {
 
 	public static void main(String[] args) {
-		Map map = new Map(4,4);
+		Map map = new Map(4,4,1);
 		while (map.getRoom("011", map.getStartingRoom()) == null) {
-			map = new Map(4,4);
+			map = new Map(4,4,1);
 		}
 		Room root = map.getStartingRoom();
 		
-		
-		map.addNeighborLink(root, 0.5);
 		map.displayFromRoom(root);		
 		System.out.println();System.out.println();
 		
