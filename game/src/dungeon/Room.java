@@ -118,6 +118,7 @@ public class Room {
     
     public void addNeighborLink(Map map, double probability) {
     	//Check each room to see if it has left and right neighbors. If so it generate a links between the room and its neighbor with a probability 
+    	
     	if (probability < 0) {
     		probability = 0;
     	} else if (probability > 1) {

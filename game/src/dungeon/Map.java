@@ -19,7 +19,6 @@ public class Map {
 		generateBasicTree(0, this.startingRoom);
 	}
 	
-	
 	public Room getStartingRoom() {return this.startingRoom;}
 	public int getEndLevel() {return this.endLevel;}
 	public int getMaxExitNumber() {return this.maxExitNumber;}
@@ -63,35 +62,58 @@ public class Map {
 				
 				if(i == indicatorList.size()-1) {		//Last character
 					if (indicator) {
-						string += (" ");
-						string += (bottomCorner);
-						string += (horizontalLine);
+						
+						//NON LAST LEVEL NEIGHBOR LINKS____________________________________________________________________
+						Room previousRoom = each.getPreviousRoom();
+						String previousRoomNeihghborId = previousRoom.getNeighbor(this).get(0).getKey(); //get the id of the first(left) neighbor of the previous room
+						if (previousRoom.getAccessibleRooms().contains(this.getRoom(previousRoomNeihghborId, this.startingRoom))) {
+							string += (" ");
+							string += (crossSection);
+							string += (horizontalLine);
+							/*     ║     ╟─01121
+   								   ║     ║   ║
+   								   ║     ╟─01122
+   								   ╙─012
+      								  ╙─0120
+							BOTTOM CORNER WITH NEIGHBOR LINK*/
+						} else {
+							string += (" ");
+							string += (bottomCorner);
+							string += (horizontalLine);
+							/*	   ║     ╟─01121
+   								   ║     ║   ║
+   								   ║     ╙─01122
+   							BOTTOM CORNER WITHOUT NEIGHBOR LINK*/
+							
+						}
+						//_____________________________________________________________________________________________
+						
 					}
-					else {
+					else {							
 						string += (" ");
 						string += (crossSection);
 						string += (horizontalLine);
+						//  ╟─01100 GENERATES THIS CHARACTER AT THE END OF A LINE 
 					}
 				}
-				else {									//previous characters
+				else {									
 					if (indicator) {
 						string += (" ");
 						string += ("  ");
+						//GENERATE EMPTY COLUMNS IN THE TREE
 					}
 					else {
 						string += (" ");
 						string += (verticalLine);
 						string += (" "); 
+						//   ║  ║  ╟─01100 GENERATES THE VERTICAL LINES
 					}
 				}
 			}
 			System.out.print(string.substring(1)); //substring to remove first space
 			System.out.println(each.getId());
 			
-			//--------------------------------------------------
-			//DISPLAY NEIGHBOR LINK FOR LAST LEVEL ROOMS 
-			//We check if the room under each has a neighbor link with each and if so print a custom string underneath
-			
+			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
 			if (each.getLevel() == this.endLevel) {
 				String neighborId = (each.getNeighbor(this).get(0).getKey());
 				if (each.getAccessibleRooms().contains(this.getRoom(neighborId, this.startingRoom))) {	
@@ -100,12 +122,17 @@ public class Map {
 					for (int i = 0; i < each.getLevel() + 1; i += 2) {string += " ";}
 					string += verticalLine;
 					System.out.println(string);
+					/*   ║     ╟─01120
+   						 ║     ║   ║
+   						 ║     ╟─01121
+   						 ║     ║   ║
+   						 ║     ╙─01122
+   					GENERATES NEIGHBOR LINKS AT LAST LEVEL*/
 				}
 			}
-			//--------------------------------------------------
+			//_____________________________________________________________________________________________
 			
-			//OLD VERSION 
-			//--------------------------------------------------
+			//OLD VERSION__________________________________________________________________________________
 			/*int level = each.getLevel();
 			for (int i = 0; i < level - 1; i++) {
 				System.out.print(verticalLine);
@@ -118,8 +145,10 @@ public class Map {
 			else {
 			System.out.print(crossSection);
 			System.out.print(horizontalLine);
-			}*/
-			//--------------------------------------------------
+			}
+			System.out.println(each.getId());*/
+			
+			//_____________________________________________________________________________________________
 			
 					
 			displayFromRoom(each);
