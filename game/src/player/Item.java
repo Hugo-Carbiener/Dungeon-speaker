@@ -8,7 +8,7 @@ public class Item {
 	boolean consummable;
 	boolean throwable;
 	boolean equipped = false;
-	
+	int itemDamage;
 	
 	public boolean isEquipable() {
 		return this.equipable;
