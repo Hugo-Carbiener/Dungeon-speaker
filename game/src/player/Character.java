@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Character {
 
-	public int health; //je l'ai rendu public pour pouvoir le modfier pendant le combat 
+	public int health; 
 	public int mana;
-	//speed may be used to determine who attacks first during an ecounter
+	//speed may be used to determine who attacks first during an encounter
 	public double speed;
 	public int baseDamage;
 	//the character can equip items such as weapons, spells, torches...

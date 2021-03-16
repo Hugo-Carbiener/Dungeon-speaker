@@ -1,9 +1,8 @@
 package player;
-import java.util.Scanner; //cf le fichier que j'ai envoyé sur la conv sur cette classe
+import java.util.Scanner; //simplifies reading data on standard input (keyboard) or in a file.
 
-//je n'ai pas du tout pris en compte le mana, xp et level for now 
 
-public class Combat {
+public class Combat { 
 	private Hero hero;
 	private Monster monster;
 	Scanner scanner = new Scanner(System.in); 
@@ -12,13 +11,13 @@ public class Combat {
 		this.hero = hero;
 		this.monster = monster;
 	}
-	public void start(Hero hero, Monster monster) {
+	public void start(Hero hero, Monster monster) { //used to start a fight
 		
-		while(hero.health != 0 || monster.health != 0) {
+		while(hero.health != 0 || monster.health != 0) { //the fight ends when the monster or the hero has no health anymore
 			System.out.println(hero.username +" ("+ hero.health+") veuillez choisir votre action (1 : Utiliser une arme , 2 : Ne pas utiliser d'arme)");
             int attack = scanner.nextInt();
-            doDamage(attack);
-            hero.health = hero.health - monster.baseDamage; //c'est le monstre qui attaque 
+            doDamage(attack);//the hero attacks
+            hero.health = hero.health - monster.baseDamage; //the monster attacks
 		}
 		
 		if(hero.health == 0) {
@@ -28,10 +27,11 @@ public class Combat {
 			System.out.println("vous avez perdu");
 		}
 	}
-	public void doDamage(int attack){
+	
+	public void doDamage(int attack){ //calculates the damage done by the hero
         switch(attack){
             case 1:
-            	System.out.println("Veuillez choisir un objet de votre inventaire");
+            	System.out.println("Veuillez choisir un objet de votre inventaire"); //in case the player uses an item
             	String itemName = scanner.next();
             	Item usedItem = new Item();
             	for(Item item : hero.inventory) {
@@ -46,11 +46,12 @@ public class Combat {
                 break;
                 
             case 2:
-                System.out.println(hero.username +"inflige "+ hero.baseDamage);
+                System.out.println(hero.username +"inflige "+ hero.baseDamage); //in case he doesn't use anything
                 monster.health = monster.health - hero.baseDamage;
                 break;
         }
     }
-	
+// might add the use of a potion to get health and mana back 
+// might put the mana, xp and level features in place 
 
 }
