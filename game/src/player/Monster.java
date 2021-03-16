@@ -4,13 +4,13 @@ package player;
 public class Monster extends Character{
 
 	private String name;
-	private int attack;
+	
 
 	
 	public Monster(String name) {
-		super(10, 0, 0.5);
+		super(10, 0, 0.5, 2);
 		this.name = name;
-		attack = 5;
+		
 		
 	}
 	
@@ -18,9 +18,6 @@ public class Monster extends Character{
 		return this.name;
 	}
 	
-	public int getAttack() {
-		return this.attack;
-	}
 	
 
 }
