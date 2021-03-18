@@ -26,7 +26,7 @@ public class Character {
 		inventory = new ArrayList<Item>(this.inventorySize);
 	}
 	
-
+	
 	
 	
 }
