@@ -1,11 +1,10 @@
+# récupération de l'entrée utilisateur nettoyée (partie de Solène)
 from test_vscode import tagged_words
 import nltk
 from nltk.corpus import wordnet
 
-
-
-
 """
+Sorties possibles :
 déplacement:
     forward
     backward
@@ -14,7 +13,6 @@ déplacement:
 attaque
 voir équipement
 utiliser objet
-
 
 data:
 ARMES
@@ -42,7 +40,7 @@ Pair.with("Ghoul", 8),
 Pair.with("Necromancer", 9),
 Pair.with("dragon", 10)));
 """
-
+# on considère qu'il n'y a qu'un verbe dans la phrase, on le récupère dans la liste
 verb = ""
 for i in tagged_words:
     print(i, i[0], i[1])
@@ -58,10 +56,13 @@ if verb == "":
 else:
 
     # verbes de référence : move, attack, use, look
+    # ces verbes servent à classifier le verbe donné par l'utilisateur
+    # dans une des actions possibles correspondantes
 
     ref_vbs = ["move", "attack", "use", "look"]
     syn_tab = []
-
+    # il existe 2 approches possibles pour faire la correspondance
+    # première méthode : on cherche dans les synonymes des mots de référence
     print("----- matching with synonyms -----")
     for ref in ref_vbs:
         tmp = []
@@ -83,7 +84,8 @@ else:
 
 
     print("----- matching with similarity -----")
-
+    # deuxième méthode : on utilise une fonction
+    # donnant un indicateur de similarité entre deux mots
     match_tab = []
     for i in ref_vbs:
         ref = wordnet.synsets(i, "v")[0]
