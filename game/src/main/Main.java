@@ -5,6 +5,7 @@ import dungeon.Map;
 import dungeon.Room;
 import player.Hero;
 import player.Monster;
+import player.Weapon;
 
 public class Main {
 	
@@ -29,6 +30,14 @@ public class Main {
 		System.out.println(monster2.getName());
 		System.out.println(monster2.baseDamage);
 		System.out.println(monster2.health);
+	
+		Weapon weapon1 = new Weapon();
+		System.out.println(weapon1.getName());
+		System.out.println(weapon1.getDamage());
+		
+		Weapon weapon2 = new Weapon();
+		System.out.println(weapon2.getName());
+		System.out.println(weapon2.getDamage());
 	}
 }
 	
