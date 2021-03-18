@@ -15,6 +15,7 @@ public class Weapon extends Item{
 		super(true, false, false);
 		String name;				//Name of the weapon generated
 		int rarityIndicator;		//Determines the rarity of the weapon which is used to calculated damages and probability of being generated
+		int r;
 		
 		Pair<String,Integer> weaponMarker;
 		List<Pair<String, Integer>> weapons = new ArrayList<>(Arrays.asList(
@@ -29,10 +30,25 @@ public class Weapon extends Item{
 				Pair.with("Scythe", 9),
 				Pair.with("Magic AK47", 10)));	
 		
-		int r = (int) (Math.random() * (weapons.size() - 1));
+		r = (int) (Math.random() * (weapons.size()));
 		weaponMarker = weapons.get(r);
 		name = weaponMarker.getValue0();
 		rarityIndicator = weaponMarker.getValue1();
+		double keepLimit = (rarityIndicator / 10) - 0.1;       //Used to determine if we keep the weapon when doing the probability check
+		
+		double keepTest = Math.random();					   //Random number compared to the probability limit
+		
+		//PROBABILITY CHECK
+		//_______________________________________________________
+		while (keepTest < keepLimit) { //redraw a weapon
+			r = (int) (Math.random() * (weapons.size() - 1));
+			weaponMarker = weapons.get(r);
+			name = weaponMarker.getValue0();
+			rarityIndicator = weaponMarker.getValue1();
+			keepLimit = (rarityIndicator / 10) - 0.1;
+		}
+		//_______________________________________________________
+		
 		
 		this.name = name;
 		this.damage = calculateDamage(rarityIndicator);
