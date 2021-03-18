@@ -1,5 +1,5 @@
 # récupération de l'entrée utilisateur nettoyée (partie de Solène)
-from test_vscode import tagged_words
+from cleaning_and_parsing import tagged_words
 import nltk
 from nltk.corpus import wordnet
 
