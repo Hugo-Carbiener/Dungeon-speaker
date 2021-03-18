@@ -14,7 +14,7 @@ public class Combat {
 	public void start(Hero hero, Monster monster) { //used to start a fight
 		
 		while(hero.health != 0 || monster.health != 0) { //the fight ends when the monster or the hero has no health anymore
-			System.out.println(hero.username +" ("+ hero.health+") veuillez choisir votre action (1 : Utiliser une arme , 2 : Ne pas utiliser d'arme)");
+			System.out.println(hero.getUsername() +" ("+ hero.health+") veuillez choisir votre action (1 : Utiliser une arme , 2 : Ne pas utiliser d'arme)");
             int attack = scanner.nextInt();
             doDamage(attack);//the hero attacks
             hero.health = hero.health - monster.baseDamage; //the monster attacks
@@ -40,13 +40,13 @@ public class Combat {
             		}
             	}
             	int totalDamage =  hero.baseDamage+ usedItem.itemDamage;
-                System.out.println(hero.username +  "utilise "+ itemName +" et inflige "+ totalDamage);
+                System.out.println(hero.getUsername() +  "utilise "+ itemName +" et inflige "+ totalDamage);
                 hero.throwItem(usedItem);
                 monster.health = monster.health - totalDamage;
                 break;
                 
             case 2:
-                System.out.println(hero.username +"inflige "+ hero.baseDamage); //in case he doesn't use anything
+                System.out.println(hero.getUsername() +"inflige "+ hero.baseDamage); //in case he doesn't use anything
                 monster.health = monster.health - hero.baseDamage;
                 break;
         }
