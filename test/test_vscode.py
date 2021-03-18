@@ -9,8 +9,10 @@ from nltk import WordNetLemmatizer
 
 # recuperer l'entree utilisateur depuis un fichier texte
 # Ouvrir et lire le fichier 
-text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
-text = text_file.read()
+#text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
+#text = text_file.read()
+
+text = input("Entrez votre action : ")
 
 print('type of text : ')
 print(type(text))
