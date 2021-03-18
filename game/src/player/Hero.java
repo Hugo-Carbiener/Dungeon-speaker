@@ -26,7 +26,6 @@ public class Hero extends Character{
 		//Hero appears in the starting room so it is visited
 		this.position.setAsVisited();
 		this.visitedRooms.add(root);
-		
 	}
 	
 	public String getUsername() {return this.username;}
@@ -70,6 +69,10 @@ public class Hero extends Character{
 	
 	public void take(Item item) {
 		//Take an item from the room to put it in the player's inventory
+	}
+	
+	public List<Item> checkInventory() {
+		return null;
 	}
 	
 	public void moveTo(Room room) {
