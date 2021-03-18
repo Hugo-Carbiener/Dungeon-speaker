@@ -44,10 +44,25 @@ public class Monster extends Character{
 				Pair.with("dragon", 10)));	
 		
 		//Randomly pick a monster
-		int r = (int) (Math.random() * (monsters.size() - 1));
+		int r = (int) (Math.random() * monsters.size());
 		monsterMarker = monsters.get(r);
 		name = monsterMarker.getValue0();
 		rarityIndicator = monsterMarker.getValue1();
+		
+		double keepLimit = (rarityIndicator / 10) - 0.1;       //Used to determine if we keep the weapon when doing the probability check
+		
+		double keepTest = Math.random();					   //Random number compared to the probability limit
+		
+		//PROBABILITY CHECK
+		//_______________________________________________________
+		while (keepTest < keepLimit) { //redraw a weapon
+			r = (int) (Math.random() * (monsters.size() - 1));
+			monsterMarker = monsters.get(r);
+			name = monsterMarker.getValue0();
+			rarityIndicator = monsterMarker.getValue1();
+			keepLimit = (rarityIndicator / 10) - 0.1;
+		}
+		//_______________________________________________________
 		
 		health = calculateHealth(rarityIndicator);
 		baseDamage = calculateDamage(rarityIndicator);
