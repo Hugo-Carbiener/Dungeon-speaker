@@ -33,7 +33,7 @@ public class Hero extends Character{
 	public int getLevel() {return this.level;}
 	public Room getPosition() {return this.position;}
 	
-	public void equipItem(Item item) {
+	public void equip(Item item) {
 		if (item.isEquipable()|| item.isThrowable()) {
 			Item temp = this.equippedItem;
 			
@@ -48,7 +48,6 @@ public class Hero extends Character{
 		}
 	}
 	
-	
 	public void throwItem(Item item) {
 		if (this.inventory.contains(item)) { //if the designated item is in inventory we get rid of it
 			this.inventory.remove(item);
@@ -62,7 +61,15 @@ public class Hero extends Character{
 		else {
 			System.out.println("The item does not exist");
 		}
-		
+	}
+	
+	public void consume() {
+		//Consume item if consumable
+	}
+	
+	
+	public void take(Item item) {
+		//Take an item from the room to put it in the player's inventory
 	}
 	
 	public void moveTo(Room room) {
@@ -80,7 +87,6 @@ public class Hero extends Character{
 	
 	public void moveForward() {
 		//Move the hero to the first child room
-
 		Room nextRoom = position.getNextRooms().get(0);
 		this.moveTo(nextRoom);
 	}
@@ -96,6 +102,11 @@ public class Hero extends Character{
 		visitedRooms.remove(visitedRooms.size()-1);
 		Room previousRoom = visitedRooms.remove(visitedRooms.size()-1);
 		this.moveTo(previousRoom);
+	}
+	
+	public void observe() {
+		//Give a description of the room
+		System.out.println("What a beautiful room");
 	}
 }
 

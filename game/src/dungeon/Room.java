@@ -5,23 +5,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javafx.util.Pair;
+import player.Item;
+import player.Monster;
 
 
 public class Room {
 	
 	private List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
     private Room previousRoom;									//Room considered "parent"of the current room
-    private List<Room> accessibleRooms = new ArrayList<Room>();
+    private List<Room> accessibleRooms = new ArrayList<Room>();	//List of rooms the player can go to 
     private boolean visited = false;							//determines if the player as already been through this room
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
     
+    private List<Item> items;											//List of items in the room
+    private List<Monster> monsters;										//List of monsters guarding the room
     
     public Room(String id, int level) {
     	this.id = id;
     	this.level = level;
     	this.previousRoom = this;
-    	
+    	this.fill();
     }
     
     public List<Room> getNextRooms() {return nextRooms;}
@@ -32,6 +36,8 @@ public class Room {
     public int getLevel() {return this.level;}
     public boolean wasVisited() {return visited;}
     public void setAsVisited() {this.visited = true;}
+    public List<Item> getItems() {return this.items;}
+    public List<Monster> getMonsters() {return this.monsters;}
     
     public List<Room> getRoomFamily() {
     	// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
@@ -54,9 +60,9 @@ public class Room {
     	this.accessibleRooms.add(nextRoom);						//Add the new room as an accessible room to the previous room
     	this.nextRooms.add(nextRoom);							//Add the new room to the list of children of the previous room
     }
-    
-    
-    public List<Pair<String, Boolean>> getNeighbor(Map map) {	
+ 
+
+	public List<Pair<String, Boolean>> getNeighbor(Map map) {	
     	//Returns a list of 2 pairs (id, boolean) that respectively indicates if room has a left neighbor and a right neighbor. 
     	//id for the right neighbor (second pair) may be nonsense but will not be used afterwards as long as it's boolean is at false
     	
@@ -147,10 +153,7 @@ public class Room {
     	}
     }
     
-    
-    
-    
-    
-    
-    
+    public void fill() {
+    	//Fill the room with monsters and items
+    }
 }

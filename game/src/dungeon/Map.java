@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Map {
 	private Room startingRoom = new Room("0", 0);		//map.startingRoom is the root node 
+	private Room endingRoom;							//Room to reach to end the game 
 	private int endLevel; 								//determines how many "floors" the dungeon will have
 	private int maxExitNumber; 							//determines how many exits a room can have. 
 	private double neighborLinkProbability;				//determines the probability of generating a link between neighbor rooms 
@@ -22,9 +23,13 @@ public class Map {
 		this.generateBasicTree(0, this.startingRoom);
 		//GENERATION OF NEIGHBOR LINKS
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
+		//SET THE ENDING ROOM
+		this.setEndingRoom();
 	}
 	
 	public Room getStartingRoom() {return this.startingRoom;}
+	public Room getEndingRoom() {return this.endingRoom;}
+	public void setEndingRoom() {}
 	public int getEndLevel() {return this.endLevel;}
 	public int getMaxExitNumber() {return this.maxExitNumber;}
 	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
@@ -188,6 +193,4 @@ public class Map {
 			this.addNeighborLink(each, probability);
 		}
 	}
-	
-	
 }
