@@ -4,6 +4,7 @@ package main;
 import dungeon.Map;
 import dungeon.Room;
 import player.Hero;
+import player.Monster;
 
 public class Main {
 	
@@ -18,6 +19,16 @@ public class Main {
 		System.out.println(hero.getPosition().getId());
 
 		map.displayFromRoom(root);
+		
+		Monster monster1 = Monster.generateMonster();
+		System.out.println(monster1.getName());
+		System.out.println(monster1.baseDamage);
+		System.out.println(monster1.health);
+		
+		Monster monster2 = Monster.generateMonster();
+		System.out.println(monster2.getName());
+		System.out.println(monster2.baseDamage);
+		System.out.println(monster2.health);
 	}
 }
 	
