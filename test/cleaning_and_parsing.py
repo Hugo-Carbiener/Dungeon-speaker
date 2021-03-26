@@ -27,43 +27,38 @@ print(words)
 print("\n")
 
 #deuxieme fonction : enlever la ponctuation
-words_no_punc = []
+#rmq : on le fait avant de tagger les mots car la fonction isalpha ne prend pas de tuples en entree
+word_no_punc = []
+for w in words:
+    if w.isalpha():
+        word_no_punc.append(w.lower())
 
-for word in words:
-    if word.isalpha():
-        words_no_punc.append(word.lower())
-
-print('words_no_punc :')
-print(words_no_punc)
+print("word_no_punc :")
+print(word_no_punc)
 print("\n")
 
-#troisieme fonction : enlever les mots inutiles
+#troisieme fonction : tagger les mots
+tagged_words = []
+
+for w in word_no_punc:
+    tagged_words = nltk.pos_tag(word_no_punc)
+
+print('tagged words :')
+print(tagged_words)
+print("\n")
+
+#quatrieme fonction : clean la liste
 clean_words = []
 
-#liste de stopwords
 stopwords = stopwords.words("english")
 
-for word in words_no_punc:
-    if word not in stopwords:
+for word in tagged_words:
+    if word[0] not in stopwords:
         clean_words.append(word)
 
 print('clean_words :')
 print(clean_words)
 print("\n")
-
-
-#quatrieme fonction : separer les mots en fonction de leur nature
-tagged_words = []
-
-for word in clean_words:
-    tagged_words = nltk.pos_tag(clean_words)
-
-#remarque : JJ = adjectifs, NN = noms singuliers, VBP = verbes au present, pas a la troisieme personne du singulier
-print('tagged words :')
-print(tagged_words)
-print("\n")
-
-
 
 
 
