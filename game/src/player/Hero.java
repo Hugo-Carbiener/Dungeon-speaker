@@ -71,15 +71,15 @@ public class Hero extends Character{
 	
 	public <T> void take(T item) {
 		//Take an item from the room to put it in the player's inventory
-		if (this.position.getItems().contains(item)) {
+		if (this.position.getMonsters().contains(item) && item != null) {
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
-				this.position.getItems().remove(item);
+				this.position.getMonsters().remove(item);
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
-					this.position.getItems().remove(item);
+					this.position.getMonsters().remove(item);
 				} else {
 					System.out.println("Your inventory is full");
 				}

@@ -19,8 +19,8 @@ public class Room {
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
     
-    private List<Item> items;											//List of items in the room
-    private List<Monster> monsters;										//List of monsters guarding the room
+    private List<Item> items = new ArrayList<>();						//List of items in the room
+    private List<Monster> monsters = new ArrayList<>();					//List of monsters guarding the room
     
     public Room(String id, int level, double fillProbability) {
     	this.id = id;
