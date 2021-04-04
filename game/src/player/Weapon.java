@@ -12,9 +12,9 @@ public class Weapon extends Item{
 	
 	
 	public Weapon() {
-		super(true, false, false);
-		String name;				//Name of the weapon generated
-		int rarityIndicator;		//Determines the rarity of the weapon which is used to calculated damages and probability of being generated
+		super(10, true, false, false);	//set weapon weight to 10
+		String name;					//Name of the weapon generated
+		int rarityIndicator;			//Determines the rarity of the weapon which is used to calculated damages and probability of being generated
 		int r;
 		
 		Pair<String,Integer> weaponMarker;

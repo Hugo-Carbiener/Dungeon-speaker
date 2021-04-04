@@ -12,6 +12,7 @@ public class Hero extends Character{
 	private List<Room> visitedRooms;
 	private int level;
 	int xp;
+	private int balance = 0;
 	
 	public Hero(String username, Map map) {
 		//Default settings for a new player
@@ -31,6 +32,7 @@ public class Hero extends Character{
 	public String getUsername() {return this.username;}
 	public int getLevel() {return this.level;}
 	public Room getPosition() {return this.position;}
+	public int getBalance() {return this.balance;}
 	
 	public void equip(Item item) {
 		if (item.isEquipable()|| item.isThrowable()) {
@@ -67,8 +69,24 @@ public class Hero extends Character{
 	}
 	
 	
-	public void take(Item item) {
+	public <T> void take(T item) {
 		//Take an item from the room to put it in the player's inventory
+		if (this.position.getItems().contains(item)) {
+			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
+				this.balance  += ((Coins) item).getAmount();
+				this.position.getItems().remove(item);
+			} else if (item instanceof Item){
+			//else adds a miscellaneous item to the inventory
+				if (this.inventory.size() < this.inventorySize) {
+					this.inventory.add((Item) item);
+					this.position.getItems().remove(item);
+				} else {
+					System.out.println("Your inventory is full");
+				}
+			} else {
+				System.err.println("Parameter is not an Item");
+			}
+		}
 	}
 	
 	public List<Item> checkInventory() {
