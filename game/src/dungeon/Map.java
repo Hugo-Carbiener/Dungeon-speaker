@@ -3,24 +3,26 @@ package dungeon;
 import java.util.List;
 
 public class Map {
-	private Room startingRoom = new Room("0", 0);		//map.startingRoom is the root node 
+	private Room startingRoom = new Room("0", 0, 0);	//map.startingRoom is the root node 
 	private Room endingRoom;							//Room to reach to end the game 
 	private int endLevel; 								//determines how many "floors" the dungeon will have
 	private int maxExitNumber; 							//determines how many exits a room can have. 
 	private double neighborLinkProbability;				//determines the probability of generating a link between neighbor rooms 
+	private double fillProbability;						//determines the probability of adding amonser/weapon when generating a room
 	private int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
 	
 	
 	
-	public Map(int endLevel,int maxExitNumber, double neighborLinkProbability) { 
+	public Map(int endLevel,int maxExitNumber, double neighborLinkProbability, double fillProbability) { 
 		//this constructor generates a map as well as a basic tree architecture displayable using displayFromRoom(map.getStartingRoom())
 		this.endLevel = endLevel;
 		this.maxExitNumber = maxExitNumber;
 		this.neighborLinkProbability = neighborLinkProbability;
+		this.fillProbability = fillProbability;
 		this.roomAmount = 1;
 		
 		//GENERATION OF THE TREE
-		this.generateBasicTree(0, this.startingRoom);
+		this.generateBasicTree(0, this.startingRoom, fillProbability);
 		//GENERATION OF NEIGHBOR LINKS
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
 		//SET THE ENDING ROOM
@@ -33,9 +35,10 @@ public class Map {
 	public int getEndLevel() {return this.endLevel;}
 	public int getMaxExitNumber() {return this.maxExitNumber;}
 	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
+	public double getFillProbability() {return this.fillProbability;}
 	public int getRoomNumber() {return this.roomAmount;}
 	
-	public void generateBasicTree(int level, Room root) {
+	public void generateBasicTree(int level, Room root, double fillProbability) {
 		//add x rooms as children of the room passed as root. x is between 0 and maxExitNumber
 		if (level < this.endLevel) {
 			int nbOfRoom = (int) (Math.random() * this.maxExitNumber);
@@ -43,12 +46,12 @@ public class Map {
 				String newId = root.getId() + String.valueOf(i);	//generate the id of the room about to be created
 				//System.out.println(newId);
 				
-				root.addRoom(newId, level + 1);
+				root.addRoom(newId, level + 1, fillProbability);
 				this.roomAmount +=1;
 			}
 			//System.out.println("Room generated");
 			for (Room each : root.getNextRooms()) { 	//generate basic trees for each child
-				generateBasicTree(level + 1, each);
+				generateBasicTree(level + 1, each, fillProbability);
 			}
 		}
 	}

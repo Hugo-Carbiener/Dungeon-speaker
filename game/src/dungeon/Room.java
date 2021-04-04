@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import javafx.util.Pair;
 import player.Item;
 import player.Monster;
-
+import player.Weapon;
 
 public class Room {
 	
@@ -21,11 +22,11 @@ public class Room {
     private List<Item> items;											//List of items in the room
     private List<Monster> monsters;										//List of monsters guarding the room
     
-    public Room(String id, int level) {
+    public Room(String id, int level, double fillProbability) {
     	this.id = id;
     	this.level = level;
     	this.previousRoom = this;
-    	this.fill();
+    	this.fill(fillProbability);
     }
     
     public List<Room> getNextRooms() {return nextRooms;}
@@ -52,9 +53,9 @@ public class Room {
     	}
     }
     
-    public void addRoom(String id, int level) {
+    public void addRoom(String id, int level, double fillProbability) {
     	//Add a room. It is considered a child of this 
-    	Room nextRoom = new Room(id, level);
+    	Room nextRoom = new Room(id, level, fillProbability);
     	nextRoom.previousRoom = this;
     	nextRoom.accessibleRooms.add(nextRoom.previousRoom);	//Add the previous room as an accessible room
     	this.accessibleRooms.add(nextRoom);						//Add the new room as an accessible room to the previous room
@@ -153,8 +154,15 @@ public class Room {
     	}
     }
     
-    public void fill() {
-    	//Fill the room with monsters and items
-    	
+    public void fill(double probability) {
+    	//Fill the room with a monster and an item
+    	Monster monster = Monster.generateMonster();
+    	Weapon weapon = new Weapon();
+    	if (Math.random() < probability) {
+    		this.monsters.add(monster);
+    	}
+    	if (Math.random() < probability) {
+    		this.items.add(weapon);
+    	}
     }
 }
