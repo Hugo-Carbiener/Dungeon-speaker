@@ -1,43 +1,46 @@
 package main;
 
 
+import java.util.List;
+
 import dungeon.Map;
 import dungeon.Room;
 import player.Hero;
+import player.Item;
 import player.Monster;
 import player.Weapon;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		Map map = new Map(4,4,0.25);
+		Map map = new Map(4,4,0.25,0.5);
 		while (map.getRoom("011", map.getStartingRoom()) == null) {
-			map = new Map(4,4,0.25);
+			map = new Map(4,4,0.25,0.5);
 		}
 		Room root = map.getStartingRoom();
 		Hero hero = new Hero("Kohuro", map);
-		
-		System.out.println(hero.getPosition().getId());
 
 		map.displayFromRoom(root);
 		
-		Monster monster1 = Monster.generateMonster();
-		System.out.println(monster1.getName());
-		System.out.println(monster1.baseDamage);
-		System.out.println(monster1.health);
+		hero.moveForward();
+		if (hero.getPosition().getItems().size()!=0) {
+		hero.take(hero.getPosition().getItems().get(0));
+		}
+		hero.moveBackwards();
+		hero.moveTo(map.getRoom("01", root));
+		if (hero.getPosition().getItems().size()!=0) {
+			hero.take(hero.getPosition().getItems().get(0));
+			}
+		hero.moveForward();
+		if (hero.getPosition().getItems().size()!=0) {
+			hero.take(hero.getPosition().getItems().get(0));
+			}
+		List<Item> inventory = hero.inventory;
+		for (Item each : inventory) {
+			System.out.println(((Weapon) each).getName());
+		}
 		
-		Monster monster2 = Monster.generateMonster();
-		System.out.println(monster2.getName());
-		System.out.println(monster2.baseDamage);
-		System.out.println(monster2.health);
-	
-		Weapon weapon1 = new Weapon();
-		System.out.println(weapon1.getName());
-		System.out.println(weapon1.getDamage());
 		
-		Weapon weapon2 = new Weapon();
-		System.out.println(weapon2.getName());
-		System.out.println(weapon2.getDamage());
 	}
 }
 	
