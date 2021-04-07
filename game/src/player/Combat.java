@@ -11,7 +11,7 @@ public class Combat {
 		this.hero = hero;
 		this.monster = monster;
 	}
-	public void start(Hero hero, Monster monster) { //used to start a fight
+	public void combat(Hero hero, Monster monster) { 
 		
 		while(hero.health != 0 || monster.health != 0) { //the fight ends when the monster or the hero has no health anymore
 			System.out.println(hero.getUsername() +" ("+ hero.health+") choose an action (1 : use weapon , 2 : don't use a weapon)");
@@ -27,6 +27,12 @@ public class Combat {
 			System.out.println("you lost");
 		}
 	}
+	
+	private static void monsterTurn(Monster monster, Hero hero) {
+		//For now the monster only attacks
+		monster.basicAttack(hero);
+	}
+	
 	
 	public void doDamage(int attack){ //calculates the damage done by the hero
         switch(attack){
