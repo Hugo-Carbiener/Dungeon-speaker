@@ -11,26 +11,28 @@ public class Combat {
 		this.hero = hero;
 		this.monster = monster;
 	}
-	public void combat(Hero hero, Monster monster) { 
+	public void start() { 
 		
 		while(hero.health != 0 || monster.health != 0) { //the fight ends when the monster or the hero has no health anymore
-			System.out.println(hero.getUsername() +" ("+ hero.health+") choose an action (1 : use weapon , 2 : don't use a weapon)");
-            int attack = scanner.nextInt();
-            doDamage(attack);//the hero attacks
-            hero.health = hero.health - monster.baseDamage; //the monster attacks
+			this.playerTurn();
+			this.monsterTurn();
 		}
-		
 		if(hero.health == 0) {
 			System.out.println("you won");
-			
 		} else if(monster.health == 0) {
 			System.out.println("you lost");
 		}
 	}
 	
-	private static void monsterTurn(Monster monster, Hero hero) {
+	private void monsterTurn() {
 		//For now the monster only attacks
-		monster.basicAttack(hero);
+		this.monster.basicAttack(this.hero);
+	}
+	
+	private void playerTurn() {
+		System.out.println(hero.getUsername() +" ("+ hero.health+") choose an action (1 : use weapon , 2 : don't use a weapon)");
+        int attack = scanner.nextInt();
+        doDamage(attack);//the hero attacks
 	}
 	
 	
@@ -39,7 +41,7 @@ public class Combat {
             case 1:
             	System.out.println("Chose an item from your inventory"); //in case the player uses an item
             	String itemName = scanner.next();
-            	Item usedItem = new Item(false,false,false);
+            	Item usedItem = new Item(0,false,false,false);
             	for(Item item : hero.inventory) {
             		if(itemName == item.name) {
             			usedItem = item;
