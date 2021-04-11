@@ -5,8 +5,10 @@ import java.util.List;
 
 public class Character {
 
-	public int health; 
+	public int health;
+	public int maxHealth;
 	public int mana;
+	public int maxMana;
 	//speed may be used to determine who attacks first during an encounter
 	public double speed;
 	public int baseDamage;
@@ -27,6 +29,17 @@ public class Character {
 	}
 	
 	
-	
+	public void basicAttack(Character target) {
+		int totalDamage = this.baseDamage;
+		if (this.equippedItem != null) {
+			totalDamage += this.equippedItem.itemDamage;
+		}
+		
+		// +/- 10%
+		int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
+		totalDamage += r;
+		
+		target.health -= totalDamage;
+	}
 	
 }
