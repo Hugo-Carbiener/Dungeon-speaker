@@ -14,7 +14,7 @@ public class GUI implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new GUI2();
+				new GUI3();
 			}
 			
 		});

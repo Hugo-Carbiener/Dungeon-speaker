@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class GUI2 {
+public class GUI2 implements ActionListener {
 	public GUI2() {
 		 //Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(800, 600);
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
@@ -27,8 +27,18 @@ public class GUI2 {
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Text");
-        JTextField tf = new JTextField(10); // accepts upto 10 characters
+        JTextField tf = new JTextField(40); // accepts upto 40 characters
         JButton send = new JButton("Send");
+        send.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String str = tf.getText();
+				System.out.println(str);
+				
+			}
+        	
+        });
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
@@ -36,7 +46,7 @@ public class GUI2 {
         panel.add(reset);
 
         // Text Area at the Center
-        JTextArea ta = new JTextArea();
+        JTextArea ta = new JTextArea("Bienvenue " +GUI3.username);
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
