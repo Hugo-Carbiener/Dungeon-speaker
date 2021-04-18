@@ -14,7 +14,7 @@ import gui.*;
 public class Main {
 	
 	public static void main(String[] args) {
-		System.out.println("je suis au bord du suicide");
+		
 		
 		new GUI();
 	}
