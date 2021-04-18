@@ -5,16 +5,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class GUI implements ActionListener {
+public class GuiTitleScreen implements ActionListener {
 
-	public GUI() {
+	public GuiTitleScreen() {
 		JFrame frame = new JFrame();
+		frame.setSize(1920, 1080);
 		JButton button = new JButton("Start");
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new GUI3();
+				new GuiGameMenu();
 			}
 			
 		});

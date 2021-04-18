@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class GUI2 implements ActionListener {
-	public GUI2() {
+public class GuiGameWindow implements ActionListener {
+	public GuiGameWindow() {
 		 //Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1920, 1080);
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
@@ -46,7 +46,7 @@ public class GUI2 implements ActionListener {
         panel.add(reset);
 
         // Text Area at the Center
-        JTextArea ta = new JTextArea("Bienvenue " +GUI3.username);
+        JTextArea ta = new JTextArea("Bienvenue " +GuiGameMenu.username);
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
