@@ -22,7 +22,13 @@ public class GuiTitleScreen implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new GuiGameMenu();
+				
+				try {
+					new GuiGameMenu();
+				} catch (FontFormatException | IOException e) {
+					e.printStackTrace();
+				}
+				
 				frame.setVisible(false);//prevent windows from overlapping and stop user from reclicking start and generating another menu window
 			}
 			
@@ -33,22 +39,33 @@ public class GuiTitleScreen implements ActionListener {
 		//resize image
 		ImageIcon imageIcon = new ImageIcon("src/res/temp_large.jpg");
 		Image image = imageIcon.getImage();//turn it into an image
-		Image newimg = image.getScaledInstance(1920, 1080,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		Image newimg = image.getScaledInstance(1420, 780,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);//turn it back into an imageIcon
 		
 		JLabel imgHolder = new JLabel();
 		imgHolder.setIcon(imageIcon);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-		panel.setLayout(new GridLayout(2, 1));
-		panel.add(imgHolder);
-		panel.add(button);
+		//Create panels for each element
+		JPanel buttonPanel = new JPanel();
+		JPanel imagePanel = new JPanel();
+		buttonPanel.setBackground(Color.black);
+		imagePanel.setBackground(Color.black);
+		buttonPanel.setSize(400, 400);
+
+		//Add elements to the panels 
+		imagePanel.add(imgHolder);
+		buttonPanel.add(button);
 		
+		//Set custom size for the button
+		buttonPanel.setPreferredSize(new Dimension(400, 800));
 		
-		
-		frame.add(panel,BorderLayout.CENTER);
-        //frame.setSize(400, 400);
+		JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	    mainPanel.add(imagePanel);
+	    mainPanel.add(buttonPanel);
+	    
+	    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);//fullscreen
+		frame.add(mainPanel,BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Dungeon Speaker");
 		frame.pack();
