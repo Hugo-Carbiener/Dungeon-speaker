@@ -24,6 +24,7 @@ public class GuiGameMenu implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new GuiGameWindow();
+				frame.setVisible(false);//prevent windows from overlapping and stop user from reclicking start and generating another menu window
 				username = tf.getText();
 				
 			}	
