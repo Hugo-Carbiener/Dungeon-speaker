@@ -1,6 +1,7 @@
 package main;
 
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import dungeon.Map;
@@ -13,8 +14,7 @@ import gui.*;
 
 public class Main {
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws FileNotFoundException {
 		
 		new GuiTitleScreen();
 	}
