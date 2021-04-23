@@ -22,8 +22,6 @@ public class Game {
 		//after pressing "start" button
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
-		System.out.println(playerName);
-				
 		//GENERATE MAP
 		Map map = Map.generateMap(4,4,0.5, 0.5, 20, 30);
 		//GENERATE PLAYER 
