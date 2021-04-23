@@ -69,6 +69,7 @@ else:
         for words in wordnet.synsets(ref):
             for lemma in words.lemmas():
                 tmp.append(lemma.name())
+                print(lemma.name())
         syn_tab.append(tmp)
 
     if verb in syn_tab[0]:
