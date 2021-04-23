@@ -10,7 +10,6 @@ import dungeon.Map;
 import dungeon.Room;
 import player.Hero;
 import player.Item;
-import player.Monster;
 import player.Weapon;
 import gui.*;
 

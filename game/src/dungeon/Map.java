@@ -56,6 +56,13 @@ public class Map {
 		}
 	}
 	
+	public static Map generateMap(int endLevel,int maxExitNumber, double neighborLinkProbability, double fillProbability, int minRoomTreshold, int maxRoomTreshold) {
+		Map map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
+		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold) {
+			map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
+		}
+		return map;
+	}
 	
 	public void displayFromRoom(Room room) {
 		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
