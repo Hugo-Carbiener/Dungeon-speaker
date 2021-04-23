@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import game.Game;
+
 
 public class GuiGameMenu implements ActionListener{
 	
@@ -26,7 +28,9 @@ public class GuiGameMenu implements ActionListener{
         send.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				username = tf.getText();
+				Game.init();
+
 				try {
 					new GuiGameWindow();
 				} catch (FontFormatException | IOException e) {
@@ -35,7 +39,6 @@ public class GuiGameMenu implements ActionListener{
 				}
 				
 				frame.setVisible(false);//prevent windows from overlapping and stop user from reclicking start and generating another menu window
-				username = tf.getText();
 				
 			}	
         });
