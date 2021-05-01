@@ -8,19 +8,25 @@ import javax.swing.*;
 
 
 public class GuiGameWindow implements ActionListener {
+	private final static String newline = "\n";
 	public GuiGameWindow() throws FontFormatException, IOException {
 		 //Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
 
-        //Creating the MenuBar and adding components
-        JMenuBar mb = new JMenuBar();
-
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Text");
         JTextField tf = new JTextField(40); // accepts upto 40 characters
+        // Text Area at the Center
+        JTextArea ta = new JTextArea("Bienvenue " +GuiGameMenu.username);
+        ta.setEditable(false);
+         
+        JScrollPane scroll = new JScrollPane (ta);
+        
+
+        
         //JButton send = new JButton("Send");
         JButton send = Toolkit.simpleButton("Send", "pixelArtFont.ttf");
         send.addActionListener(new ActionListener(){
@@ -28,27 +34,30 @@ public class GuiGameWindow implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String str = tf.getText();
-				System.out.println(str);
-				
+				ta.append(newline + str);
+				tf.setText("");
 			}
         	
         });
        
-        //JButton reset = new JButton("Reset");
-        JButton reset = Toolkit.simpleButton("Reset", "pixelArtFont.ttf");
+        
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(send);
-        panel.add(reset);
+        panel.add(scroll);
+        
+        frame.getRootPane().setDefaultButton(send);
+    
 
-        // Text Area at the Center
-        JTextArea ta = new JTextArea("Bienvenue " +GuiGameMenu.username);
+     
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.NORTH, mb);
+        
         frame.getContentPane().add(BorderLayout.CENTER, ta);
+
         frame.setVisible(true);
+       
 	}
 
 }

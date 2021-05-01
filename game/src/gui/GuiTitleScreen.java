@@ -59,11 +59,12 @@ public class GuiTitleScreen implements ActionListener {
 		//Set custom size for the button
 		buttonPanel.setPreferredSize(new Dimension(400, 800));
 		
+		
 		JPanel mainPanel = new JPanel();
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(imagePanel);
 	    mainPanel.add(buttonPanel);
-	    
+	    frame.getRootPane().setDefaultButton(button);
 	    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);//fullscreen
 		frame.add(mainPanel,BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

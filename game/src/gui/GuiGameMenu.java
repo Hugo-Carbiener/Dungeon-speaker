@@ -46,11 +46,7 @@ public class GuiGameMenu implements ActionListener{
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(send);
-        
-
-        // Text Area at the Center
-        //JTextArea ta = new JTextArea();
-
+        frame.getRootPane().setDefaultButton(send);
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         //frame.getContentPane().add(BorderLayout.SOUTH, ta);
