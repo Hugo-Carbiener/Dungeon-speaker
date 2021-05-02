@@ -12,16 +12,16 @@ import sys
 #text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
 #text = text_file.read()
 
-text = sys.argv[1]
+#text = sys.argv[1]
 
-"""
+
 text = input("Entrez votre action : ")
 
 
 print('type of text : ')
 print(type(text))
 print("\n")
-"""
+
 
 
 #premiere fonction : word tokenization
