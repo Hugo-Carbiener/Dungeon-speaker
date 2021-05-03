@@ -6,9 +6,16 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import NLP.NLPManager;
+
 
 public class GuiGameWindow implements ActionListener {
+	
 	private final static String newline = "\n";
+	private static String currentOutput;
+	
+	private static String getCurrentOuput() {return GuiGameWindow.currentOutput;}
+	
 	public GuiGameWindow() throws FontFormatException, IOException {
 		 //Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
@@ -33,9 +40,16 @@ public class GuiGameWindow implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String str = tf.getText();
-				ta.append(newline + str);
+				String userInput = tf.getText();
+				ta.append(newline + userInput);
 				tf.setText("");
+				
+				try {
+					currentOutput = NLPManager.startNLP(userInput);
+					System.out.println(currentOutput);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
         	
         });
