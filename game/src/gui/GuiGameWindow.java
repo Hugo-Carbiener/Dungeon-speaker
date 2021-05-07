@@ -5,7 +5,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -45,12 +51,14 @@ public class GuiGameWindow implements ActionListener {
         JTextPane textPane = new JTextPane();
         doc = (StyledDocument)textPane.getDocument();
         textPane.setEditable(false);
-
+        
+        //Scrollbar
+        JScrollPane sp = new JScrollPane(textPane);
+        
         //Text field
         JTextField textField = Toolkit.textField("pixelArtFont.ttf");
         //Button
         JButton send = Toolkit.simpleButton("Send", "pixelArtFont.ttf");
-        
         panel.add(label); // Components Added using Flow Layout
         panel.add(textField);
         panel.add(send);
@@ -62,6 +70,11 @@ public class GuiGameWindow implements ActionListener {
         textPane.setFont(customFont);
         textPane.setBackground(Color.BLACK);
         panel.setBackground(Color.BLACK);
+        
+        sp.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        sp.setSize(10, 800);
         
         Style defaut = textPane.getStyle("default");
         
