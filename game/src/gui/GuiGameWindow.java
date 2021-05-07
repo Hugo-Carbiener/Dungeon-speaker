@@ -31,18 +31,13 @@ public class GuiGameWindow implements ActionListener {
         JTextPane textPane = new JTextPane();
         StyledDocument doc = (StyledDocument)textPane.getDocument();
         textPane.setEditable(false);
-        
-        //scrollbar
-        JScrollPane scroll = new JScrollPane(textPane);
-        
+
         //Button
         JButton send = Toolkit.simpleButton("Send", "pixelArtFont.ttf");
         
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(send);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        panel.add(scroll);
         
         //Style
         Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(60f);
@@ -59,24 +54,19 @@ public class GuiGameWindow implements ActionListener {
         StyleConstants.setForeground(userInputStyle, Color.CYAN);
         StyleConstants.setFontSize(userInputStyle, 15);
 
-        
         //Create style for game displays
         Style gameInputStyle = textPane.addStyle("gameInputStyle", defaut);
         StyleConstants.setForeground(gameInputStyle, Color.RED);
         StyleConstants.setFontSize(gameInputStyle, 15);
         
-        
-        
         frame.getRootPane().setDefaultButton(send);
         frame.setBackground(Color.PINK);
 
      
-
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         
-        frame.getContentPane().add(BorderLayout.CENTER, textPane
-        		);
+        frame.getContentPane().add(BorderLayout.CENTER, textPane);
 
         frame.setVisible(true);
         
@@ -94,15 +84,6 @@ public class GuiGameWindow implements ActionListener {
 			    
 			    pos += str.length() + 1;
 				tf.setText("");
-				
-				try {
-					doc.insertString(pos, newline + "An event occurs" ,gameInputStyle);
-				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				pos += (newline + "An event occurs").length();
 			}
         });
        
