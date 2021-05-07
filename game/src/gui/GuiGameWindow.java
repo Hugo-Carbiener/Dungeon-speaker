@@ -19,8 +19,18 @@ public class GuiGameWindow implements ActionListener {
 	private static int pos = 0;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
+
+	public static void GuiDisplay(String string) {
 	
-	
+		try {
+			
+			doc.insertString(pos,newline + string, gameInputStyle);
+			pos += string.length() + 1;
+			
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public GuiGameWindow() throws FontFormatException, IOException {
 		//Creating the Frame
