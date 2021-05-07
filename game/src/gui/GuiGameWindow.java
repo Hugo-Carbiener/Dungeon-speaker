@@ -41,25 +41,26 @@ public class GuiGameWindow implements ActionListener {
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Describe your action :  ");        
-        JTextField tf = new JTextField(40); // accepts upto 40 characters
         // Text Area at the Center
         JTextPane textPane = new JTextPane();
         doc = (StyledDocument)textPane.getDocument();
         textPane.setEditable(false);
 
+        //Text field
+        JTextField textField = Toolkit.textField("pixelArtFont.ttf");
         //Button
         JButton send = Toolkit.simpleButton("Send", "pixelArtFont.ttf");
         
         panel.add(label); // Components Added using Flow Layout
-        panel.add(tf);
+        panel.add(textField);
         panel.add(send);
         
         //Style
-        Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(60f);
+        Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(35f);
         label.setFont(customFont);
         label.setForeground(Color.WHITE);
-        textPane.setBackground(Color.BLACK);
         textPane.setFont(customFont);
+        textPane.setBackground(Color.BLACK);
         panel.setBackground(Color.BLACK);
         
         Style defaut = textPane.getStyle("default");
@@ -67,12 +68,12 @@ public class GuiGameWindow implements ActionListener {
         //Create style for user inputs
         userInputStyle = textPane.addStyle("userInputStyle", defaut);
         StyleConstants.setForeground(userInputStyle, Color.CYAN);
-        StyleConstants.setFontSize(userInputStyle, 20);
+        StyleConstants.setFontSize(userInputStyle, 18);
 
         //Create style for game displays
         gameInputStyle = textPane.addStyle("gameInputStyle", defaut);
         StyleConstants.setForeground(gameInputStyle, Color.RED);
-        StyleConstants.setFontSize(gameInputStyle, 18);
+        StyleConstants.setFontSize(gameInputStyle, 22);
         
         frame.getRootPane().setDefaultButton(send);
         frame.setBackground(Color.PINK);
@@ -98,7 +99,7 @@ public class GuiGameWindow implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String str = tf.getText();
+				String str = textField.getText();
 				
 				try {
 					doc.insertString(pos,newline + str, userInputStyle);
@@ -107,7 +108,7 @@ public class GuiGameWindow implements ActionListener {
 				}
 				
 			    pos += str.length() + 1;
-				tf.setText("");
+				textField.setText("");
 			}
         });
        
