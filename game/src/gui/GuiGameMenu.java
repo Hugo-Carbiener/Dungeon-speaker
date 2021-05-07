@@ -17,7 +17,7 @@ public class GuiGameMenu implements ActionListener{
 		//Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
+        frame.setSize(1500, 800);
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Username");
