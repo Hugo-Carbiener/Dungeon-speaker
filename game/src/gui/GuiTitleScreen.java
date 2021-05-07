@@ -37,7 +37,8 @@ public class GuiTitleScreen implements ActionListener {
 		//Add titlescreen image
 		
 		//resize image
-		ImageIcon imageIcon = new ImageIcon("src/res/temp_large.jpg");
+		
+		ImageIcon imageIcon = new ImageIcon("src/res/Dungeon_speaker.png");
 		Image image = imageIcon.getImage();//turn it into an image
 		Image newimg = image.getScaledInstance(1420, 780,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);//turn it back into an imageIcon
