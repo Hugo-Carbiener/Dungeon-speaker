@@ -23,10 +23,12 @@ public class GuiGameWindow implements ActionListener {
         JLabel label = new JLabel("Describe your action :  ");        
         JTextField tf = new JTextField(40); // accepts upto 40 characters
         // Text Area at the Center
-        JTextArea ta = new JTextArea("Bienvenue " +GuiGameMenu.username);
+        JTextArea ta = new JTextArea(400, 400);
         ta.setEditable(false);
         
-        JScrollPane scroll = new JScrollPane (ta);
+        //scrollbar
+        JScrollPane scroll = new JScrollPane(ta);
+        
         
         //JButton send = new JButton("Send");
         JButton send = Toolkit.simpleButton("Send", "pixelArtFont.ttf");
@@ -45,10 +47,11 @@ public class GuiGameWindow implements ActionListener {
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(send);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         panel.add(scroll);
         
         //Style
-        Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(40f);
+        Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(60f);
         label.setFont(customFont);
         label.setForeground(Color.WHITE);
         ta.setBackground(Color.BLACK);
