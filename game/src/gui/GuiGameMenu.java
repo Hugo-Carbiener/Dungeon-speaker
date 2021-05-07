@@ -61,6 +61,8 @@ public class GuiGameMenu implements ActionListener{
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         //frame.getContentPane().add(BorderLayout.SOUTH, ta);
         frame.setVisible(true);
+        //Fullscreen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 }
 

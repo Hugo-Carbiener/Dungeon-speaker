@@ -81,11 +81,12 @@ public class GuiGameWindow implements ActionListener {
      
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        
         frame.getContentPane().add(BorderLayout.CENTER, textPane);
-
         frame.setVisible(true);
        
+        //Fullscreen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
         try {
         	String welcomeMessage = "You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon";
 			doc.insertString(pos, welcomeMessage, gameInputStyle);
