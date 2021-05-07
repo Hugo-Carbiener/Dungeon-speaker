@@ -15,7 +15,12 @@ import javax.swing.text.StyledDocument;
 public class GuiGameWindow implements ActionListener {
 	
 	private final static String newline = "\n";
-	public static int pos = 0;
+	private static StyledDocument doc;
+	private static int pos = 0;
+	private static Style userInputStyle;
+	private static Style gameInputStyle;
+	
+	
 	
 	public GuiGameWindow() throws FontFormatException, IOException {
 		//Creating the Frame
@@ -29,7 +34,7 @@ public class GuiGameWindow implements ActionListener {
         JTextField tf = new JTextField(40); // accepts upto 40 characters
         // Text Area at the Center
         JTextPane textPane = new JTextPane();
-        StyledDocument doc = (StyledDocument)textPane.getDocument();
+        doc = (StyledDocument)textPane.getDocument();
         textPane.setEditable(false);
 
         //Button
@@ -50,12 +55,12 @@ public class GuiGameWindow implements ActionListener {
         Style defaut = textPane.getStyle("default");
         
         //Create style for user inputs
-        Style userInputStyle = textPane.addStyle("userInputStyle", defaut);
+        userInputStyle = textPane.addStyle("userInputStyle", defaut);
         StyleConstants.setForeground(userInputStyle, Color.CYAN);
         StyleConstants.setFontSize(userInputStyle, 15);
 
         //Create style for game displays
-        Style gameInputStyle = textPane.addStyle("gameInputStyle", defaut);
+        gameInputStyle = textPane.addStyle("gameInputStyle", defaut);
         StyleConstants.setForeground(gameInputStyle, Color.RED);
         StyleConstants.setFontSize(gameInputStyle, 15);
         
