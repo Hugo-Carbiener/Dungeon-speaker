@@ -14,7 +14,7 @@ import javax.swing.text.StyledDocument;
 
 public class GuiGameWindow implements ActionListener {
 	
-	private final static String newline = "\n";
+	private static String newline = "\n";
 	private static StyledDocument doc;
 	private static int pos = 0;
 	private static Style userInputStyle;
@@ -32,7 +32,7 @@ public class GuiGameWindow implements ActionListener {
 		}
 	}
 	
-	public GuiGameWindow() throws FontFormatException, IOException {
+	public GuiGameWindow() throws FontFormatException, IOException{
 		//Creating the Frame
         JFrame frame = new JFrame("Dungeon Speaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,12 +67,12 @@ public class GuiGameWindow implements ActionListener {
         //Create style for user inputs
         userInputStyle = textPane.addStyle("userInputStyle", defaut);
         StyleConstants.setForeground(userInputStyle, Color.CYAN);
-        StyleConstants.setFontSize(userInputStyle, 15);
+        StyleConstants.setFontSize(userInputStyle, 20);
 
         //Create style for game displays
         gameInputStyle = textPane.addStyle("gameInputStyle", defaut);
         StyleConstants.setForeground(gameInputStyle, Color.RED);
-        StyleConstants.setFontSize(gameInputStyle, 15);
+        StyleConstants.setFontSize(gameInputStyle, 18);
         
         frame.getRootPane().setDefaultButton(send);
         frame.setBackground(Color.PINK);
@@ -84,6 +84,14 @@ public class GuiGameWindow implements ActionListener {
         frame.getContentPane().add(BorderLayout.CENTER, textPane);
 
         frame.setVisible(true);
+       
+        try {
+        	String welcomeMessage = "You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon";
+			doc.insertString(pos, welcomeMessage, gameInputStyle);
+			pos += welcomeMessage.length();
+		} catch (BadLocationException e1) {
+			e1.printStackTrace();
+		}
         
         //Action listener of the button
         send.addActionListener(new ActionListener(){
@@ -91,12 +99,13 @@ public class GuiGameWindow implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String str = tf.getText();
-			    try {
-			    	doc.insertString(pos,newline + str, userInputStyle);
+				
+				try {
+					doc.insertString(pos,newline + str, userInputStyle);
 				} catch (BadLocationException e) {
 					e.printStackTrace();
 				}
-			    
+				
 			    pos += str.length() + 1;
 				tf.setText("");
 			}
