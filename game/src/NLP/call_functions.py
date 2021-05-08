@@ -93,9 +93,9 @@ else:
         unmatched = False
     elif verb in syn_tab[2]:
         unmatched = False
-        print("use")
-    elif verb in syn_tab[3]:
         print("look")
+    elif verb in syn_tab[3]:
+        print("take")
         unmatched = False
 
     if unmatched:
