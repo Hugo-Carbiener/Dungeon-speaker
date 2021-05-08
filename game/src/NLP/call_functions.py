@@ -1,5 +1,5 @@
 # récupération de l'entrée utilisateur nettoyée (partie de Solène)
-import cleaning_and_parsing
+import cleaning_and_parsing as cap
 import nltk
 from nltk.corpus import wordnet
 
@@ -46,7 +46,7 @@ Pair.with("Dragon", 10)));
 #on commnence par les verbes
 # on considère qu'il n'y a qu'un verbe dans la phrase, on le récupère dans la liste
 verb = ""
-for i in clean_words:
+for i in cap.clean_words:
     #print(i, i[0], i[1])
     #print('V' in i[1])
     if 'V' in i[1]:
@@ -56,7 +56,7 @@ for i in clean_words:
 
 #print(verb)
 if verb == "":
-    print("Error ! Verb not found")
+    print("ERROR")
 else:
 
     # verbes de référence : move, attack, use, look
@@ -67,7 +67,7 @@ else:
     syn_tab = []
     # il existe 2 approches possibles pour faire la correspondance
     # première méthode : on cherche dans les synonymes des mots de référence
-    print("----- matching with synonyms -----")
+    # print("----- matching with synonyms -----")
     for ref in ref_vbs:
         tmp = []
         for words in wordnet.synsets(ref):
@@ -97,8 +97,6 @@ else:
     elif verb in syn_tab[3]:
         print("look")
         unmatched = False
-    else:
-        print("ERROR")
 
     if unmatched:
         # print("----- matching with similarity -----")
@@ -111,7 +109,7 @@ else:
             match_tab.append((ref.wup_similarity(word), i))
 
         match_tab.sort(reverse=True)
-        print(match_tab)
+        #print(match_tab)
         print("%s" % match_tab[0][1])
 
 
@@ -120,10 +118,11 @@ else:
 
 
 #on essaie de regrouper par groupe de sens
-
+"""
 grammar = "NP : {<DT>?<JJ>*<NN>}"
 
 parser = nltk.RegexpParser(grammar)
-output = parser.parse(tagged_words)
+output = parser.parse(cap.tagged_words)
 print(output)
 #output.draw()
+"""

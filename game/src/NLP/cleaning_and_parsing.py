@@ -65,7 +65,7 @@ for word in tagged_words:
         clean_words.append(word)
 
 # print('clean_words :')
-print(clean_words)
+# print(clean_words)
 # print("\n")
 
 
