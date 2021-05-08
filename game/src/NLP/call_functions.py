@@ -1,6 +1,5 @@
 # récupération de l'entrée utilisateur nettoyée (partie de Solène)
-from cleaning_and_parsing import clean_words
-from cleaning_and_parsing import tagged_words
+import cleaning_and_parsing
 import nltk
 from nltk.corpus import wordnet
 
@@ -48,14 +47,14 @@ Pair.with("Dragon", 10)));
 # on considère qu'il n'y a qu'un verbe dans la phrase, on le récupère dans la liste
 verb = ""
 for i in clean_words:
-    print(i, i[0], i[1])
-    print('V' in i[1])
+    #print(i, i[0], i[1])
+    #print('V' in i[1])
     if 'V' in i[1]:
         verb = i[0]
-        print(type(i[0]))
+        #print(type(i[0]))
         break
 
-print(verb)
+#print(verb)
 if verb == "":
     print("Error ! Verb not found")
 else:
@@ -84,31 +83,36 @@ else:
             syn_tab[1].append(lemma.name())
 
 
-
+    unmatched = True
     if verb in syn_tab[0]:
-        print("Action : move")
+        print("move")
+        unmatched = False
+
     elif verb in syn_tab[1]:
-        print("Action : attack")
+        print("attack")
+        unmatched = False
     elif verb in syn_tab[2]:
-        print("Action : use")
+        unmatched = False
+        print("use")
     elif verb in syn_tab[3]:
-        print("Action : look")
+        print("look")
+        unmatched = False
     else:
-        print("Error : verb unmatched")
+        print("ERROR")
 
+    if unmatched:
+        # print("----- matching with similarity -----")
+        # deuxième méthode : on utilise une fonction
+        # donnant un indicateur de similarité entre deux mots
+        match_tab = []
+        for i in ref_vbs:
+            ref = wordnet.synsets(i, "v")[0]
+            word = wordnet.synsets(verb, "v")[0]
+            match_tab.append((ref.wup_similarity(word), i))
 
-    print("----- matching with similarity -----")
-    # deuxième méthode : on utilise une fonction
-    # donnant un indicateur de similarité entre deux mots
-    match_tab = []
-    for i in ref_vbs:
-        ref = wordnet.synsets(i, "v")[0]
-        word = wordnet.synsets(verb, "v")[0]
-        match_tab.append((ref.wup_similarity(word), i))
-
-    match_tab.sort(reverse=True)
-    print(match_tab)
-    print("Action : %s" % match_tab[0][1])
+        match_tab.sort(reverse=True)
+        print(match_tab)
+        print("%s" % match_tab[0][1])
 
 
 

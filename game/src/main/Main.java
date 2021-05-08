@@ -1,23 +1,23 @@
 package main;
 
 
-import java.awt.FontFormatException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-
-import dungeon.Map;
-import dungeon.Room;
-import player.Hero;
-import player.Item;
-import player.Weapon;
-import gui.*;
+import NLP.NLPManager;
 
 public class Main {
 	
-	public static void main(String[] args) throws FontFormatException, IOException {
+	public static void main(String[] args) throws Exception {
 		
-		new GuiTitleScreen();
+		//new GuiTitleScreen();
+		String str1 = "I grab the sword";
+		String str2 = "I grab the apple";
+		String str3 = "I walk back";
+		String str4 = "I attack the monster";
+		System.out.println(NLPManager.startNLP(str1));
+		System.out.println(NLPManager.startNLP(str2));
+		System.out.println(NLPManager.startNLP(str3));
+		System.out.println(NLPManager.startNLP(str4));
+		
+		
 	}
 }
 	
