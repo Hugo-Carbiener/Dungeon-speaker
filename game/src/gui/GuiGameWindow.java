@@ -18,6 +18,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import NLP.NLPManager;
+import game.Game;
 
 
 public class GuiGameWindow implements ActionListener {
@@ -27,7 +28,8 @@ public class GuiGameWindow implements ActionListener {
 	private static int pos = 0;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
-	private static String[] currentInput;
+	private static String currentInput;
+	private static volatile boolean inputIsUpdated = false;
 
 	public static void GuiDisplay(String string) {
 	
@@ -39,7 +41,9 @@ public class GuiGameWindow implements ActionListener {
 		}
 	}
 	
-	public static String[] getCurrentInput() {return currentInput;}
+	public static String getCurrentInput() {return currentInput;}
+	public static boolean getInputUpdateState() {return inputIsUpdated;}
+	public static void setInputState(boolean state) {inputIsUpdated = state;}
 	
 	public GuiGameWindow() throws FontFormatException, IOException{
 		//Creating the Frame
@@ -117,7 +121,7 @@ public class GuiGameWindow implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String str = textField.getText();
-				//currentOutput = NLPManager.startNLP(str);
+				currentInput = NLPManager.startNLP(str);
 				
 				try {
 					doc.insertString(pos,newline + str, userInputStyle);
@@ -127,6 +131,11 @@ public class GuiGameWindow implements ActionListener {
 				
 			    pos += str.length() + 1;
 				textField.setText("");
+				
+				inputIsUpdated = true;
+				synchronized (Game.loopThread) {
+					Game.loopThread.notify();
+				}
 			}
         });
        

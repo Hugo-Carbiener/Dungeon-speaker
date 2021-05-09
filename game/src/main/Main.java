@@ -8,6 +8,7 @@ import java.util.List;
 
 import dungeon.Map;
 import dungeon.Room;
+import game.Game;
 import player.Hero;
 import player.Item;
 import player.Weapon;
@@ -17,7 +18,7 @@ public class Main {
 	
 	public static void main(String[] args) throws FontFormatException, IOException {
 		
-		new GuiTitleScreen();
+		Game.start();
 	}
 }
 	

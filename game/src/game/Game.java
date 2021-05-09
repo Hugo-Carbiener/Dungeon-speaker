@@ -1,7 +1,12 @@
 package game;
 
+import java.awt.FontFormatException;
+import java.io.IOException;
+
 import dungeon.Map;
 import gui.GuiGameMenu;
+import gui.GuiGameWindow;
+import gui.GuiTitleScreen;
 import player.Hero;
 
 public class Game {
@@ -9,17 +14,29 @@ public class Game {
 	private static Hero player;
 	private static Map map;
 	private static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
-	
+	public static Thread loopThread;
+	public static Thread GuiThread;
 	
 	public static Hero getHero() {return Game.player;}
 	public static Map getMap() {return Game.map;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
 	
+	public static void start() {
+		//Start the game by launching the Titlescreen interface in a separate thread
+		GuiThread = new Thread() {
+			public void run(){
+				try {
+					new GuiTitleScreen();
+				} catch (FontFormatException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		GuiThread.start();
+	}
+	
 	public static void init() {
-		//init GUI with title screen 
-		
-		//after pressing "start" button
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
 		//GENERATE MAP
@@ -30,6 +47,7 @@ public class Game {
 		Game.player = player;
 		Game.map = map;
 		Game.gameState = "roaming";
+		Game.loop();
 	}
 	
 	
@@ -49,9 +67,34 @@ public class Game {
 	}
 	
 	public static void event() {
+		
+		if (! GuiGameWindow.getInputUpdateState()) {
+			GuiGameWindow.GuiDisplay("waiting...");
+		
+			//Pause the game loop to wait for the user's input 
+			try {
+				synchronized(loopThread) {
+					loopThread.wait();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		String currentInput = GuiGameWindow.getCurrentInput();
+		GuiGameWindow.GuiDisplay("Went through");
+		GuiGameWindow.GuiDisplay(currentInput);
+		GuiGameWindow.setInputState(false);
+		
 		switch (Game.gameState) {
 		
 		case "roaming":
+			if (currentInput == "move") {
+				GuiGameWindow.GuiDisplay("The player asked to move");
+			} else if (currentInput == "attack") {
+				GuiGameWindow.GuiDisplay("The player asked to attack");
+			}
 			//player can move or use objects or check the map or manage their inventory
 			break;
 			
