@@ -23,16 +23,18 @@ public class GuiGameWindow implements ActionListener {
 	private static String newline = "\n";
 	private static StyledDocument doc;
 	private static int pos = 0;
+	private static Style defaultStyle;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
 
 	public static void GuiDisplay(String string) {
 	
 		try {
-			
-			doc.insertString(pos,newline + string, gameInputStyle);
-			pos += string.length() + 1;
-			
+			String arrows = ">>";
+			doc.insertString(pos, newline + arrows, defaultStyle);
+			pos += arrows.length() + 1;
+			doc.insertString(pos,string, gameInputStyle);
+			pos += string.length();
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
@@ -76,7 +78,12 @@ public class GuiGameWindow implements ActionListener {
 
         sp.setSize(10, 800);
         
-        Style defaut = textPane.getStyle("default");
+        Style defaut= textPane.getStyle("default");
+        
+        //Create style for arrows
+        defaultStyle = textPane.addStyle("defaultStyle", defaut);
+        StyleConstants.setForeground(defaultStyle, Color.WHITE);
+        StyleConstants.setFontSize(defaultStyle, 22);
         
         //Create style for user inputs
         userInputStyle = textPane.addStyle("userInputStyle", defaut);
