@@ -32,7 +32,7 @@ public class GuiGameMenu implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				username = tf.getText();
-				Game.init();
+				
 
 				try {
 					new GuiGameWindow();
@@ -43,6 +43,13 @@ public class GuiGameMenu implements ActionListener{
 				
 				frame.setVisible(false);//prevent windows from overlapping and stop user from reclicking start and generating another menu window
 				
+				//Launch game initialization in a separate thread
+				Game.loopThread = new Thread() {
+					public void run(){
+						Game.init();
+					}
+				};
+				Game.loopThread.start();
 			}	
         });
         

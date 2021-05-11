@@ -20,7 +20,7 @@ public class Room {
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
     
     private List<Item> items = new ArrayList<>();						//List of items in the room
-    private List<Monster> monsters = new ArrayList<>();					//List of monsters guarding the room
+    private Monster monster;											//The monster guarding the room
     
     public Room(String id, int level, double fillProbability) {
     	this.id = id;
@@ -38,7 +38,7 @@ public class Room {
     public boolean wasVisited() {return visited;}
     public void setAsVisited() {this.visited = true;}
     public List<Item> getItems() {return this.items;}
-    public List<Monster> getMonsters() {return this.monsters;}
+    public Monster getMonster() {return this.monster;}
     
     public List<Room> getRoomFamily() {
     	// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of
@@ -159,7 +159,7 @@ public class Room {
     	Monster monster = Monster.generateMonster();
     	Weapon weapon = new Weapon();
     	if (Math.random() < probability) {
-    		this.monsters.add(monster);
+    		this.monster = monster;
     	}
     	if (Math.random() < probability) {
     		this.items.add(weapon);

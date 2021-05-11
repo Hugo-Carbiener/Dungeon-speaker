@@ -2,7 +2,7 @@ package player;
 
 public class Item {
 
-	String name;
+	private String name;
 	int weight;
 	boolean equipable;
 	boolean consummable;
@@ -19,6 +19,6 @@ public class Item {
 	
 	public boolean isEquipable() {return this.equipable;}
 	public boolean isConsummable() {return this.consummable;}
-	public boolean isThrowable() {return this.throwable;
-	}
+	public boolean isThrowable() {return this.throwable;}
+	public String getName() {return this.name;}
 }

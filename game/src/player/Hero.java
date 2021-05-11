@@ -5,6 +5,7 @@ import java.util.List;
 
 import dungeon.Map;
 import dungeon.Room;
+import gui.GuiGameWindow;
 
 public class Hero extends Character{
 	private String username;
@@ -71,17 +72,17 @@ public class Hero extends Character{
 	
 	public <T> void take(T item) {
 		//Take an item from the room to put it in the player's inventory
-		if (this.position.getMonsters().contains(item) && item != null) {
+		if (this.position.getItems().contains(item) && item != null) {
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
-				this.position.getMonsters().remove(item);
+				this.position.getItems().remove(item);
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
-					this.position.getMonsters().remove(item);
+					this.position.getItems().remove(item);
 				} else {
-					System.out.println("Your inventory is full");
+					GuiGameWindow.GuiDisplay("Your inventory is full! Throw away something first.");
 				}
 			} else {
 				System.err.println("Parameter is not an Item");
@@ -127,7 +128,44 @@ public class Hero extends Character{
 	
 	public void observe() {
 		//Give a description of the room
-		System.out.println("What a beautiful room");
+		String[] adjectives = {"dark", "pestilent", "dank", "moist", "foul", "nasty", "rugged", "decayed", "old", "hideous", "surprisingly bright", "humid", "large", "small", "oppressing"};
+		String[] goodAdjectives = {"shiny", "bright", "trusty", "well manufactured", "trustworthy", "perfectly balanced", "large", "old", "long"};
+		String[] places = {"there", "on the ground", "on a shelve", "in an open chest", "in a little cabinet", "among rubles", "in the dark", "among crates", "in the hand of an unlucky adventurer"};
+		String[] adverbs = {"menacingly", "aggressively", "wrathfully", "calmy", "curiously", "oodly", "nefariously"};
+		
+		String place;
+		String adj = adjectives[(int) (Math.random() * adjectives.length)];
+		String obs = "You look around you.\nIt is a " + adj + " room.";
+		
+		obs += "\n\n";
+		//Item
+		if (! this.getPosition().getItems().isEmpty()) {//Room is not empty item wise
+			if (this.getPosition().getItems().size() == 1) {//Room has one item
+				place = places[(int) (Math.random() * places.length)];
+				String goodAdj = goodAdjectives[(int) (Math.random() * goodAdjectives.length)];
+				obs += "There is an item laying " + place + ". It is a " + goodAdj+ " " + this.getPosition().getItems().get(0).getName() + ".";
+				
+			} else {//Room has more than one item
+				place = places[(int) (Math.random() * places.length)];
+				obs += "There are items laying " + place + ". You can see ";
+				for (int i = 0; i < this.getPosition().getItems().size(); i++) {
+					obs += "a " + this.getPosition().getItems().get(i).getName();
+					if (i < this.getPosition().getItems().size() - 1) {
+						obs += ",";
+					} else {
+						obs += ".";
+					}
+				}
+			}
+		}
+		obs += "\n\n";
+		
+		if (! (this.getPosition().getMonster() == null)) {//Room is not empty monster wise
+			adj = adjectives[(int) (Math.random() * adjectives.length)];
+			String adv = adverbs[(int) (Math.random() * adverbs.length)];
+			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
+		}
+		GuiGameWindow.GuiDisplay(obs);
 	}
 }
 
