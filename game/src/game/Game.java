@@ -2,12 +2,14 @@ package game;
 
 import java.awt.FontFormatException;
 import java.io.IOException;
+import java.util.List;
 
 import dungeon.Map;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
 import gui.GuiTitleScreen;
 import player.Hero;
+import player.Item;
 
 public class Game {
 	
@@ -97,6 +99,18 @@ public class Game {
 			
 			case "take":
 			//Take an item
+				
+			String argument = currentInput[1];
+			List<Item> roomItems = player.getPosition().getItems();
+			for (Item each : roomItems) {			//for each item in the room's item pool
+				if (each.getName() == argument) {
+					player.take(each);
+					break;
+				} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != argument) {  //If we reached the last item of the list and the name is still not correct
+					GuiGameWindow.GuiDisplay("You do not have such an item in your inventory...");
+				}
+			}
+			
 				break;
 				
 			case "check":
@@ -117,7 +131,6 @@ public class Game {
 			
 				
 			}
-			//player can move or use objects or check the map or manage their inventory
 			break;
 			
 		case "combat":
