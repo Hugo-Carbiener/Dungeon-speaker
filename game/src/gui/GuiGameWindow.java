@@ -17,6 +17,8 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import NLP.NLPManager;
+
 
 public class GuiGameWindow implements ActionListener {
 	
