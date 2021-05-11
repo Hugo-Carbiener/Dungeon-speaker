@@ -66,8 +66,10 @@ public class Game {
 		}
 	}
 	
+	
 	public static void event() {
-		
+		//Required to wait for the user's input
+		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
 			GuiGameWindow.GuiDisplay("waiting...");
 		
@@ -86,14 +88,34 @@ public class Game {
 		GuiGameWindow.GuiDisplay("Went through");
 		GuiGameWindow.GuiDisplay(currentInput);
 		GuiGameWindow.setInputState(false);
+		//-----------------------------------------------------------------
 		
 		switch (Game.gameState) {
 		
 		case "roaming":
-			if (currentInput == "move") {
-				GuiGameWindow.GuiDisplay("The player asked to move");
-			} else if (currentInput == "attack") {
-				GuiGameWindow.GuiDisplay("The player asked to attack");
+			switch (currentInput) {
+			
+			case "take":
+			//Take an item
+				break;
+				
+			case "check":
+			//Either check the map or check the inventory
+				break;
+				
+			case "throw":
+			//Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory
+				break;
+			
+			case "equip":
+			//Equip an item from the inventory
+				break;
+			
+			case "look":
+			//Look at your surroundings 
+				break;
+			
+				
 			}
 			//player can move or use objects or check the map or manage their inventory
 			break;
