@@ -128,7 +128,42 @@ public class Hero extends Character{
 	
 	public void observe() {
 		//Give a description of the room
-		System.out.println("What a beautiful room");
+		String[] adjectives = {"dark", "pestilent", "dank", "moist", "foul", "nasty", "rugged", "decayed", "old", "hideous", "surprisingly bright", "humid", "large", "small", "oppressing"};
+		String[] places = {"there", "on the ground", "on a shelve", "in an open chest", "in a little cabinet", "among rubles", "in the dark", "among crates", "in the hand of an unlucky adventurer"};
+		String[] adverbs = {"menacingly", "aggressively", "wrathfully", "calmy", "curiously", "oodly", "nefariously"};
+		String place;
+		String adj = adjectives[(int) (Math.random() * adjectives.length)];
+		String obs = "You look around you.\nIt is a " + adj + " room.";
+		
+		obs += "\n\n";
+		//Item
+		if (! this.getPosition().getItems().isEmpty()) {//Room is not empty item wise
+			if (this.getPosition().getItems().size() == 1) {//Room has one item
+				place = places[(int) (Math.random() * places.length)];
+				obs += "There is an item laying " + place + ". It is a " + this.getPosition().getItems().get(0).getName();
+				
+			} else {//Room has more than one item
+				place = places[(int) (Math.random() * places.length)];
+				obs += "There are items laying " + place + ". You can see ";
+				for (int i = 0; i < this.getPosition().getItems().size(); i++) {
+					obs += "a " + this.getPosition().getItems().get(i).getName();
+					if (i < this.getPosition().getItems().size() - 1) {
+						obs += ",";
+					} else {
+						obs += ".";
+					}
+				}
+			}
+		}
+		obs += "\n\n";
+		
+		if (! this.getPosition().getMonsters().isEmpty()) {//Room is not empty monster wise
+			adj = adjectives[(int) (Math.random() * adjectives.length)];
+			String adv = adverbs[(int) (Math.random() * adverbs.length)];
+			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonsters().get(0).getName() + "!";
+		}
+		System.out.println(obs);
+		//GuiGameWindow.GuiDisplay(obs);
 	}
 }
 

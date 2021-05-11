@@ -18,7 +18,25 @@ public class Main {
 	
 	public static void main(String[] args) throws FontFormatException, IOException {
 		
-		Game.start();
+		//Game.start();
+		Map map = new Map(6,6,1,1);
+		Hero player = new Hero("Kohuro", map);
+		
+		map.displayFromRoom(map.getStartingRoom());
+		player.moveForward();
+		System.out.println(player.getPosition().getItems().get(0).getName());
+		System.out.println(player.getPosition().getMonsters().get(0).getName());
+		player.observe();
+		player.moveForward();
+		System.out.println(player.getPosition().getItems().get(0).getName());
+		System.out.println(player.getPosition().getMonsters().get(0).getName());
+		player.observe();
+		player.moveForward();
+		System.out.println(player.getPosition().getItems().get(0).getName());
+		System.out.println(player.getPosition().getMonsters().get(0).getName());
+		player.observe();
+		
+		
 	}
 }
 	

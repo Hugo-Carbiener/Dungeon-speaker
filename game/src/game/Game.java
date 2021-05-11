@@ -127,6 +127,7 @@ public class Game {
 			
 			case "look":
 			//Look at your surroundings 
+				player.observe();
 				break;
 			
 				
