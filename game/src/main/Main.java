@@ -1,10 +1,7 @@
 package main;
 
 
-import java.awt.FontFormatException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
+import NLP.NLPManager;
 
 import dungeon.Map;
 import dungeon.Room;
@@ -16,7 +13,7 @@ import gui.*;
 
 public class Main {
 	
-	public static void main(String[] args) throws FontFormatException, IOException {
+	public static void main(String[] args) throws Exception {
 		
 		Game.start();
 	}

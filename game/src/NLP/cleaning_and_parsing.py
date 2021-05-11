@@ -1,3 +1,4 @@
+
 import nltk
 from nltk.corpus import stopwords	#permet d'enlever les mots inutiles
 from nltk import word_tokenize	#permet de tokeniser par mot
@@ -12,24 +13,26 @@ import sys
 #text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
 #text = text_file.read()
 
-#text = sys.argv[1]
+text = ""
+for i in range(len(sys.argv) - 1):
+    text += sys.argv[i + 1] + " "
 
 
-text = input("Entrez votre action : ")
+#text = input("Entrez votre action : ")
 
 
-print('type of text : ')
-print(type(text))
-print("\n")
+#print('type of text : ')
+#print(type(text))
+#print("\n")
 
 
 
 #premiere fonction : word tokenization
 words = word_tokenize(text)
 
-print('words :')
-print(words)
-print("\n")
+# print('words :')
+# print(words)
+# print("\n")
 
 #deuxieme fonction : enlever la ponctuation
 #rmq : on le fait avant de tagger les mots car la fonction isalpha ne prend pas de tuples en entree
@@ -38,9 +41,9 @@ for w in words:
     if w.isalpha():
         word_no_punc.append(w.lower())
 
-print("word_no_punc :")
-print(word_no_punc)
-print("\n")
+# print("word_no_punc :")
+# print(word_no_punc)
+# print("\n")
 
 #troisieme fonction : tagger les mots
 tagged_words = []
@@ -48,9 +51,9 @@ tagged_words = []
 for w in word_no_punc:
     tagged_words = nltk.pos_tag(word_no_punc)
 
-print('tagged words :')
-print(tagged_words)
-print("\n")
+# print('tagged words :')
+# print(tagged_words)
+# print("\n")
 
 #quatrieme fonction : clean la liste
 clean_words = []
@@ -61,9 +64,9 @@ for word in tagged_words:
     if word[0] not in stopwords:
         clean_words.append(word)
 
-print('clean_words :')
-print(clean_words)
-print("\n")
+# print('clean_words :')
+# print(clean_words)
+# print("\n")
 
 
 
