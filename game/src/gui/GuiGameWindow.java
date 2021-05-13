@@ -34,8 +34,8 @@ public class GuiGameWindow implements ActionListener {
 
 	public static void GuiDefaultDisplay(String string) {
 		try {
-			doc.insertString(pos,string, defaultStyle);
-			pos += string.length();
+			doc.insertString(pos, newline + string, defaultStyle);
+			pos += string.length() + 1;
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}

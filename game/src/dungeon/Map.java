@@ -186,7 +186,7 @@ public class Map {
 		char verticalLine = '\u2551';
 		char horizontalLine = '\u2500';
 		
-		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDisplay("0");}
+		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDefaultDisplay("0");}
 		for (Room each : room.getNextRooms()) {
 			
 			
@@ -247,7 +247,7 @@ public class Map {
 				}
 			}
 			String finalOutput = string.substring(1) + each.getId();
-			GuiGameWindow.GuiDisplay(finalOutput);
+			GuiGameWindow.GuiDefaultDisplay(finalOutput);
 			
 			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
 			if (each.getLevel() == this.endLevel) {
@@ -257,7 +257,7 @@ public class Map {
 					string = string.substring(1, string.length()-2) + verticalLine; //remove first space, remove cross section, add vertical line
 					for (int i = 0; i < each.getLevel() + 1; i += 2) {string += " ";}
 					string += verticalLine;
-					GuiGameWindow.GuiDisplay(string);
+					GuiGameWindow.GuiDefaultDisplay(string);
 					/*   ║     ╟─01120
    						 ║     ║   ║
    						 ║     ╟─01121

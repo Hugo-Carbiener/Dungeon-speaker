@@ -76,15 +76,15 @@ public class Hero extends Character{
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
 				this.position.getItems().remove(item);
-				GuiGameWindow.GuiDisplay("You pick up the coins.");
+				GuiGameWindow.GuiGameDisplay("You pick up the coins.");
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
-					GuiGameWindow.GuiDisplay("You pick up the " + ((Item) item).getName());
+					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName());
 				} else {
-					GuiGameWindow.GuiDisplay("Your inventory is full! Throw away something first.");
+					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.");
 				}
 			} else {
 				System.err.println("Parameter is not an Item");
@@ -94,7 +94,7 @@ public class Hero extends Character{
 	
 	public void checkInventory() {
 		//Print a description of the inventory's content
-		GuiGameWindow.GuiDisplay("You open your bag and take a peek inside.");
+		GuiGameWindow.GuiGameDisplay("You open your bag and take a peek inside.");
 		String output = "You see";
 		if (this.inventory.size() == 0) {
 			output += " nothing. It is empty.";
@@ -108,7 +108,7 @@ public class Hero extends Character{
 				}
 			}
 		}
-		GuiGameWindow.GuiDisplay(output);
+		GuiGameWindow.GuiGameDisplay(output);
 	}
 	
 	public void moveTo(Room room) {
@@ -182,7 +182,7 @@ public class Hero extends Character{
 			String adv = adverbs[(int) (Math.random() * adverbs.length)];
 			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
 		}
-		GuiGameWindow.GuiDisplay(obs);
+		GuiGameWindow.GuiGameDisplay(obs);
 	}
 }
 

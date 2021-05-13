@@ -89,7 +89,7 @@ public class Game {
 		
 		String currentInput = GuiGameWindow.getCurrentInput();
 		//GuiGameWindow.GuiDisplay("Went through");
-		GuiGameWindow.GuiDisplay(currentInput);
+		GuiGameWindow.GuiGameDisplay(currentInput);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
@@ -117,7 +117,9 @@ public class Game {
 			case "check":
 			//Either check the map or check the inventory
 				//Check map
+				GuiGameWindow.GuiDefaultDisplay("______________________________________");
 				map.displayOnGuiFromRoom(map.getStartingRoom());
+				GuiGameWindow.GuiDefaultDisplay("______________________________________");
 				
 				//Check inventory
 				player.checkInventory();
