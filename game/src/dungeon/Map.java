@@ -28,12 +28,6 @@ public class Map {
 		this.generateBasicTree(0, this.startingRoom, fillProbability);
 		//GENERATION OF NEIGHBOR LINKS
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
-		//SET THE ENDING ROOM
-		this.setEndingRoom(this.startingRoom);
-		/*while (this.endingRoom == null) {
-			this.setEndingRoom(this.startingRoom);
-			System.out.println("trying");
-		}*/
 	}
 	
 	public Room getStartingRoom() {return this.startingRoom;}
@@ -46,16 +40,18 @@ public class Map {
 
 	
 	public void setEndingRoom(Room root) {
-		/*double r = Math.random();
-		for (Room each : root.getNextRooms()) {
-			if (each.getLevel() == this.endLevel) {		
-				if (r < 0.5 && endingRoom == null) {
-					this.endingRoom = each;
-					each.setAsEndingRoom();
-				}
+		
+		if (root.getLevel() == this.endLevel) {
+			double r = Math.random();
+			if (r < 0.1 && this.endingRoom == null) {
+				this.endingRoom = root;
+				root.setAsEndingRoom();
 			}
-			this.setEndingRoom(each);
-		}*/
+		} else {
+			for (Room each : root.getNextRooms()) {
+				setEndingRoom(each);
+			}
+		}
 	}
 	
 	public boolean reachesMaxLevel(Room root) {
@@ -95,6 +91,13 @@ public class Map {
 		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold || map.reachesMaxLevel(map.getStartingRoom()) == false) {
 			map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
 		}
+		
+		//SET THE ENDING ROOM
+		map.setEndingRoom(map.startingRoom);
+		while (map.endingRoom == null) {
+			map.setEndingRoom(map.startingRoom);
+		}
+		
 		return map;
 	}
 	
