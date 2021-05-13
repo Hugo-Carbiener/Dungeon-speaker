@@ -2,6 +2,8 @@ package dungeon;
 
 import java.util.List;
 
+import gui.GuiGameWindow;
+
 public class Map {
 	private Room startingRoom = new Room("0", 0, 0);	//map.startingRoom is the root node 
 	private Room endingRoom;							//Room to reach to end the game 
@@ -176,6 +178,118 @@ public class Map {
 		}
 	}	
 	
+	
+	public void displayOnGuiFromRoom(Room room) {
+		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
+		char bottomCorner = '\u2559';
+		char crossSection = '\u255F';
+		char verticalLine = '\u2551';
+		char horizontalLine = '\u2500';
+		
+		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDisplay("0");}
+		for (Room each : room.getNextRooms()) {
+			
+			
+			//DISPLAY ONE LINE WITH THE ID AT THE END
+			List<Boolean> indicatorList = each.lastChildIndicator();
+			String string = "";
+			for (int i = 0; i < indicatorList.size(); i++) {
+				Boolean indicator = indicatorList.get(i);
+				
+				if(i == indicatorList.size()-1) {		//Last character
+					if (indicator) {
+						
+						//NON LAST LEVEL NEIGHBOR LINKS____________________________________________________________________
+						Room previousRoom = each.getPreviousRoom();
+						String previousRoomNeihghborId = previousRoom.getNeighbor(this).get(0).getKey(); //get the id of the first(left) neighbor of the previous room
+						if (previousRoom.getAccessibleRooms().contains(this.getRoom(previousRoomNeihghborId, this.startingRoom))) {
+							string += (" ");
+							string += (crossSection);
+							string += (horizontalLine);
+							/*     ║     ╟─01121
+   								   ║     ║   ║
+   								   ║     ╟─01122
+   								   ╙─012
+      								  ╙─0120
+							BOTTOM CORNER WITH NEIGHBOR LINK*/
+						} else {
+							string += (" ");
+							string += (bottomCorner);
+							string += (horizontalLine);
+							/*	   ║     ╟─01121
+   								   ║     ║   ║
+   								   ║     ╙─01122
+   							BOTTOM CORNER WITHOUT NEIGHBOR LINK*/
+							
+						}
+						//_____________________________________________________________________________________________
+						
+					}
+					else {							
+						string += (" ");
+						string += (crossSection);
+						string += (horizontalLine);
+						//  ╟─01100 GENERATES THIS CHARACTER AT THE END OF A LINE 
+					}
+				}
+				else {									
+					if (indicator) {
+						string += (" ");
+						string += ("  ");
+						//GENERATE EMPTY COLUMNS IN THE TREE
+					}
+					else {
+						string += (" ");
+						string += (verticalLine);
+						string += (" "); 
+						//   ║  ║  ╟─01100 GENERATES THE VERTICAL LINES
+					}
+				}
+			}
+			String finalOutput = string.substring(1) + each.getId();
+			GuiGameWindow.GuiDisplay(finalOutput);
+			
+			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
+			if (each.getLevel() == this.endLevel) {
+				String neighborId = (each.getNeighbor(this).get(0).getKey());
+				if (each.getAccessibleRooms().contains(this.getRoom(neighborId, this.startingRoom))) {	
+					//check if the neighbor room is an accessible room (if it is, this link was made by Map.addNeighborLink)
+					string = string.substring(1, string.length()-2) + verticalLine; //remove first space, remove cross section, add vertical line
+					for (int i = 0; i < each.getLevel() + 1; i += 2) {string += " ";}
+					string += verticalLine;
+					GuiGameWindow.GuiDisplay(string);
+					/*   ║     ╟─01120
+   						 ║     ║   ║
+   						 ║     ╟─01121
+   						 ║     ║   ║
+   						 ║     ╙─01122
+   					GENERATES NEIGHBOR LINKS AT LAST LEVEL*/
+				}
+			}
+			//_____________________________________________________________________________________________
+			
+			//OLD VERSION__________________________________________________________________________________
+			/*int level = each.getLevel();
+			for (int i = 0; i < level - 1; i++) {
+				System.out.print(verticalLine);
+				System.out.print(" "); 
+			}
+			if (room.getNextRooms().indexOf(each) == room.getNextRooms().size()-1) {
+				System.out.print(bottomCorner);
+				System.out.print(horizontalLine);
+			}
+			else {
+			System.out.print(crossSection);
+			System.out.print(horizontalLine);
+			}
+			System.out.println(each.getId());*/
+			
+			//_____________________________________________________________________________________________
+			
+					
+			displayOnGuiFromRoom(each);
+		}
+	}	
 	
 	public Room getRoom(String id, Room root) { 
 		//returns the room that is defined by id. root must be set at startingRoom
