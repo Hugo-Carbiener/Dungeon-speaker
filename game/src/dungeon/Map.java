@@ -14,8 +14,17 @@ public class Map {
 	private double fillProbability;						//determines the probability of adding amonser/weapon when generating a room
 	private int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
 	
+	public Room getStartingRoom() {return this.startingRoom;}
+	public Room getEndingRoom() {return this.endingRoom;}
+	public int getEndLevel() {return this.endLevel;}
+	public int getMaxExitNumber() {return this.maxExitNumber;}
+	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
+	public double getFillProbability() {return this.fillProbability;}
+	public int getRoomNumber() {return this.roomAmount;}
 	
 	
+	
+	//CONSTRUCTOR
 	public Map(int endLevel,int maxExitNumber, double neighborLinkProbability, double fillProbability) { 
 		//this constructor generates a map as well as a basic tree architecture displayable using displayFromRoom(map.getStartingRoom())
 		this.endLevel = endLevel;
@@ -28,44 +37,6 @@ public class Map {
 		this.generateBasicTree(0, this.startingRoom, fillProbability);
 		//GENERATION OF NEIGHBOR LINKS
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
-	}
-	
-	public Room getStartingRoom() {return this.startingRoom;}
-	public Room getEndingRoom() {return this.endingRoom;}
-	public int getEndLevel() {return this.endLevel;}
-	public int getMaxExitNumber() {return this.maxExitNumber;}
-	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
-	public double getFillProbability() {return this.fillProbability;}
-	public int getRoomNumber() {return this.roomAmount;}
-
-	
-	public void setEndingRoom(Room root) {
-		
-		if (root.getLevel() == this.endLevel) {
-			double r = Math.random();
-			if (r < 0.1 && this.endingRoom == null) {
-				this.endingRoom = root;
-				root.setAsEndingRoom();
-			}
-		} else {
-			for (Room each : root.getNextRooms()) {
-				setEndingRoom(each);
-			}
-		}
-	}
-	
-	public boolean reachesMaxLevel(Room root) {
-		if (root.getLevel() == this.endLevel) {
-			return true;
-		} else {
-			for (Room each : root.getNextRooms()) {
-				Boolean output = reachesMaxLevel(each);
-				if (output) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 	
 	public void generateBasicTree(int level, Room root, double fillProbability) {
@@ -85,8 +56,18 @@ public class Map {
 			}
 		}
 	}
+
+	public void addNeighborLink(Room root, double probability) {
+		//Applies Room.addNeighborLink to every room of the dungeon
+		
+		for (Room each : root.getNextRooms()) { 
+			each.addNeighborLink(this, probability);
+			this.addNeighborLink(each, probability);
+		}
+	}
 	
 	public static Map generateMap(int endLevel,int maxExitNumber, double neighborLinkProbability, double fillProbability, int minRoomTreshold, int maxRoomTreshold) {
+		//Generates maps until a map meets the requirements (number of rooms between an interval and at least one room reaches the dungeon's max level) then sets the ending room
 		Map map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
 		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold || map.reachesMaxLevel(map.getStartingRoom()) == false) {
 			map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
@@ -100,6 +81,38 @@ public class Map {
 		
 		return map;
 	}
+		
+	
+	public boolean reachesMaxLevel(Room root) {
+		//Returns true if at least one room of the map reaches the max level
+		if (root.getLevel() == this.endLevel) {
+			return true;
+		} else {
+			for (Room each : root.getNextRooms()) {
+				Boolean output = reachesMaxLevel(each);
+				if (output) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public void setEndingRoom(Room root) {
+		//set one of the rooms to be the goal, has to be at max level
+		if (root.getLevel() == this.endLevel) {
+			double r = Math.random();
+			if (r < 0.1 && this.endingRoom == null) {
+				this.endingRoom = root;
+				root.setAsEndingRoom();
+			}
+		} else {
+			for (Room each : root.getNextRooms()) {
+				setEndingRoom(each);
+			}
+		}
+	}
+	
 	
 	public void displayFromRoom(Room room) {
 		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
@@ -215,7 +228,7 @@ public class Map {
 	
 	
 	public void displayOnGuiFromRoom(Room room) {
-		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
+		//Displays the map on the Gui
 		char square = '\u25A1';
 		char dotedSquare = '\u25A3';
 		char bottomCorner = '\u2559';
@@ -223,7 +236,7 @@ public class Map {
 		char verticalLine = '\u2551';
 		char horizontalLine = '\u2500';
 		
-		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDefaultDisplay("0");}
+		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDefaultDisplay(Character.toString(square));}
 		for (Room each : room.getNextRooms()) {
 			
 			
@@ -240,7 +253,7 @@ public class Map {
 						Room previousRoom = each.getPreviousRoom();
 						String previousRoomNeihghborId = previousRoom.getNeighbor(this).get(0).getKey(); //get the id of the first(left) neighbor of the previous room
 						if (previousRoom.getAccessibleRooms().contains(this.getRoom(previousRoomNeihghborId, this.startingRoom))) {
-							string += (" ");
+							string += ("  ");
 							string += (crossSection);
 							string += (horizontalLine);
 							/*     ║     ╟─01121
@@ -250,7 +263,7 @@ public class Map {
       								  ╙─0120
 							BOTTOM CORNER WITH NEIGHBOR LINK*/
 						} else {
-							string += (" ");
+							string += ("  ");
 							string += (bottomCorner);
 							string += (horizontalLine);
 							/*	   ║     ╟─01121
@@ -263,7 +276,7 @@ public class Map {
 						
 					}
 					else {							
-						string += (" ");
+						string += ("  ");
 						string += (crossSection);
 						string += (horizontalLine);
 						//  ╟─01100 GENERATES THIS CHARACTER AT THE END OF A LINE 
@@ -271,14 +284,14 @@ public class Map {
 				}
 				else {									
 					if (indicator) {
-						string += (" ");
+						string += ("  ");
 						string += ("  ");
 						//GENERATE EMPTY COLUMNS IN THE TREE
 					}
 					else {
-						string += (" ");
+						string += ("  ");
 						string += (verticalLine);
-						string += ("  "); 
+						string += (" "); 
 						//   ║  ║  ╟─01100 GENERATES THE VERTICAL LINES
 					}
 				}
@@ -353,12 +366,5 @@ public class Map {
 	}
 	
 	
-	public void addNeighborLink(Room root, double probability) {
-		//Applies Room.addNeighborLink to every room of the dungeon
-		
-		for (Room each : root.getNextRooms()) { 
-			each.addNeighborLink(this, probability);
-			this.addNeighborLink(each, probability);
-		}
-	}
+
 }
