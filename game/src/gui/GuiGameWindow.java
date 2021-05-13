@@ -26,16 +26,28 @@ public class GuiGameWindow implements ActionListener {
 	private static String newline = "\n";
 	private static StyledDocument doc;
 	private static int pos = 0;
+	private static Style defaultStyle;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
 	private static String currentInput;
 	private static volatile boolean inputIsUpdated = false;
 
-	public static void GuiDisplay(String string) {
-	
+	public static void GuiDefaultDisplay(String string) {
 		try {
-			doc.insertString(pos,newline + string, gameInputStyle);
-			pos += string.length() + 1;
+			doc.insertString(pos,string, defaultStyle);
+			pos += string.length();
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void GuiGameDisplay(String string) {
+		try {
+			String arrows = ">>";
+			doc.insertString(pos, newline + arrows, defaultStyle);
+			pos += arrows.length() + 1;
+			doc.insertString(pos,string, gameInputStyle);
+			pos += string.length();
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +95,12 @@ public class GuiGameWindow implements ActionListener {
 
         sp.setSize(10, 800);
         
-        Style defaut = textPane.getStyle("default");
+        Style defaut= textPane.getStyle("default");
+        
+        //Create style for arrows
+        defaultStyle = textPane.addStyle("defaultStyle", defaut);
+        StyleConstants.setForeground(defaultStyle, Color.WHITE);
+        StyleConstants.setFontSize(defaultStyle, 22);
         
         //Create style for user inputs
         userInputStyle = textPane.addStyle("userInputStyle", defaut);
@@ -107,13 +124,7 @@ public class GuiGameWindow implements ActionListener {
         //Fullscreen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-        try {
-        	String welcomeMessage = "You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon";
-			doc.insertString(pos, welcomeMessage, gameInputStyle);
-			pos += welcomeMessage.length();
-		} catch (BadLocationException e1) {
-			e1.printStackTrace();
-		}
+        GuiGameDisplay("You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon");
         
         //Action listener of the button
         send.addActionListener(new ActionListener(){
