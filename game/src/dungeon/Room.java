@@ -18,6 +18,7 @@ public class Room {
     private boolean visited = false;							//determines if the player as already been through this room
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
+    private boolean isEndingRoom = false;
     
     private List<Item> items = new ArrayList<>();						//List of items in the room
     private Monster monster;											//The monster guarding the room
@@ -37,6 +38,8 @@ public class Room {
     public int getLevel() {return this.level;}
     public boolean wasVisited() {return visited;}
     public void setAsVisited() {this.visited = true;}
+    public boolean isEndingRoom() {return this.isEndingRoom;}
+    public void setAsEndingRoom() {this.isEndingRoom = true;}
     public List<Item> getItems() {return this.items;}
     public Monster getMonster() {return this.monster;}
     

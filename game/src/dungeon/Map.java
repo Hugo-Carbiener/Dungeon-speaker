@@ -1,6 +1,7 @@
 package dungeon;
 
 import java.util.List;
+import java.util.Random;
 
 import gui.GuiGameWindow;
 
@@ -28,17 +29,31 @@ public class Map {
 		//GENERATION OF NEIGHBOR LINKS
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
 		//SET THE ENDING ROOM
-		this.setEndingRoom();
+		this.setEndingRoom(this.startingRoom);
+		while (this.endingRoom == null) {
+			this.setEndingRoom(this.startingRoom);
+		}
 	}
 	
 	public Room getStartingRoom() {return this.startingRoom;}
 	public Room getEndingRoom() {return this.endingRoom;}
-	public void setEndingRoom() {}
 	public int getEndLevel() {return this.endLevel;}
 	public int getMaxExitNumber() {return this.maxExitNumber;}
 	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
 	public double getFillProbability() {return this.fillProbability;}
 	public int getRoomNumber() {return this.roomAmount;}
+	
+	public void setEndingRoom(Room root) {
+		for (Room each : root.getNextRooms()) {
+			if (each.getLevel() == this.endLevel) {
+				double r = Math.random();
+				if (r < 0.25 && endingRoom == null) {
+					this.endingRoom = each;
+					each.setAsEndingRoom();
+				}
+			}
+		}
+	}
 	
 	public void generateBasicTree(int level, Room root, double fillProbability) {
 		//add x rooms as children of the room passed as root. x is between 0 and maxExitNumber
@@ -181,6 +196,7 @@ public class Map {
 	
 	public void displayOnGuiFromRoom(Room room) {
 		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
+		char square = '\u25A1';
 		char bottomCorner = '\u2559';
 		char crossSection = '\u255F';
 		char verticalLine = '\u2551';
@@ -241,12 +257,12 @@ public class Map {
 					else {
 						string += (" ");
 						string += (verticalLine);
-						string += (" "); 
+						string += ("  "); 
 						//   ║  ║  ╟─01100 GENERATES THE VERTICAL LINES
 					}
 				}
 			}
-			String finalOutput = string.substring(1) + each.getId();
+			String finalOutput = string.substring(1) + square;
 			GuiGameWindow.GuiDefaultDisplay(finalOutput);
 			
 			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
