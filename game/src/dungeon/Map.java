@@ -30,9 +30,10 @@ public class Map {
 		this.addNeighborLink(this.startingRoom, neighborLinkProbability);
 		//SET THE ENDING ROOM
 		this.setEndingRoom(this.startingRoom);
-		while (this.endingRoom == null) {
+		/*while (this.endingRoom == null) {
 			this.setEndingRoom(this.startingRoom);
-		}
+			System.out.println("trying");
+		}*/
 	}
 	
 	public Room getStartingRoom() {return this.startingRoom;}
@@ -42,17 +43,33 @@ public class Map {
 	public double getNeighborLinkProbability() {return this.neighborLinkProbability;}
 	public double getFillProbability() {return this.fillProbability;}
 	public int getRoomNumber() {return this.roomAmount;}
+
 	
 	public void setEndingRoom(Room root) {
+		/*double r = Math.random();
 		for (Room each : root.getNextRooms()) {
-			if (each.getLevel() == this.endLevel) {
-				double r = Math.random();
-				if (r < 0.25 && endingRoom == null) {
+			if (each.getLevel() == this.endLevel) {		
+				if (r < 0.5 && endingRoom == null) {
 					this.endingRoom = each;
 					each.setAsEndingRoom();
 				}
 			}
+			this.setEndingRoom(each);
+		}*/
+	}
+	
+	public boolean reachesMaxLevel(Room root) {
+		if (root.getLevel() == this.endLevel) {
+			return true;
+		} else {
+			for (Room each : root.getNextRooms()) {
+				Boolean output = reachesMaxLevel(each);
+				if (output) {
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 	
 	public void generateBasicTree(int level, Room root, double fillProbability) {
@@ -75,7 +92,7 @@ public class Map {
 	
 	public static Map generateMap(int endLevel,int maxExitNumber, double neighborLinkProbability, double fillProbability, int minRoomTreshold, int maxRoomTreshold) {
 		Map map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
-		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold) {
+		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold || map.reachesMaxLevel(map.getStartingRoom()) == false) {
 			map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
 		}
 		return map;
@@ -149,7 +166,7 @@ public class Map {
 				}
 			}
 			System.out.print(string.substring(1)); //substring to remove first space
-			System.out.println(each.getId());
+			System.out.println(each.getId() + " -- " + each.getLevel());
 			
 			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
 			if (each.getLevel() == this.endLevel) {
@@ -197,6 +214,7 @@ public class Map {
 	public void displayOnGuiFromRoom(Room room) {
 		//Displays the map of the dungeon like a tree. It starts from the room passed as argument. 
 		char square = '\u25A1';
+		char dotedSquare = '\u25A3';
 		char bottomCorner = '\u2559';
 		char crossSection = '\u255F';
 		char verticalLine = '\u2551';
@@ -262,7 +280,14 @@ public class Map {
 					}
 				}
 			}
-			String finalOutput = string.substring(1) + square;
+			
+			String finalOutput = string.substring(1);
+			if (each.isEndingRoom()) {
+				finalOutput += dotedSquare;
+			} else {
+				finalOutput += square;
+			}
+			
 			GuiGameWindow.GuiDefaultDisplay(finalOutput);
 			
 			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________

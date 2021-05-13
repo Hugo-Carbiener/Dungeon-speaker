@@ -48,7 +48,6 @@ public class Game {
 		//Create game with a roaming state
 		Game.player = player;
 		Game.map = map;
-		Game.getMap().displayFromRoom(Game.getMap().getStartingRoom());
 		Game.gameState = "roaming";
 		Game.loop();
 	}
@@ -74,7 +73,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			//GuiGameWindow.GuiDisplay("waiting...");
+			GuiGameWindow.GuiGameDisplay("waiting...");
 		
 			//Pause the game loop to wait for the user's input 
 			try {
@@ -88,7 +87,7 @@ public class Game {
 		}
 		
 		String currentInput = GuiGameWindow.getCurrentInput();
-		//GuiGameWindow.GuiDisplay("Went through");
+		GuiGameWindow.GuiGameDisplay("Went through");
 		GuiGameWindow.GuiGameDisplay(currentInput);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
