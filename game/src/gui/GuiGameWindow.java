@@ -27,8 +27,16 @@ public class GuiGameWindow implements ActionListener {
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
 
-	public static void GuiDisplay(String string) {
+	public static void GuiDefaultDisplay(String string) {
+		try {
+			doc.insertString(pos,string, defaultStyle);
+			pos += string.length();
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public static void GuiGameDisplay(String string) {
 		try {
 			String arrows = ">>";
 			doc.insertString(pos, newline + arrows, defaultStyle);
@@ -107,13 +115,7 @@ public class GuiGameWindow implements ActionListener {
         //Fullscreen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-        try {
-        	String welcomeMessage = "You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon";
-			doc.insertString(pos, welcomeMessage, gameInputStyle);
-			pos += welcomeMessage.length();
-		} catch (BadLocationException e1) {
-			e1.printStackTrace();
-		}
+        GuiGameDisplay("You take your first step into the dungeon. Its terrifying depth lies in front of you.." + newline + "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon");
         
         //Action listener of the button
         send.addActionListener(new ActionListener(){
