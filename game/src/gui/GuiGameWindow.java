@@ -121,8 +121,16 @@ public class GuiGameWindow implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String str = textField.getText();
-				currentInput = NLPManager.startNLP(str);
 				
+				//Process input using nlp
+				try {
+					currentInput = NLPManager.startNLP(str);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				//Display the user's input
 				try {
 					doc.insertString(pos,newline + str, userInputStyle);
 				} catch (BadLocationException e) {
@@ -132,6 +140,7 @@ public class GuiGameWindow implements ActionListener {
 			    pos += str.length() + 1;
 				textField.setText("");
 				
+				//Unfreeze the game loop after waiting for the input
 				inputIsUpdated = true;
 				synchronized (Game.loopThread) {
 					Game.loopThread.notify();

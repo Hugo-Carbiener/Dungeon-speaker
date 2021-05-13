@@ -100,7 +100,7 @@ public class Game {
 			case "take":
 			//Take an item
 				
-			String argument = currentInput[1];
+			/*
 			List<Item> roomItems = player.getPosition().getItems();
 			for (Item each : roomItems) {			//for each item in the room's item pool
 				if (each.getName() == argument) {
@@ -109,16 +109,22 @@ public class Game {
 				} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != argument) {  //If we reached the last item of the list and the name is still not correct
 					GuiGameWindow.GuiDisplay("You do not have such an item in your inventory...");
 				}
-			}
+			}*/
 			
 				break;
 				
 			case "check":
 			//Either check the map or check the inventory
+				//Check map
+				
+				
+				//Check inventory
+				player.checkInventory();
 				break;
 				
 			case "throw":
 			//Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory
+				
 				break;
 			
 			case "equip":
@@ -128,6 +134,10 @@ public class Game {
 			case "look":
 			//Look at your surroundings 
 				player.observe();
+				break;
+			
+			case "move":
+				player.moveForward();
 				break;
 			
 				

@@ -76,11 +76,13 @@ public class Hero extends Character{
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
 				this.position.getItems().remove(item);
+				GuiGameWindow.GuiDisplay("You pick up the coins.");
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
+					GuiGameWindow.GuiDisplay("You pick up the " + ((Item) item).getName());
 				} else {
 					GuiGameWindow.GuiDisplay("Your inventory is full! Throw away something first.");
 				}
@@ -90,8 +92,22 @@ public class Hero extends Character{
 		}
 	}
 	
-	public List<Item> checkInventory() {
-		return null;
+	public void checkInventory() {
+		//Print a description of the inventory's content
+		GuiGameWindow.GuiDisplay("You open your bag and take a peek inside.\n");
+		GuiGameWindow.GuiDisplay("You see");
+		if (this.inventory.size() == 0) {
+			GuiGameWindow.GuiDisplay(" nothing. It is empty.");
+		} else {
+			for (int i = 0; i < this.inventory.size(); i++) {
+				GuiGameWindow.GuiDisplay(" a " + this.inventory.get(i).getName());
+				if (i == this.inventory.size() - 1) {
+					GuiGameWindow.GuiDisplay(".");
+				} else {
+					GuiGameWindow.GuiDisplay(",");
+				}
+			}
+		}
 	}
 	
 	public void moveTo(Room room) {
