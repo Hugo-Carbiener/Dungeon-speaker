@@ -99,7 +99,7 @@ public class Game {
 			
 			case "take":
 			//Take an item
-				
+			player.take(player.getPosition().getItems().get(0));
 			/*
 			List<Item> roomItems = player.getPosition().getItems();
 			for (Item each : roomItems) {			//for each item in the room's item pool

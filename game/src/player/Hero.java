@@ -94,20 +94,21 @@ public class Hero extends Character{
 	
 	public void checkInventory() {
 		//Print a description of the inventory's content
-		GuiGameWindow.GuiDisplay("You open your bag and take a peek inside.\n");
-		GuiGameWindow.GuiDisplay("You see");
+		GuiGameWindow.GuiDisplay("You open your bag and take a peek inside.");
+		String output = "You see";
 		if (this.inventory.size() == 0) {
-			GuiGameWindow.GuiDisplay(" nothing. It is empty.");
+			output += " nothing. It is empty.";
 		} else {
 			for (int i = 0; i < this.inventory.size(); i++) {
-				GuiGameWindow.GuiDisplay(" a " + this.inventory.get(i).getName());
+				output += " a " + this.inventory.get(i).getName();
 				if (i == this.inventory.size() - 1) {
-					GuiGameWindow.GuiDisplay(".");
+					output += ".";
 				} else {
-					GuiGameWindow.GuiDisplay(",");
+					output += ",";
 				}
 			}
 		}
+		GuiGameWindow.GuiDisplay(output);
 	}
 	
 	public void moveTo(Room room) {
