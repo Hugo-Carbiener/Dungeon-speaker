@@ -3,6 +3,9 @@ package dungeon;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.text.BadLocationException;
+
+import game.Game;
 import gui.GuiGameWindow;
 
 public class Map {
@@ -298,13 +301,37 @@ public class Map {
 			}
 			
 			String finalOutput = string.substring(1);
+			//Print the line on the gui
+			GuiGameWindow.GuiDefaultDisplay(finalOutput);
+			//Print the right room in the right color on the gui
 			if (each.isEndingRoom()) {
-				finalOutput += dotedSquare;
+				//Print a doted square for the ending room
+				try {
+					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(dotedSquare), GuiGameWindow.getDefaultStyle());
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
+			} else if (each == Game.getPlayer().getPosition()){
+				//Print a square in red to signify the player's position
+				try {
+					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(square), GuiGameWindow.getGameStyle());
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
 			} else {
-				finalOutput += square;
+				//Print a square for regular rooms
+				try {
+					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(square), GuiGameWindow.getDefaultStyle());
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
 			}
 			
-			GuiGameWindow.GuiDefaultDisplay(finalOutput);
+			//Incremente the position in the Gui text area
+			GuiGameWindow.pos += 1;
+			
+			
+			
 			
 			//LAST LEVEL NEIGHBOR LINK_____________________________________________________________________
 			if (each.getLevel() == this.endLevel) {

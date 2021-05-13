@@ -24,13 +24,17 @@ import game.Game;
 public class GuiGameWindow implements ActionListener {
 	
 	private static String newline = "\n";
-	private static StyledDocument doc;
-	private static int pos = 0;
+	public static StyledDocument doc;
+	public static int pos = 0;
 	private static Style defaultStyle;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
 	private static String currentInput;
 	private static volatile boolean inputIsUpdated = false;
+
+	public static Style getDefaultStyle() {return GuiGameWindow.defaultStyle;}
+	public static Style getPlayerStyle() {return GuiGameWindow.userInputStyle;}
+	public static Style getGameStyle() {return GuiGameWindow.gameInputStyle;}
 
 	public static void GuiDefaultDisplay(String string) {
 		try {

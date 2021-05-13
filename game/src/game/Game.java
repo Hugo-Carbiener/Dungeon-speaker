@@ -19,7 +19,7 @@ public class Game {
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.player;}
+	public static Hero getHero() {return Game.getPlayer();}
 	public static Map getMap() {return Game.map;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
@@ -56,14 +56,14 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (player.health != 0 && !(player.getPosition() == map.getEndingRoom())) {
+		while (getPlayer().health != 0 && !(getPlayer().getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
 		
 		
-		if (player.health == 0) {
+		if (getPlayer().health == 0) {
 			//lose condition
-		} else if (player.getPosition() == map.getEndingRoom()) {
+		} else if (getPlayer().getPosition() == map.getEndingRoom()) {
 			//win condition
 		}
 	}
@@ -99,7 +99,7 @@ public class Game {
 			
 			case "take":
 			//Take an item
-			player.take(player.getPosition().getItems().get(0));
+			getPlayer().take(getPlayer().getPosition().getItems().get(0));
 			/*
 			List<Item> roomItems = player.getPosition().getItems();
 			for (Item each : roomItems) {			//for each item in the room's item pool
@@ -121,7 +121,7 @@ public class Game {
 				GuiGameWindow.GuiDefaultDisplay("______________________________________");
 				
 				//Check inventory
-				player.checkInventory();
+				getPlayer().checkInventory();
 				break;
 				
 			case "throw":
@@ -135,11 +135,11 @@ public class Game {
 			
 			case "look":
 			//Look at your surroundings 
-				player.observe();
+				getPlayer().observe();
 				break;
 			
 			case "move":
-				player.moveForward();
+				getPlayer().moveForward();
 				break;
 			
 				
@@ -151,5 +151,8 @@ public class Game {
 			break;
 			
 		}
+	}
+	public static Hero getPlayer() {
+		return player;
 	}
 }
