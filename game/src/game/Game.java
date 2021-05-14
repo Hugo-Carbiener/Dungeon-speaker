@@ -154,6 +154,20 @@ public class Game {
 				break;
 			
 			case "equip"://Equip an item from the inventory
+				List<Item> playerInventory = player.inventory;
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : playerInventory) {//for each item in the player's inventory
+						if (each.getName() == arg) {
+							player.equip(each);
+							break;
+						} else if (playerInventory.indexOf(each) == playerInventory.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+				}
 				break;
 			
 			case "look"://Look at your surroundings 

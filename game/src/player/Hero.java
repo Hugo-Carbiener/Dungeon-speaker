@@ -36,7 +36,7 @@ public class Hero extends Character{
 	public int getBalance() {return this.balance;}
 	
 	public void equip(Item item) {
-		if (item.isEquipable()|| item.isThrowable()) {
+		if (item.isEquipable()) {
 			Item temp = this.equippedItem;
 			
 			this.equippedItem = item;
@@ -47,6 +47,8 @@ public class Hero extends Character{
 				temp.equipped = false;
 				this.inventory.add(temp);
 			}
+		} else {
+			GuiGameWindow.GuiGameDisplay("This item is not equipable.");
 		}
 	}
 	
