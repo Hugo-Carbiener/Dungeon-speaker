@@ -88,9 +88,6 @@ public class Game {
 		
 		String[] currentInput = GuiGameWindow.getCurrentInput();
 		String action = currentInput[0];
-		if (currentInput.length > 1) {
-			String arg = currentInput[1];
-		}
 		
 		GuiGameWindow.GuiGameDisplay("Went through");
 		GuiGameWindow.GuiGameDisplay(currentInput[0]);
@@ -104,17 +101,24 @@ public class Game {
 			
 			case "take":
 			//Take an item
-			getPlayer().take(getPlayer().getPosition().getItems().get(0));
-			/*
+			
 			List<Item> roomItems = player.getPosition().getItems();
-			for (Item each : roomItems) {			//for each item in the room's item pool
-				if (each.getName() == argument) {
-					player.take(each);
-					break;
-				} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != argument) {  //If we reached the last item of the list and the name is still not correct
-					GuiGameWindow.GuiDisplay("You do not have such an item in your inventory...");
+			//get the argument if it exists
+			if (currentInput.length > 1) {
+				String arg = currentInput[1];
+				
+				for (Item each : roomItems) {			//for each item in the room's item pool
+					if (each.getName() == arg) {
+						player.take(each);
+						break;
+					} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+						GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+					}
+					
 				}
-			}*/
+			} else {	//send error message if the nlp script did not output an argument
+				GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+			}
 			
 				break;
 				
