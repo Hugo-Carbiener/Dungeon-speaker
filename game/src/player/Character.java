@@ -25,7 +25,7 @@ public class Character {
 		this.baseDamage = baseDamage;
 		equippedItem = null;
 		inventorySize = 10;
-		inventory = new ArrayList<Item>(this.inventorySize);
+		inventory = new ArrayList<Item>();
 	}
 	
 	

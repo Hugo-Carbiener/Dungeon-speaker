@@ -98,26 +98,24 @@ public class Game {
 		case "roaming":
 		
 			switch (action) {
-			case "take":
-			//Take an item
-			List<Item> roomItems = player.getPosition().getItems();
-			if (currentInput.length > 1) {//get the argument if it exists
-				String arg = currentInput[1];
-				for (Item each : roomItems) {//for each item in the room's item pool
-					if (each.getName() == arg) {
-						player.take(each);
-						break;
-					} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-						GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+			case "take"://Take an item in the current room
+				List<Item> roomItems = player.getPosition().getItems();
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : roomItems) {//for each item in the room's item pool
+						if (each.getName() == arg) {
+							player.take(each);
+							break;
+						} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
 					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
 				}
-			} else {//send error message if the nlp script did not output an argument
-				GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
-			}
 				break;
 				
-			case "check":
-			//Either check the map or check the inventory
+			case "check"://Either check the map or check the inventory
 				if (currentInput.length > 1) {//get the argument if it exists
 					String arg = currentInput[1];
 					switch (arg) {
@@ -138,17 +136,27 @@ public class Game {
 				}
 				break;
 				
-			case "throw":
-			//Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory
-				
+			case "throw"://Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory				
+				List<Item> playerItems = player.inventory;
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : playerItems) {//for each item in the player's inventory
+						if (each.getName() == arg) {
+							player.throwItem(each);
+							break;
+						} else if (playerItems.indexOf(each) == playerItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+				}
 				break;
 			
-			case "equip":
-			//Equip an item from the inventory
+			case "equip"://Equip an item from the inventory
 				break;
 			
-			case "look":
-			//Look at your surroundings 
+			case "look"://Look at your surroundings 
 				getPlayer().observe();
 				break;
 			
