@@ -4,7 +4,7 @@ import java.io.*;
 
 public class NLPManager {
 
-	public static String startNLP(String userInput) throws Exception {
+	public static String[] startNLP(String userInput) throws Exception {
 		Process p = Runtime.getRuntime().exec("pwd");
 		BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String pwd = in.readLine();
@@ -12,8 +12,10 @@ public class NLPManager {
         String path = pwd.substring(0, posDir) + "Text-based-dungeon-crawler/game/src/NLP/call_functions.py";
 		Process p2 = Runtime.getRuntime().exec(String.format("python3 %s %s", path, userInput));
 		BufferedReader in2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+		String[] result = new String[1];
 		String output = in2.readLine();
-		return output;
+		result[0] = output;
+		return result;
 	}
 
 }
