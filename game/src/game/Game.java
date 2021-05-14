@@ -86,16 +86,21 @@ public class Game {
 			
 		}
 		
-		String currentInput = GuiGameWindow.getCurrentInput();
+		String[] currentInput = GuiGameWindow.getCurrentInput();
+		String action = currentInput[0];
+		if (currentInput.length > 1) {
+			String arg = currentInput[1];
+		}
+		
 		GuiGameWindow.GuiGameDisplay("Went through");
-		GuiGameWindow.GuiGameDisplay(currentInput);
+		GuiGameWindow.GuiGameDisplay(currentInput[0]);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
 		switch (Game.gameState) {
 		
 		case "roaming":
-			switch (currentInput) {
+			switch (action) {
 			
 			case "take":
 			//Take an item

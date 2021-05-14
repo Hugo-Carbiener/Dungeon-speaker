@@ -29,7 +29,7 @@ public class GuiGameWindow implements ActionListener {
 	private static Style defaultStyle;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
-	private static String currentInput;
+	private static String[] currentInput;
 	private static volatile boolean inputIsUpdated = false;
 
 	public static Style getDefaultStyle() {return GuiGameWindow.defaultStyle;}
@@ -57,7 +57,7 @@ public class GuiGameWindow implements ActionListener {
 		}
 	}
 	
-	public static String getCurrentInput() {return currentInput;}
+	public static String[] getCurrentInput() {return currentInput;}
 	public static boolean getInputUpdateState() {return inputIsUpdated;}
 	public static void setInputState(boolean state) {inputIsUpdated = state;}
 	
