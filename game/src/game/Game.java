@@ -95,42 +95,47 @@ public class Game {
 		//-----------------------------------------------------------------
 		
 		switch (Game.gameState) {
-		
 		case "roaming":
+		
 			switch (action) {
-			
 			case "take":
 			//Take an item
-			
 			List<Item> roomItems = player.getPosition().getItems();
-			//get the argument if it exists
-			if (currentInput.length > 1) {
+			if (currentInput.length > 1) {//get the argument if it exists
 				String arg = currentInput[1];
-				
-				for (Item each : roomItems) {			//for each item in the room's item pool
+				for (Item each : roomItems) {//for each item in the room's item pool
 					if (each.getName() == arg) {
 						player.take(each);
 						break;
 					} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
 						GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
 					}
-					
 				}
-			} else {	//send error message if the nlp script did not output an argument
+			} else {//send error message if the nlp script did not output an argument
 				GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
 			}
-			
 				break;
 				
 			case "check":
 			//Either check the map or check the inventory
-				//Check map
-				GuiGameWindow.GuiDefaultDisplay("______________________________________");
-				map.displayOnGuiFromRoom(map.getStartingRoom());
-				GuiGameWindow.GuiDefaultDisplay("______________________________________");
-				
-				//Check inventory
-				getPlayer().checkInventory();
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					switch (arg) {
+					case "map":
+						//Check map
+						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						map.displayOnGuiFromRoom(map.getStartingRoom());
+						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						break;
+					
+					case "inventory":
+						//Check inventory
+						getPlayer().checkInventory();
+						break;
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?");
+				}
 				break;
 				
 			case "throw":
