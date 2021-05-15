@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 
 public class Toolkit {
@@ -55,6 +56,7 @@ public class Toolkit {
 		    e.printStackTrace();
 		}
 		
+		textField.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		textField.setBackground(Color.BLACK);
 		textField.setForeground(Color.WHITE);
 		
