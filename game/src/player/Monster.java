@@ -92,5 +92,9 @@ public class Monster extends Character{
 		
 		return baseDMG;
 	}
+
+	public void defend() {
+		
+	}
 }
 

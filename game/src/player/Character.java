@@ -1,7 +1,10 @@
 package player;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import gui.GuiGameWindow;
 
 public class Character {
 
@@ -38,8 +41,17 @@ public class Character {
 		// +/- 10%
 		int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
 		totalDamage += r;
-		
 		target.health -= totalDamage;
+		
+		//Create the message to explain the action
+		String message = "";
+		if (target == Combat.getHero()) {
+			message += "You deal " + totalDamage + " points of damages to the " + Combat.getMonster().getName() + ".";
+		} else {
+			message += "The " + Combat.getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
+		}
+		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
 	
+	public void defend()
 }

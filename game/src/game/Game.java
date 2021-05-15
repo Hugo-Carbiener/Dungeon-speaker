@@ -20,7 +20,7 @@ public class Game {
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.getPlayer();}
+	public static Hero getHero() {return Game.player;}
 	public static Map getMap() {return Game.map;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
@@ -57,14 +57,14 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (getPlayer().health != 0 && !(getPlayer().getPosition() == map.getEndingRoom())) {
+		while (player.health != 0 && !(player.getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
 		
 		
-		if (getPlayer().health == 0) {
+		if (player.health == 0) {
 			//lose condition
-		} else if (getPlayer().getPosition() == map.getEndingRoom()) {
+		} else if (player.getPosition() == map.getEndingRoom()) {
 			//win condition
 		}
 	}
@@ -129,7 +129,7 @@ public class Game {
 					
 					//case "inventory":
 						//Check inventory
-						getPlayer().checkInventory();
+						player.checkInventory();
 						//break;
 					//}
 				//} else {//send error message if the nlp script did not output an argument
@@ -172,11 +172,17 @@ public class Game {
 				break;
 			
 			case "look"://Look at your surroundings 
-				getPlayer().observe();
+				player.observe();
+				break;
+				
+			case "attack":
+				
 				break;
 			
 			case "move":
-				getPlayer().moveForward();
+				//player.moveForward();
+				//player.backtrack();
+				//player.moveBackwards();
 				break;
 			
 				
@@ -188,8 +194,4 @@ public class Game {
 			break;
 			
 		}
-	}
-	public static Hero getPlayer() {
-		return player;
-	}
 }

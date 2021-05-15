@@ -28,7 +28,7 @@ public class Weapon extends Item{
 				Pair.with("Whip", 7),
 				Pair.with("Claymore", 8),
 				Pair.with("Scythe", 9),
-				Pair.with("Magic AK47", 10)));	
+				Pair.with("Katana", 10)));	
 		
 		r = (int) (Math.random() * weapons.size());
 		weaponMarker = weapons.get(r);
