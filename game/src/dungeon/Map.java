@@ -1,5 +1,6 @@
 package dungeon;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -233,13 +234,14 @@ public class Map {
 	public void displayOnGuiFromRoom(Room room) {
 		//Displays the map on the Gui
 		char square = '\u25A1';
+		char roundedSquare = '\u25A2';
 		char dotedSquare = '\u25A3';
 		char bottomCorner = '\u2559';
 		char crossSection = '\u255F';
 		char verticalLine = '\u2551';
 		char horizontalLine = '\u2500';
 		
-		if (room == this.getStartingRoom()) {GuiGameWindow.GuiDefaultDisplay(Character.toString(square));}
+		if (room == this.getStartingRoom()) {GuiGameWindow.GuiRawDisplay(Character.toString(square), Color.WHITE);}
 		for (Room each : room.getNextRooms()) {
 			
 			
@@ -301,34 +303,20 @@ public class Map {
 			}
 			
 			String finalOutput = string.substring(1);
-			//Print the line on the gui
-			GuiGameWindow.GuiDefaultDisplay(finalOutput);
 			//Print the right room in the right color on the gui
 			if (each.isEndingRoom()) {
 				//Print a doted square for the ending room
-				try {
-					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(dotedSquare), GuiGameWindow.getDefaultStyle());
-				} catch (BadLocationException e) {
-					e.printStackTrace();
-				}
+				finalOutput += dotedSquare;
 			} else if (each == Game.getPlayer().getPosition()){
-				//Print a square in red to signify the player's position
-				try {
-					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(square), GuiGameWindow.getGameStyle());
-				} catch (BadLocationException e) {
-					e.printStackTrace();
-				}
+				//Print a rounded square to signify the player's position
+				finalOutput += roundedSquare;
 			} else {
 				//Print a square for regular rooms
-				try {
-					GuiGameWindow.doc.insertString(GuiGameWindow.pos, Character.toString(square), GuiGameWindow.getDefaultStyle());
-				} catch (BadLocationException e) {
-					e.printStackTrace();
-				}
+				finalOutput += square;
 			}
 			
-			//Incremente the position in the Gui text area
-			GuiGameWindow.pos += 1;
+			//Print the line
+			GuiGameWindow.GuiRawDisplay(finalOutput, Color.WHITE);
 			
 			
 			
@@ -341,7 +329,7 @@ public class Map {
 					string = string.substring(1, string.length()-2) + verticalLine; //remove first space, remove cross section, add vertical line
 					for (int i = 0; i < each.getLevel() + 1; i += 2) {string += " ";}
 					string += verticalLine;
-					GuiGameWindow.GuiDefaultDisplay(string);
+					GuiGameWindow.GuiRawDisplay(string, Color.WHITE);
 					/*   ║     ╟─01120
    						 ║     ║   ║
    						 ║     ╟─01121

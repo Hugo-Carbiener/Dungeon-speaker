@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.List;
@@ -73,7 +74,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			GuiGameWindow.GuiGameDisplay("waiting...");
+			GuiGameWindow.GuiGameDisplay("waiting...", Color.WHITE, false);
 		
 			//Pause the game loop to wait for the user's input 
 			try {
@@ -89,8 +90,8 @@ public class Game {
 		String[] currentInput = GuiGameWindow.getCurrentInput();
 		String action = currentInput[0];
 		
-		GuiGameWindow.GuiGameDisplay("Went through");
-		GuiGameWindow.GuiGameDisplay(currentInput[0]);
+		GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
+		GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
@@ -107,34 +108,34 @@ public class Game {
 							player.take(each);
 							break;
 						} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...", Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 				
 			case "check"://Either check the map or check the inventory
-				if (currentInput.length > 1) {//get the argument if it exists
-					String arg = currentInput[1];
-					switch (arg) {
-					case "map":
+				//if (currentInput.length > 1) {//get the argument if it exists
+				//	String arg = currentInput[1];
+					//switch (arg) {
+					//case "map":
 						//Check map
-						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
 						map.displayOnGuiFromRoom(map.getStartingRoom());
-						GuiGameWindow.GuiDefaultDisplay("______________________________________");
-						break;
+						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
+						//break;
 					
-					case "inventory":
+					//case "inventory":
 						//Check inventory
 						getPlayer().checkInventory();
-						break;
-					}
-				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?");
-				}
-				break;
+						//break;
+					//}
+				//} else {//send error message if the nlp script did not output an argument
+				//	GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?", Color.WHITE, true, true);
+				//}
+				//break;
 				
 			case "throw"://Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory				
 				List<Item> playerItems = player.inventory;
@@ -145,11 +146,11 @@ public class Game {
 							player.throwItem(each);
 							break;
 						} else if (playerItems.indexOf(each) == playerItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...", Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 			
@@ -162,11 +163,11 @@ public class Game {
 							player.equip(each);
 							break;
 						} else if (playerInventory.indexOf(each) == playerInventory.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...",Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 			

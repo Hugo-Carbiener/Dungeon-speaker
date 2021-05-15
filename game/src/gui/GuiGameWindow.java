@@ -35,12 +35,18 @@ public class GuiGameWindow implements ActionListener {
 	private static Font customFontLarge;
 	private static Font customFontMedium;
 	
+	//Variables used with nlp
+	private static String[] currentInput;
+	private static volatile boolean inputIsUpdated = false;
+	
+	
 	public static void GuiGameDisplay(String string, Color color, boolean skipALine) {
 		//Display the string on a single line. For multiple lines use the method multiple times
 		String str = ">> " + string;
 		JLabel lbl = new JLabel(str);
 		lbl.setForeground(color);
 		lbl.setFont(customFontMedium);
+		
 		topPanel.add(lbl, gbc);
 		gbc.gridy++;
 		
@@ -49,6 +55,22 @@ public class GuiGameWindow implements ActionListener {
 			topPanel.add(new JLabel("<html> <br/> </html>"), gbc);
 			gbc.gridy++;
 		}
+		//Set scollbar focus to the bottom of the page
+		JScrollBar vertical = scrollPane.getVerticalScrollBar();
+		vertical.setValue( vertical.getMaximum() );
+		//Update the frame
+		frame.validate();
+		frame.repaint();
+	}
+	
+	public static void GuiRawDisplay(String string, Color color) {
+		//Display the string on a single line, no font, no line skip, no arrows
+		JLabel lbl = new JLabel(string);
+		lbl.setForeground(color);
+		lbl.setFont(new Font("Arial", Font.PLAIN, 25
+				));
+		topPanel.add(lbl, gbc);
+		gbc.gridy++;
 		//Set scollbar focus to the bottom of the page
 		JScrollBar vertical = scrollPane.getVerticalScrollBar();
 		vertical.setValue( vertical.getMaximum() );
@@ -139,6 +161,14 @@ public class GuiGameWindow implements ActionListener {
 				//Get the content of the text field
 				String str = textField.getText();
 				textField.setText("");
+				//Process input using nlp
+				try {
+					currentInput = NLPManager.startNLP(str);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				//Print it
 				JLabel temp = new JLabel(str);
 				temp.setForeground(Color.CYAN);
@@ -154,6 +184,12 @@ public class GuiGameWindow implements ActionListener {
 				//Update the frame
 				frame.validate();
 				frame.repaint();
+				
+				//Unfreeze the game loop after waiting for the input
+				inputIsUpdated = true;
+				synchronized (Game.loopThread) {
+					Game.loopThread.notify();
+				}
 			}
         });
        

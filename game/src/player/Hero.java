@@ -1,5 +1,6 @@
 package player;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +50,9 @@ public class Hero extends Character{
 				message += "and put your" + temp.getName() + " back into your inventory";
 			}
 			message += ".";
-			GuiGameWindow.GuiGameDisplay(message);
+			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 		} else {
-			GuiGameWindow.GuiGameDisplay("This item is not equipable.");
+			GuiGameWindow.GuiGameDisplay("This item is not equipable.", Color.WHITE, true);
 		}
 	}
 	
@@ -63,7 +64,7 @@ public class Hero extends Character{
 			if (item.isThrowable()) {
 				//do item action
 			}
-			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".");
+			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".", Color.WHITE, true);
 		}
 		else {
 			System.out.println("The item does not exist");
@@ -81,15 +82,15 @@ public class Hero extends Character{
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
 				this.position.getItems().remove(item);
-				GuiGameWindow.GuiGameDisplay("You pick up the coins.");
+				GuiGameWindow.GuiGameDisplay("You pick up the coins.", Color.WHITE, true);
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
-					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName());
+					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName(), Color.WHITE, true);
 				} else {
-					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.");
+					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.", Color.WHITE, true);
 				}
 			} else {
 				System.err.println("Parameter is not an Item");
@@ -99,7 +100,7 @@ public class Hero extends Character{
 	
 	public void checkInventory() {
 		//Print a description of the inventory's content
-		GuiGameWindow.GuiGameDisplay("You open your bag and take a peek inside.");
+		GuiGameWindow.GuiGameDisplay("You open your bag and take a peek inside.", Color.WHITE, true);
 		String output = "You see";
 		if (this.inventory.size() == 0) {
 			output += " nothing. It is empty.";
@@ -113,7 +114,7 @@ public class Hero extends Character{
 				}
 			}
 		}
-		GuiGameWindow.GuiGameDisplay(output);
+		GuiGameWindow.GuiGameDisplay(output, Color.WHITE, true);
 	}
 	
 	public void moveTo(Room room) {
@@ -187,7 +188,7 @@ public class Hero extends Character{
 			String adv = adverbs[(int) (Math.random() * adverbs.length)];
 			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
 		}
-		GuiGameWindow.GuiGameDisplay(obs);
+		GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, true);
 	}
 }
 
