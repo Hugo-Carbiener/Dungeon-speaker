@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -28,6 +29,7 @@ public class GuiGameWindow implements ActionListener {
 	private static JFrame frame;
 	private static GridBagConstraints gbc;
 	private static JPanel topPanel;
+	private static JScrollPane scrollPane;
 	private static Font customFontLarge;
 	private static Font customGameFont;
 	private static Font customPlayerFont;
@@ -39,6 +41,9 @@ public class GuiGameWindow implements ActionListener {
 			lbl.setFont(customGameFont);
 			topPanel.add(lbl, gbc);
 			gbc.gridy++;
+			
+			JScrollBar vertical = scrollPane.getVerticalScrollBar();
+			vertical.setValue( vertical.getMaximum() );
 			frame.validate();
 			frame.repaint();
 	}
@@ -88,29 +93,13 @@ public class GuiGameWindow implements ActionListener {
         topPanel.add(temp, gbc);//Used as a trick to keep all residual space between this string and the text we display at the bottom
         gbc.gridy++;								//Increment position of writing 
         gbc.weighty = 0;
-        //Print the start message
-        String strtMsg = "You take your first step into the dungeon. Its terrifying depth lies in front of you.."; 
-        GuiGameDisplay(strtMsg);
-        /*temp = new JLabel(strtMsg);
-        topPanel.add(temp, gbc);
-        gbc.gridy++;
-        temp.setFont(customGameFont);
-        temp.setForeground(Color.WHITE);*/
-        strtMsg = "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you. Today you will either walk out as a hero or remain forgotten within the depths of the dungeon"; 
-        GuiGameDisplay(strtMsg);
-        /*temp = new JLabel(strtMsg);
-        temp.setFont(customGameFont);
-        temp.setForeground(Color.WHITE);
-        topPanel.add(temp, gbc);
-        gbc.gridy++;*/
-
      
         //Adding Components to the frame.
         frame.getRootPane().setDefaultButton(send);
         frame.getContentPane().add(BorderLayout.NORTH, topPanel);
         frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
         //Scrollbar (It is important to place it here)
-        JScrollPane scrollPane = new JScrollPane(topPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane = new JScrollPane(topPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.add(scrollPane);
         frame.setVisible(true);
         frame.pack();
@@ -123,7 +112,13 @@ public class GuiGameWindow implements ActionListener {
         bottomPanel.setBackground(Color.BLACK);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
-        
+      //Print the start message
+        String strtMsg = "You take your first step into the dungeon. Its terrifying depth lies in front of you.."; 
+        GuiGameDisplay(strtMsg);
+        strtMsg = "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you."; 
+        GuiGameDisplay(strtMsg);
+        strtMsg = " Today you will either walk out as a hero or remain forgotten within the depths of the dungeon"; 
+        GuiGameDisplay(strtMsg);
         
         //Action listener of the button
         send.addActionListener(new ActionListener(){
@@ -140,6 +135,8 @@ public class GuiGameWindow implements ActionListener {
 				topPanel.add(temp, gbc);
 				gbc.gridy++;
 				topPanel.add(new JLabel("<html> "+newline+" </html>"), gbc);//Add empty line
+				JScrollBar vertical = scrollPane.getVerticalScrollBar();
+				vertical.setValue( vertical.getMaximum() );
 				frame.validate();
 				frame.repaint();
 			}
