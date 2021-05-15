@@ -25,27 +25,33 @@ import javax.swing.text.StyledDocument;
 
 public class GuiGameWindow implements ActionListener {
 	
-	private static String newline = "<br/";
 	private static JFrame frame;
 	private static GridBagConstraints gbc;
 	private static JPanel topPanel;
 	private static JScrollPane scrollPane;
 	private static Font customFontLarge;
-	private static Font customGameFont;
-	private static Font customPlayerFont;
+	private static Font customFontMedium;
 	
-	public static void GuiGameDisplay(String string) {
-			String str = ">>" + string;
-			JLabel lbl = new JLabel(str);
-			lbl.setForeground(Color.WHITE);
-			lbl.setFont(customGameFont);
-			topPanel.add(lbl, gbc);
+	public static void GuiGameDisplay(String string, Color color, boolean skipALine) {
+		//Display the string on a single line. For multiple lines use the method multiple times
+		String str = ">> " + string;
+		JLabel lbl = new JLabel(str);
+		lbl.setForeground(color);
+		lbl.setFont(customFontMedium);
+		topPanel.add(lbl, gbc);
+		gbc.gridy++;
+		
+		if (skipALine) {
+			//Add empty line
+			topPanel.add(new JLabel("<html> <br/> </html>"), gbc);
 			gbc.gridy++;
-			
-			JScrollBar vertical = scrollPane.getVerticalScrollBar();
-			vertical.setValue( vertical.getMaximum() );
-			frame.validate();
-			frame.repaint();
+		}
+		//Set scollbar focus to the bottom of the page
+		JScrollBar vertical = scrollPane.getVerticalScrollBar();
+		vertical.setValue( vertical.getMaximum() );
+		//Update the frame
+		frame.validate();
+		frame.repaint();
 	}
 	
 	public GuiGameWindow() throws FontFormatException, IOException{
@@ -75,9 +81,7 @@ public class GuiGameWindow implements ActionListener {
         
         //Fonts
         customFontLarge = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(35f);
-        customGameFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(22f);
-        customPlayerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(20f);
-
+        customFontMedium = Font.createFont(Font.TRUETYPE_FONT, new File("src/res/pixelArtFont.ttf")).deriveFont(22f);
 
         //Create the layout for the top panel and allows to have messages properly displayed
         topPanel.setLayout(new GridBagLayout());
@@ -105,7 +109,7 @@ public class GuiGameWindow implements ActionListener {
         frame.pack();
        
         //Style
-        bottomLabel.setFont(customGameFont);
+        bottomLabel.setFont(customFontMedium);
         bottomLabel.setForeground(Color.WHITE);
         topPanel.setBackground(Color.BLACK);
         topPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -113,12 +117,12 @@ public class GuiGameWindow implements ActionListener {
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
       //Print the start message
-        String strtMsg = "You take your first step into the dungeon. Its terrifying depth lies in front of you.."; 
-        GuiGameDisplay(strtMsg);
+        String strtMsg = "You take your first step into the dungeon. Its terrifying depth lies in front of you..."; 
+        GuiGameDisplay(strtMsg, Color.WHITE, false);
         strtMsg = "Even you, " + GuiGameMenu.username + ", the fearless adventurer, can feel shivers running down your spine. A great challenge stand before you."; 
-        GuiGameDisplay(strtMsg);
-        strtMsg = " Today you will either walk out as a hero or remain forgotten within the depths of the dungeon"; 
-        GuiGameDisplay(strtMsg);
+        GuiGameDisplay(strtMsg, Color.WHITE, false);
+        strtMsg = "Today you will either walk out as a hero or remain forgotten within the depths of the dungeon!"; 
+        GuiGameDisplay(strtMsg, Color.WHITE, true);
         
         //Action listener of the button
         send.addActionListener(new ActionListener(){
@@ -128,15 +132,19 @@ public class GuiGameWindow implements ActionListener {
 				//Get the content of the text field
 				String str = textField.getText();
 				textField.setText("");
-
+				//Print it
 				JLabel temp = new JLabel(str);
 				temp.setForeground(Color.CYAN);
-				temp.setFont(customPlayerFont);
+				temp.setFont(customFontMedium);
 				topPanel.add(temp, gbc);
 				gbc.gridy++;
-				topPanel.add(new JLabel("<html> "+newline+" </html>"), gbc);//Add empty line
+				//Add empty line
+				topPanel.add(new JLabel("<html> <br/> </html>"), gbc);
+				gbc.gridy++;
+				//Set scollbar focus to the bottom of the page
 				JScrollBar vertical = scrollPane.getVerticalScrollBar();
 				vertical.setValue( vertical.getMaximum() );
+				//Update the frame
 				frame.validate();
 				frame.repaint();
 			}
