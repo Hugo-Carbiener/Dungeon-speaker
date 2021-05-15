@@ -24,18 +24,22 @@ import game.Game;
 public class GuiGameWindow implements ActionListener {
 	
 	private static String newline = "\n";
-	private static StyledDocument doc;
-	private static int pos = 0;
+	public static StyledDocument doc;
+	public static int pos = 0;
 	private static Style defaultStyle;
 	private static Style userInputStyle;
 	private static Style gameInputStyle;
-	private static String currentInput;
+	private static String[] currentInput;
 	private static volatile boolean inputIsUpdated = false;
+
+	public static Style getDefaultStyle() {return GuiGameWindow.defaultStyle;}
+	public static Style getPlayerStyle() {return GuiGameWindow.userInputStyle;}
+	public static Style getGameStyle() {return GuiGameWindow.gameInputStyle;}
 
 	public static void GuiDefaultDisplay(String string) {
 		try {
-			doc.insertString(pos,string, defaultStyle);
-			pos += string.length();
+			doc.insertString(pos, newline + string, defaultStyle);
+			pos += string.length() + 1;
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +57,7 @@ public class GuiGameWindow implements ActionListener {
 		}
 	}
 	
-	public static String getCurrentInput() {return currentInput;}
+	public static String[] getCurrentInput() {return currentInput;}
 	public static boolean getInputUpdateState() {return inputIsUpdated;}
 	public static void setInputState(boolean state) {inputIsUpdated = state;}
 	
@@ -132,8 +136,16 @@ public class GuiGameWindow implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String str = textField.getText();
-				currentInput = NLPManager.startNLP(str);
 				
+				//Process input using nlp
+				try {
+					currentInput = NLPManager.startNLP(str);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				//Display the user's input
 				try {
 					doc.insertString(pos,newline + str, userInputStyle);
 				} catch (BadLocationException e) {
@@ -143,6 +155,7 @@ public class GuiGameWindow implements ActionListener {
 			    pos += str.length() + 1;
 				textField.setText("");
 				
+				//Unfreeze the game loop after waiting for the input
 				inputIsUpdated = true;
 				synchronized (Game.loopThread) {
 					Game.loopThread.notify();

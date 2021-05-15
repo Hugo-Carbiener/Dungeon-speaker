@@ -19,7 +19,7 @@ public class Game {
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.player;}
+	public static Hero getHero() {return Game.getPlayer();}
 	public static Map getMap() {return Game.map;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
@@ -56,14 +56,14 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (player.health != 0 && !(player.getPosition() == map.getEndingRoom())) {
+		while (getPlayer().health != 0 && !(getPlayer().getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
 		
 		
-		if (player.health == 0) {
+		if (getPlayer().health == 0) {
 			//lose condition
-		} else if (player.getPosition() == map.getEndingRoom()) {
+		} else if (getPlayer().getPosition() == map.getEndingRoom()) {
 			//win condition
 		}
 	}
@@ -73,7 +73,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			GuiGameWindow.GuiDisplay("waiting...");
+			GuiGameWindow.GuiGameDisplay("waiting...");
 		
 			//Pause the game loop to wait for the user's input 
 			try {
@@ -86,48 +86,96 @@ public class Game {
 			
 		}
 		
-		String currentInput = GuiGameWindow.getCurrentInput();
-		GuiGameWindow.GuiDisplay("Went through");
-		GuiGameWindow.GuiDisplay(currentInput);
+		String[] currentInput = GuiGameWindow.getCurrentInput();
+		String action = currentInput[0];
+		
+		GuiGameWindow.GuiGameDisplay("Went through");
+		GuiGameWindow.GuiGameDisplay(currentInput[0]);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
 		switch (Game.gameState) {
-		
 		case "roaming":
-			switch (currentInput) {
-			
-			case "take":
-			//Take an item
-				
-			String argument = currentInput[1];
-			List<Item> roomItems = player.getPosition().getItems();
-			for (Item each : roomItems) {			//for each item in the room's item pool
-				if (each.getName() == argument) {
-					player.take(each);
-					break;
-				} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != argument) {  //If we reached the last item of the list and the name is still not correct
-					GuiGameWindow.GuiDisplay("You do not have such an item in your inventory...");
+		
+			switch (action) {
+			case "take"://Take an item in the current room
+				List<Item> roomItems = player.getPosition().getItems();
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : roomItems) {//for each item in the room's item pool
+						if (each.getName() == arg) {
+							player.take(each);
+							break;
+						} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
 				}
-			}
-			
 				break;
 				
-			case "check":
-			//Either check the map or check the inventory
+			case "check"://Either check the map or check the inventory
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					switch (arg) {
+					case "map":
+						//Check map
+						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						map.displayOnGuiFromRoom(map.getStartingRoom());
+						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						break;
+					
+					case "inventory":
+						//Check inventory
+						getPlayer().checkInventory();
+						break;
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?");
+				}
 				break;
 				
-			case "throw":
-			//Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory
+			case "throw"://Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory				
+				List<Item> playerItems = player.inventory;
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : playerItems) {//for each item in the player's inventory
+						if (each.getName() == arg) {
+							player.throwItem(each);
+							break;
+						} else if (playerItems.indexOf(each) == playerItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+				}
 				break;
 			
-			case "equip":
-			//Equip an item from the inventory
+			case "equip"://Equip an item from the inventory
+				List<Item> playerInventory = player.inventory;
+				if (currentInput.length > 1) {//get the argument if it exists
+					String arg = currentInput[1];
+					for (Item each : playerInventory) {//for each item in the player's inventory
+						if (each.getName() == arg) {
+							player.equip(each);
+							break;
+						} else if (playerInventory.indexOf(each) == playerInventory.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+						}
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+				}
 				break;
 			
-			case "look":
-			//Look at your surroundings 
-				player.observe();
+			case "look"://Look at your surroundings 
+				getPlayer().observe();
+				break;
+			
+			case "move":
+				getPlayer().moveForward();
 				break;
 			
 				
@@ -139,5 +187,8 @@ public class Game {
 			break;
 			
 		}
+	}
+	public static Hero getPlayer() {
+		return player;
 	}
 }

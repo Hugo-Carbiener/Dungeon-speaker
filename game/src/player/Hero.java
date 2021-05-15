@@ -36,29 +36,34 @@ public class Hero extends Character{
 	public int getBalance() {return this.balance;}
 	
 	public void equip(Item item) {
-		if (item.isEquipable()|| item.isThrowable()) {
+		if (item.isEquipable()) {
 			Item temp = this.equippedItem;
 			
 			this.equippedItem = item;
 			item.equipped = true;
 			this.inventory.remove(item);
-			
+			String message = "You equip your " + item.getName();
 			if (temp != null) { //if their was an item previously equipped 
 				temp.equipped = false;
 				this.inventory.add(temp);
+				message += "and put your" + temp.getName() + " back into your inventory";
 			}
+			message += ".";
+			GuiGameWindow.GuiGameDisplay(message);
+		} else {
+			GuiGameWindow.GuiGameDisplay("This item is not equipable.");
 		}
 	}
 	
 	public void throwItem(Item item) {
 		if (this.inventory.contains(item)) { //if the designated item is in inventory we get rid of it
 			this.inventory.remove(item);
-		}
-		else if (this.equippedItem == item) { //if the designated item is equipped we either get rid of it or use it if throwable
+		} else if (this.equippedItem == item) { //if the designated item is equipped we either get rid of it or use it if throwable
 			this.equippedItem = null;
 			if (item.isThrowable()) {
 				//do item action
 			}
+			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".");
 		}
 		else {
 			System.out.println("The item does not exist");
@@ -76,13 +81,15 @@ public class Hero extends Character{
 			if (item instanceof Coins) {		//if player takes coins add an amount to the balance
 				this.balance  += ((Coins) item).getAmount();
 				this.position.getItems().remove(item);
+				GuiGameWindow.GuiGameDisplay("You pick up the coins.");
 			} else if (item instanceof Item){
 			//else adds a miscellaneous item to the inventory
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
+					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName());
 				} else {
-					GuiGameWindow.GuiDisplay("Your inventory is full! Throw away something first.");
+					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.");
 				}
 			} else {
 				System.err.println("Parameter is not an Item");
@@ -90,8 +97,23 @@ public class Hero extends Character{
 		}
 	}
 	
-	public List<Item> checkInventory() {
-		return null;
+	public void checkInventory() {
+		//Print a description of the inventory's content
+		GuiGameWindow.GuiGameDisplay("You open your bag and take a peek inside.");
+		String output = "You see";
+		if (this.inventory.size() == 0) {
+			output += " nothing. It is empty.";
+		} else {
+			for (int i = 0; i < this.inventory.size(); i++) {
+				output += " a " + this.inventory.get(i).getName();
+				if (i == this.inventory.size() - 1) {
+					output += ".";
+				} else {
+					output += ",";
+				}
+			}
+		}
+		GuiGameWindow.GuiGameDisplay(output);
 	}
 	
 	public void moveTo(Room room) {
@@ -165,7 +187,7 @@ public class Hero extends Character{
 			String adv = adverbs[(int) (Math.random() * adverbs.length)];
 			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
 		}
-		GuiGameWindow.GuiDisplay(obs);
+		GuiGameWindow.GuiGameDisplay(obs);
 	}
 }
 
