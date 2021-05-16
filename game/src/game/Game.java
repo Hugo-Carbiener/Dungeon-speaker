@@ -20,7 +20,7 @@ public class Game {
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.player;}
+	public static Hero getPlayer() {return Game.player;}
 	public static Map getMap() {return Game.map;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
@@ -180,7 +180,7 @@ public class Game {
 				break;
 			
 			case "move":
-				//player.moveForward();
+				player.moveForward();
 				//player.backtrack();
 				//player.moveBackwards();
 				break;
@@ -194,4 +194,5 @@ public class Game {
 			break;
 			
 		}
+	}
 }

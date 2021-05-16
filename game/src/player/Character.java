@@ -45,7 +45,7 @@ public class Character {
 		
 		//Create the message to explain the action
 		String message = "";
-		if (target == Combat.getHero()) {
+		if (target == Combat.getPlayer()) {
 			message += "You deal " + totalDamage + " points of damages to the " + Combat.getMonster().getName() + ".";
 		} else {
 			message += "The " + Combat.getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
@@ -53,5 +53,7 @@ public class Character {
 		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
 	
-	public void defend()
+	public void defend() {
+		
+	}
 }
