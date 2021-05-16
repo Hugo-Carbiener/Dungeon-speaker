@@ -10,7 +10,7 @@ import game.Game;
 import gui.GuiGameWindow;
 
 public class Map {
-	private Room startingRoom = new Room("0", 0, 0);	//map.startingRoom is the root node 
+	Room startingRoom = new Room("0", 0, 0);	//map.startingRoom is the root node 
 	private Room endingRoom;							//Room to reach to end the game 
 	private int endLevel; 								//determines how many "floors" the dungeon will have
 	private int maxExitNumber; 							//determines how many exits a room can have. 

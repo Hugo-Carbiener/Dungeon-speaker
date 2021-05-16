@@ -7,8 +7,8 @@ import java.util.List;
 import org.javatuples.Pair;
 
 public class Weapon extends Item{
-	private String name;
-	private int damage;
+	String name;
+	int damage;
 	
 	
 	public Weapon() {
