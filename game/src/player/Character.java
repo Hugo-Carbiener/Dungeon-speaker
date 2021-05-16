@@ -59,7 +59,7 @@ public class Character {
 		//Create the message to explain the action
 		String message = "";
 		if (target instanceof Hero) {
-			message = "The " + Game.getCombat().getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
+			message = "The " + Game.getCombat().getMonster().getName() + " inflicted you " + totalDamage + " points of damages! Hold Strong!";
 			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 			message = "You have " + Game.getPlayer().health + " health points left.";
 			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);

@@ -28,9 +28,9 @@ import game.Game;
 
 public class GuiGameWindow implements ActionListener {
 	
-	private static JFrame frame;
+	public static JFrame frame;
 	private static GridBagConstraints gbc;
-	private static JPanel topPanel;
+	public static JPanel topPanel;
 	private static JScrollPane scrollPane;
 	private static Font customFontLarge;
 	private static Font customFontMedium;
@@ -38,7 +38,6 @@ public class GuiGameWindow implements ActionListener {
 	//Variables used with nlp
 	private static String[] currentInput;
 	private static volatile boolean inputIsUpdated = false;
-	
 	
 	public static void GuiGameDisplay(String string, Color color, boolean skipALine) {
 		//Display the string on a single line. For multiple lines use the method multiple times

@@ -2,13 +2,19 @@ package game;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import dungeon.Map;
+import gui.GuiDefeatScreen;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
 import gui.GuiTitleScreen;
+import gui.GuiVictoryScreen;
 import player.Combat;
 import player.Hero;
 import player.Item;
@@ -60,15 +66,19 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (player.health != 0 && !(player.getPosition() == map.getEndingRoom())) {
+		while (player.health > 0 && !(player.getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
-		
-		
-		if (player.health == 0) {
+		if (player.health <= 0) {
 			//lose condition
+			gameState = "defeat";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
 		} else if (player.getPosition() == map.getEndingRoom()) {
 			//win condition
+			gameState = "victory";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
 		}
 	}
 	
@@ -203,6 +213,23 @@ public class Game {
 			//player is in Combat. For now, due to the limited amount of possible actions during battles, we have chosen to let them run automatically
 			break;
 			
+		case "defeat":
+			try {
+				new GuiDefeatScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case "victory":
+			try {
+				new GuiVictoryScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
 }

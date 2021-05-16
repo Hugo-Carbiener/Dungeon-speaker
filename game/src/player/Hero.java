@@ -18,7 +18,7 @@ public class Hero extends Character{
 	
 	public Hero(String username, Map map) {
 		//Default settings for a new player
-		super(100, 20, 1, 20);
+		super(1, 20, 1, 20);
 		Room root = map.getStartingRoom();
 		
 		this.username = username;
