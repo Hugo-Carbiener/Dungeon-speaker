@@ -67,8 +67,7 @@ public class GuiGameWindow implements ActionListener {
 		//Display the string on a single line, no font, no line skip, no arrows
 		JLabel lbl = new JLabel(string);
 		lbl.setForeground(color);
-		lbl.setFont(new Font("Arial", Font.PLAIN, 25
-				));
+		lbl.setFont(new Font("Arial", Font.PLAIN, 25));
 		topPanel.add(lbl, gbc);
 		gbc.gridy++;
 		//Set scollbar focus to the bottom of the page

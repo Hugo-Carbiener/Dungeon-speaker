@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.Game;
 import gui.GuiGameWindow;
 
 public class Character {
 
 	public int health;
 	public int maxHealth;
+	//Defines if the player is currently defendeing himself from an incomming attack
+	public boolean isDefending = false;
 	public int mana;
 	public int maxMana;
 	//speed may be used to determine who attacks first during an encounter
@@ -33,7 +36,9 @@ public class Character {
 	
 	
 	public void basicAttack(Character target) {
+		//Damage = base damages
 		int totalDamage = this.baseDamage;
+		// + weapon damages
 		if (this.equippedItem != null) {
 			totalDamage += this.equippedItem.itemDamage;
 		}
@@ -41,19 +46,35 @@ public class Character {
 		// +/- 10%
 		int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
 		totalDamage += r;
+		
+		// - defense
+		if (target.isDefending) {
+			//Defense divides the damages in two 
+			totalDamage = totalDamage / 2;
+			target.isDefending = false;
+		}
+	
 		target.health -= totalDamage;
 		
 		//Create the message to explain the action
 		String message = "";
-		if (target == Combat.getPlayer()) {
-			message += "You deal " + totalDamage + " points of damages to the " + Combat.getMonster().getName() + ".";
+		if (target == Game.getCombat().getMonster()) {
+			message += "You deal " + totalDamage + " points of damages to the " + Game.getCombat().getMonster().getName() + ".";
 		} else {
-			message += "The " + Combat.getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
+			message += "The " + Game.getCombat().getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
 		}
 		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
 	
 	public void defend() {
+		this.isDefending = true;
 		
+		String message = "";
+		if (this == Game.getCombat().getPlayer()) {
+			message += "You defend yourself from the incomming attack.";
+		} else {
+			message += "The " + Game.getCombat().getMonster().getName() + " is preparing the block your next move.";
+		}
+		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
 }

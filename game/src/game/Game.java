@@ -9,6 +9,7 @@ import dungeon.Map;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
 import gui.GuiTitleScreen;
+import player.Combat;
 import player.Hero;
 import player.Item;
 
@@ -16,12 +17,14 @@ public class Game {
 	
 	private static Hero player;
 	private static Map map;
+	private static Combat combat;
 	private static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
 	public static Hero getPlayer() {return Game.player;}
 	public static Map getMap() {return Game.map;}
+	public static Combat getCombat() {return Game.combat;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
 	
@@ -176,7 +179,13 @@ public class Game {
 				break;
 				
 			case "attack":
-				
+				//Cheeck if there is a monster in the room
+				if (player.getPosition().getMonster() == null) {//There is no monster
+					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
+				} else {
+					GuiGameWindow.GuiGameDisplay("You engage the " + player.getPosition().getMonster().getName() + "! Get ready!", Color.WHITE, true);
+					combat = new Combat(player, player.getPosition().getMonster());
+				}
 				break;
 			
 			case "move":
@@ -190,7 +199,7 @@ public class Game {
 			break;
 			
 		case "combat":
-			//player is stuck in combat 
+			//player is in Combat. For now, due to the limited amount of possible actions during battles, we have chosen to let them run automatically
 			break;
 			
 		}
