@@ -18,7 +18,7 @@ public class Hero extends Character{
 	
 	public Hero(String username, Map map) {
 		//Default settings for a new player
-		super(20, 20, 1, 10);
+		super(100, 20, 1, 20);
 		Room root = map.getStartingRoom();
 		
 		this.username = username;
@@ -158,19 +158,20 @@ public class Hero extends Character{
 		
 		String place;
 		String adj = adjectives[(int) (Math.random() * adjectives.length)];
-		String obs = "You look around you.\nIt is a " + adj + " room.";
+		String obs = "You look around you. It is a " + adj + " room.";
+		GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, false);
 		
-		obs += "\n\n";
 		//Item
 		if (! this.getPosition().getItems().isEmpty()) {//Room is not empty item wise
 			if (this.getPosition().getItems().size() == 1) {//Room has one item
 				place = places[(int) (Math.random() * places.length)];
 				String goodAdj = goodAdjectives[(int) (Math.random() * goodAdjectives.length)];
-				obs += "There is an item laying " + place + ". It is a " + goodAdj+ " " + this.getPosition().getItems().get(0).getName() + ".";
+				obs = "There is an item laying " + place + ". It is a " + goodAdj+ " " + this.getPosition().getItems().get(0).getName() + ".";
+				GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, false);
 				
 			} else {//Room has more than one item
 				place = places[(int) (Math.random() * places.length)];
-				obs += "There are items laying " + place + ". You can see ";
+				obs = "There are items laying " + place + ". You can see ";
 				for (int i = 0; i < this.getPosition().getItems().size(); i++) {
 					obs += "a " + this.getPosition().getItems().get(i).getName();
 					if (i < this.getPosition().getItems().size() - 1) {
@@ -179,16 +180,16 @@ public class Hero extends Character{
 						obs += ".";
 					}
 				}
+				GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, false);
 			}
 		}
-		obs += "\n\n";
-		
+
 		if (! (this.getPosition().getMonster() == null)) {//Room is not empty monster wise
 			adj = adjectives[(int) (Math.random() * adjectives.length)];
 			String adv = adverbs[(int) (Math.random() * adverbs.length)];
-			obs += "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
-		}
-		GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, true);
+			obs = "There is a " + adj + " monster looking at you " + adv + ": a " + this.getPosition().getMonster().getName() + "!";
+			GuiGameWindow.GuiGameDisplay(obs, Color.WHITE, true);
+		}		
 	}
 }
 

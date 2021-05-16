@@ -185,6 +185,7 @@ public class Game {
 				} else {
 					GuiGameWindow.GuiGameDisplay("You engage the " + player.getPosition().getMonster().getName() + "! Get ready!", Color.WHITE, true);
 					combat = new Combat(player, player.getPosition().getMonster());
+					combat.start();
 				}
 				break;
 			

@@ -18,19 +18,18 @@ public class Combat {
 		this.hero = hero;
 		this.monster = monster;
 		Game.setGameState("Combat");
-		this.start();
 	}
 	
 	public void start() { 
 		
-		while(getPlayer().health != 0 || monster.health != 0) { //the fight ends when the monster or the hero has no health anymore
+		while(getPlayer().health > 0 && monster.health > 0) { //the fight ends when the monster or the hero has no health anymore
 			playerTurn();
 			monsterTurn();
 		}
-		if(monster.health == 0) {
+		if(monster.health <= 0) {
 			GuiGameWindow.GuiGameDisplay("You have slain the" + monster.getName() + "!", Color.WHITE, false);
 			GuiGameWindow.GuiGameDisplay("You could probably habve looted some equipment on the corpse if that was implemented in the game", Color.WHITE, true);
-		} else if(getPlayer().health == 0) {
+		} else if(getPlayer().health <= 0) {
 			GuiGameWindow.GuiGameDisplay("Out of energy, you begin to sumble as your sight darkens. You know that these are the last breaths you take...", Color.WHITE, false);
 			GuiGameWindow.GuiGameDisplay("Your lifeless body hits the ground heavily.", Color.WHITE, false);
 			if (getPlayer().equippedItem != null) {
@@ -43,7 +42,8 @@ public class Combat {
 	private void monsterTurn() {
 		//Monster can either attack of defend
 		double r = Math.random();
-		if (r < 0.5) {
+		System.out.println(r);
+		if (r <= 0.2) {
 			monster.defend();
 		} else {
 			monster.basicAttack(getPlayer());
@@ -53,7 +53,8 @@ public class Combat {
 	private void playerTurn() {
 		//Monster can either attack of defend
 		double r = Math.random();
-		if (r > 0.5) {
+		System.out.println(r);
+		if (r <= 0.2) {
 			hero.defend();
 		} else {
 			hero.basicAttack(getMonster());

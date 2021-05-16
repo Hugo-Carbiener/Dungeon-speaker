@@ -58,19 +58,23 @@ public class Character {
 		
 		//Create the message to explain the action
 		String message = "";
-		if (target == Game.getCombat().getMonster()) {
-			message += "You deal " + totalDamage + " points of damages to the " + Game.getCombat().getMonster().getName() + ".";
+		if (target instanceof Hero) {
+			message = "The " + Game.getCombat().getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
+			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
+			message = "You have " + Game.getPlayer().health + " health points left.";
+			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 		} else {
-			message += "The " + Game.getCombat().getMonster().getName() + " inflicted you " + totalDamage + " points of damages ! Hold Strong !";
+			message = "You deal " + totalDamage + " points of damages to the " + Game.getCombat().getMonster().getName() + ".";
+			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 		}
-		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
+		
 	}
 	
 	public void defend() {
 		this.isDefending = true;
 		
 		String message = "";
-		if (this == Game.getCombat().getPlayer()) {
+		if (this instanceof Hero) {
 			message += "You defend yourself from the incomming attack.";
 		} else {
 			message += "The " + Game.getCombat().getMonster().getName() + " is preparing the block your next move.";
