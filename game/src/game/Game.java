@@ -2,26 +2,37 @@ package game;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import dungeon.Map;
+import gui.GuiDefeatScreen;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
 import gui.GuiTitleScreen;
+import gui.GuiVictoryScreen;
+import player.Combat;
 import player.Hero;
 import player.Item;
 
+
+
 public class Game {
 	
-	private static Hero player;
-	private static Map map;
-	private static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
+	static Hero player;
+	static Map map;
+	static Combat combat;
+	static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.getPlayer();}
+	public static Hero getPlayer() {return Game.player;}
 	public static Map getMap() {return Game.map;}
+	public static Combat getCombat() {return Game.combat;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
 	
@@ -57,15 +68,19 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (getPlayer().health != 0 && !(getPlayer().getPosition() == map.getEndingRoom())) {
+		while (player.health > 0 && !(player.getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
-		
-		
-		if (getPlayer().health == 0) {
+		if (player.health <= 0) {
 			//lose condition
-		} else if (getPlayer().getPosition() == map.getEndingRoom()) {
+			gameState = "defeat";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
+		} else if (player.getPosition() == map.getEndingRoom()) {
 			//win condition
+			gameState = "victory";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
 		}
 	}
 	
@@ -129,7 +144,7 @@ public class Game {
 					
 					//case "inventory":
 						//Check inventory
-						getPlayer().checkInventory();
+						player.checkInventory();
 						//break;
 					//}
 				//} else {//send error message if the nlp script did not output an argument
@@ -172,11 +187,24 @@ public class Game {
 				break;
 			
 			case "look"://Look at your surroundings 
-				getPlayer().observe();
+				player.observe();
+				break;
+				
+			case "attack":
+				//Cheeck if there is a monster in the room
+				if (player.getPosition().getMonster() == null) {//There is no monster
+					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
+				} else {
+					GuiGameWindow.GuiGameDisplay("You engage the " + player.getPosition().getMonster().getName() + "! Get ready!", Color.WHITE, true);
+					combat = new Combat(player, player.getPosition().getMonster());
+					combat.start();
+				}
 				break;
 			
 			case "move":
-				getPlayer().moveForward();
+				player.moveForward();
+				//player.backtrack();
+				//player.moveBackwards();
 				break;
 			
 				
@@ -184,12 +212,29 @@ public class Game {
 			break;
 			
 		case "combat":
-			//player is stuck in combat 
+			//player is in Combat. For now, due to the limited amount of possible actions during battles, we have chosen to let them run automatically
 			break;
 			
+		case "defeat":
+			try {
+				new GuiDefeatScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case "victory":
+			try {
+				new GuiVictoryScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
-	public static Hero getPlayer() {
-		return player;
-	}
 }
+
+
+

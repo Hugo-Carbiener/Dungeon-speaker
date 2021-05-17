@@ -12,16 +12,16 @@ import player.Weapon;
 
 public class Room {
 	
-	private List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
-    private Room previousRoom;									//Room considered "parent"of the current room
-    private List<Room> accessibleRooms = new ArrayList<Room>();	//List of rooms the player can go to 
-    private boolean visited = false;							//determines if the player as already been through this room
+	public List<Room> nextRooms = new ArrayList<Room>();		//List of rooms that are considered "child" of the current room
+    public Room previousRoom;									//Room considered "parent"of the current room
+    public List<Room> accessibleRooms = new ArrayList<Room>();	//List of rooms the player can go to 
+    public boolean visited = false;							//determines if the player as already been through this room
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
-    private boolean isEndingRoom = false;
+    public boolean isEndingRoom = false;
     
-    private List<Item> items = new ArrayList<>();						//List of items in the room
-    private Monster monster;											//The monster guarding the room
+    public List<Item> items = new ArrayList<>();						//List of items in the room
+    public Monster monster;											//The monster guarding the room
     
     public Room(String id, int level, double fillProbability) {
     	this.id = id;

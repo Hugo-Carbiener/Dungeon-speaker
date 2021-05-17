@@ -23,6 +23,12 @@ public class WeaponTest {
 		
 	}
 	
-	//can't test the other functions because they give random numbers 
+	
+	@Test
+	public void testCalculateDamage() {
+		Weapon weapon = new Weapon();
+		int rarityIndicator = 3;
+		assertSame(15,weapon.calculateDamage(rarityIndicator));
+	}
 
 }

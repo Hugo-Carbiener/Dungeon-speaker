@@ -1,43 +1,66 @@
 package dungeon;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class MapTest {
-	
-	Map testMap;
-	
-	@Before 
-	public void setup() throws Exception {
-		testMap = new Map(4,4,0.5,1);
-		while (testMap.getRoomNumber() < 2){
-			testMap = new Map(4,4,0.5,1);
-		}
-		testMap.displayFromRoom(testMap.getStartingRoom());	
-	}
-	
+
 	@Test
-	public void getRoomTest() {
-		Room gotRoom = testMap.getRoom("00", testMap.getStartingRoom());
-		assertEquals("00", gotRoom.getId());
-		assertEquals(testMap.getStartingRoom(), gotRoom.getPreviousRoom());
-	
-		//Test on root
-		gotRoom = testMap.getRoom("0", testMap.getStartingRoom());
-		assertSame(testMap.getStartingRoom(), gotRoom);
-		
-		//Test on a room which is n-th child with a n-1 limit
-		gotRoom = testMap.getRoom("005", testMap.getStartingRoom());
-		assertNull(gotRoom);
-				
-		//Test on a room too "deep" (room level too high) to exist 
-		gotRoom = testMap.getRoom("00000000", testMap.getStartingRoom());
-		assertNull(gotRoom);
-		
-		//Test on a room the id of which does not correspond to the norm
-		gotRoom = testMap.getRoom("aled", testMap.getStartingRoom());
-		assertNull(gotRoom);
+	public void testGetStartingRoom() {
+		Map map = new Map(1,1,1,1);
+		Room room = new Room("0", 0,0);
+		assertEquals(room, map.getStartingRoom());
 	}
+
+	@Test
+	public void testGetEndingRoom() {
+		Map map = new Map(1,1,1,1);
+		Room room = new Room("1", 1,1);
+		map.endingRoom = room;
+		assertSame(room, map.getEndingRoom());
+	}
+
+	@Test
+	public void testGetEndLevel() {
+		Map map = new Map(1,1,1,1);
+		map.endLevel = 3;
+		assertEquals(3,map.getEndLevel());
+	}
+
+	@Test
+	public void testGetMaxExitNumber() {
+		Map map = new Map(1,1,1,1);
+		assertEquals(1,map.getMaxExitNumber());
+	}
+
+	@Test
+	public void testGetNeighborLinkProbability() {
+		Map map = new Map(1,1,1,1);
+		assertSame(1,map.getNeighborLinkProbability());
+	}
+
+	@Test
+	public void testGetFillProbability() {
+		Map map = new Map(1,1,1,1);
+		assertSame(1,map.getFillProbability());
+	}
+
+	@Test
+	public void testGetRoomNumber() {
+		Map map = new Map(1,1,1,1);
+		map.roomAmount = 1;
+		assertEquals(1,map.GetRoomNumber());
+	}
+
+	@Test
+	public void testReachesMaxLevel() {
+		Map map = new Map(1,1,1,1);
+		Room room = new Room("1", 1, 1);
+		assertTrue(map.reachesMaxLevel(room));
+	}
+
+
 }
+
+//the other functions have random variables in them, can't predict the outcome

@@ -11,12 +11,12 @@ import gui.GuiGameWindow;
 
 public class Map {
 	Room startingRoom = new Room("0", 0, 0);	//map.startingRoom is the root node 
-	private Room endingRoom;							//Room to reach to end the game 
-	private int endLevel; 								//determines how many "floors" the dungeon will have
-	private int maxExitNumber; 							//determines how many exits a room can have. 
+	Room endingRoom;							//Room to reach to end the game 
+	int endLevel; 								//determines how many "floors" the dungeon will have
+	int maxExitNumber; 							//determines how many exits a room can have. 
 	private double neighborLinkProbability;				//determines the probability of generating a link between neighbor rooms 
 	private double fillProbability;						//determines the probability of adding amonser/weapon when generating a room
-	private int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
+	int roomAmount;								//tells how many rooms the dungeon contains, starting room included.
 	
 	public Room getStartingRoom() {return this.startingRoom;}
 	public Room getEndingRoom() {return this.endingRoom;}
