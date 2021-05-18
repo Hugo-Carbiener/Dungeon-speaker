@@ -12,9 +12,11 @@ public class NLPManager {
         String path = pwd.substring(0, posDir) + "Text-based-dungeon-crawler/game/src/NLP/call_functions.py";
 		Process p2 = Runtime.getRuntime().exec(String.format("python3 %s %s", path, userInput));
 		BufferedReader in2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
-		String[] result = new String[1];
 		String output = in2.readLine();
-		result[0] = output;
+		// parsing du tableau python
+		// on retire les crochets du tableau
+		output = output.substring(1, output.length() - 2);
+		String[] result = output.split(",");
 		return result;
 	}
 
