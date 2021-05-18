@@ -16,6 +16,8 @@ public class NLPManager {
 		// parsing du tableau python
 		// on retire les crochets du tableau
 		output = output.substring(1, output.length() - 2);
+		output = output.replaceAll("'", "");
+		output = output.replaceAll(" ", "");
 		String[] result = output.split(",");
 		return result;
 	}
