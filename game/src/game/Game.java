@@ -154,7 +154,7 @@ public class Game {
 				if (currentInput.length > 1) {//get the argument if it exists
 					String arg = currentInput[1];
 					for (Item each : playerItems) {//for each item in the player's inventory
-						if (each.getName() == arg) {
+						if (arg.equals(each.getName())) {
 							player.throwItem(each);
 							break;
 						} else if (playerItems.indexOf(each) == playerItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
@@ -170,10 +170,7 @@ public class Game {
 				List<Item> playerInventory = player.inventory;
 				if (currentInput.length > 1) {//get the argument if it exists
 					String arg = currentInput[1];
-					for (Item each : playerInventory) {//for each item in the player's inventory
-						System.out.println((arg == each.getName()));
-						System.out.println(arg);
-						System.out.println(each.getName());
+					for (Item each : playerInventory) {//for each item in the player's inventory;
 						if (arg.equals(each.getName())) {
 							player.equip(each);
 							
