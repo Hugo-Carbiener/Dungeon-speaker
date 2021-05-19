@@ -156,6 +156,7 @@ public class GuiGameWindow implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				//Get the content of the text field
 				String str = textField.getText();
 				textField.setText("");

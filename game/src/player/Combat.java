@@ -36,6 +36,10 @@ public class Combat {
 		} else if(monster.health <= 0) {
 			GuiGameWindow.GuiGameDisplay("You have slain the" + monster.getName() + "!", Color.WHITE, false);
 			GuiGameWindow.GuiGameDisplay("You could probably habve looted some equipment on the corpse if that was implemented in the game", Color.WHITE, true);
+			//Remove the dead monster from the room
+			hero.getPosition().setMonster(null);
+			//Tell the game to listen to roaming actions
+			Game.setGameState("roaming");
 		}
 	}
 	
@@ -52,7 +56,6 @@ public class Combat {
 	private void playerTurn() {
 		//Monster can either attack of defend
 		double r = Math.random();
-		System.out.println(r);
 		if (r <= 0.2) {
 			hero.defend();
 		} else {

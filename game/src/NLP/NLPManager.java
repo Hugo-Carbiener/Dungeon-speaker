@@ -14,10 +14,12 @@ public class NLPManager {
 		BufferedReader in2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
 		String output = in2.readLine();
 		// parsing du tableau python
-		// on retire les crochets du tableau
+		//Remove brackets
 		output = output.substring(1, output.length() - 2);
+		//Remove excessive characters
 		output = output.replaceAll("'", "");
 		output = output.replaceAll(" ", "");
+		//Split the words
 		String[] result = output.split(",");
 		return result;
 	}

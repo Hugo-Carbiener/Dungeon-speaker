@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.FontFormatException;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import dungeon.Map;
+import dungeon.Room;
 import gui.GuiDefeatScreen;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
@@ -103,6 +105,7 @@ public class Game {
 		String[] currentInput = GuiGameWindow.getCurrentInput();
 		String action = currentInput[0];
 		
+		
 		GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
 		GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
@@ -129,7 +132,7 @@ public class Game {
 				}
 				break;
 				
-			case "check"://Either check the map or check the inventory
+			case "look"://Either check the map or check the inventory
 				//if (currentInput.length > 1) {//get the argument if it exists
 				//	String arg = currentInput[1];
 					//switch (arg) {
@@ -142,7 +145,8 @@ public class Game {
 					
 					//case "inventory":
 						//Check inventory
-						player.checkInventory();
+						//player.checkInventory();
+						player.observe();
 						//break;
 					//}
 				//} else {//send error message if the nlp script did not output an argument
@@ -184,9 +188,9 @@ public class Game {
 				}
 				break;
 			
-			case "look"://Look at your surroundings 
+			/*case "look"://Look at your surroundings 
 				player.observe();
-				break;
+				break;*/
 				
 			case "attack":
 				//Cheeck if there is a monster in the room
@@ -199,13 +203,90 @@ public class Game {
 				}
 				break;
 			
-			case "move":
-				player.moveForward();
-				//player.backtrack();
-				//player.moveBackwards();
-				break;
-			
+			case "move"://Move the player to another room
 				
+				if (currentInput.length > 1) {//get the argument if it exists
+					String[] arg = Arrays.copyOfRange(currentInput, 1, currentInput.length-1);
+					List<String> argList = Arrays.asList(arg);
+					if (argList.contains("first") || argList.contains("forward")) {//player wants to go to the first room
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							//Check if there is a 'first room'
+							String targetRoomId = player.getPosition().getId() + String.valueOf(0);
+							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
+							if (targetRoom == null) {
+								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
+							} else {
+								GuiGameWindow.GuiGameDisplay("You move to the first room in front of you.", Color.WHITE, true);
+								player.moveForward();
+							}
+							break;
+						}
+					} else if (argList.contains("second")) {//player wants to go to the second room
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							//Check if there is a 'second room'
+							String targetRoomId = player.getPosition().getId() + String.valueOf(1);
+							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
+							if (targetRoom == null) {
+								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
+							} else {
+								GuiGameWindow.GuiGameDisplay("You move to the second room in front of you.", Color.WHITE, true);
+								player.moveTo(targetRoom);
+							}
+							break;
+						}
+					} else if (argList.contains("third")) {//player wants to go the third room
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							//Check if there is a 'third room'
+							String targetRoomId = player.getPosition().getId() + String.valueOf(2);
+							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
+							if (targetRoom == null) {
+								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
+							} else {
+								GuiGameWindow.GuiGameDisplay("You move to the third room in front of you.", Color.WHITE, true);
+								player.moveTo(targetRoom);
+							}
+							break;
+						}
+					} else if (argList.contains("fourth")) {//player wants to go to the fourth room
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							//Check if there is a 'fourth room'
+							String targetRoomId = player.getPosition().getId() + String.valueOf(3);
+							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
+							if (targetRoom == null) {
+								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
+							} else {
+								GuiGameWindow.GuiGameDisplay("You move to the fourth room in front of you.", Color.WHITE, true);
+								player.moveTo(targetRoom);
+							}
+							break;
+						}
+					} else if (argList.contains("back")){//player wants to go back the their previous position
+						GuiGameWindow.GuiGameDisplay("You follow your steps back and find yourself in the room previously visited.", Color.WHITE, true);
+						player.backtrack();
+						break;
+					} else if (argList.contains("behind")){//player wants to go to the room behind them
+						GuiGameWindow.GuiGameDisplay("You turn around and head towards the room that was behind you.", Color.WHITE, true);
+						player.moveBackwards();
+						break;
+					} else {//We generate the dungeon with max four child rooms so there cannot be a fifth room
+						GuiGameWindow.GuiGameDisplay("Your instruction was unclear. Such room does not exist...", Color.WHITE, true);
+					}
+				} else {//send error message if the nlp script did not output an argument
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. Please precise which room you are looking for.", Color.WHITE, true);
+				}
+				break;
 			}
 			break;
 			
@@ -230,6 +311,15 @@ public class Game {
 				e.printStackTrace();
 			}
 			break;
+		}
+	}
+	
+	public static boolean monsterIsPresent() {
+		//returns true if there is a monster on the player's current position
+		if (Game.player.getPosition().getMonster() == null) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }
