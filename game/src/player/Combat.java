@@ -30,12 +30,12 @@ public class Combat {
 			GuiGameWindow.GuiGameDisplay("Out of energy, you begin to sumble as your sight darkens. You know that these are the last breaths you take...", Color.RED, false);
 			GuiGameWindow.GuiGameDisplay("Your lifeless body hits the ground heavily.", Color.RED, false);
 			if (getPlayer().equippedItem != null) {
-				GuiGameWindow.GuiGameDisplay("You send your " + getPlayer().equippedItem.getName() + "flying away.", Color.WHITE, false);
+				GuiGameWindow.GuiGameDisplay("In your fall, you send your " + getPlayer().equippedItem.getName() + " flying away.", Color.RED, false);
 			}
 			GuiGameWindow.GuiGameDisplay("These are the last words of the story of " + getPlayer().getUsername() +", the adventurer.", Color.RED, true);
 		} else if(monster.health <= 0) {
 			GuiGameWindow.GuiGameDisplay("You have slain the " + monster.getName() + "!", Color.WHITE, false);
-			GuiGameWindow.GuiGameDisplay("You could probably habve looted some equipment on the corpse if that was implemented in the game.", Color.WHITE, true);
+			GuiGameWindow.GuiGameDisplay("You could probably habe looted some equipment on the corpse if that was implemented in the game.", Color.WHITE, true);
 			//Remove the dead monster from the room
 			hero.getPosition().setMonster(null);
 			//Tell the game to listen to roaming actions

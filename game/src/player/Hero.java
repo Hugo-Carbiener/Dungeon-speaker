@@ -59,12 +59,13 @@ public class Hero extends Character{
 	public void throwItem(Item item) {
 		if (this.inventory.contains(item)) { //if the designated item is in inventory we get rid of it
 			this.inventory.remove(item);
+			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".", Color.WHITE, true);
 		} else if (this.equippedItem == item) { //if the designated item is equipped we either get rid of it or use it if throwable
 			this.equippedItem = null;
 			if (item.isThrowable()) {
 				//do item action
 			}
-			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".", Color.WHITE, true);
+			GuiGameWindow.GuiGameDisplay("You throw your equipped " + item.getName() + ".", Color.WHITE, true);
 		}
 		else {
 			System.out.println("The item does not exist");
@@ -72,7 +73,7 @@ public class Hero extends Character{
 	}
 	
 	public void consume() {
-		//Consume item if consumable
+		//Consume item if consummable
 	}
 	
 	
