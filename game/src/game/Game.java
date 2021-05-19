@@ -117,11 +117,12 @@ public class Game {
 		
 			switch (action) {
 			case "take"://Take an item in the current room
-				Item item = player.getPosition().getItems().get(0);
-				if (item != null) {//get the argument if it exists
-					player.take(item);
-				} else {
+				List<Item> roomItem = player.getPosition().getItems();
+				if (roomItem.isEmpty()) {//There is no item to pick up
 					GuiGameWindow.GuiGameDisplay("There is no item in this room", Color.WHITE, true);
+				} else {
+					player.take(roomItem.get(0));
+					
 				}
 				break;
 				
@@ -140,6 +141,7 @@ public class Game {
 						//Check inventory
 						player.checkInventory();
 						player.observe();
+						break;
 						//break;
 					//}
 				//} else {//send error message if the nlp script did not output an argument
@@ -169,10 +171,14 @@ public class Game {
 				if (currentInput.length > 1) {//get the argument if it exists
 					String arg = currentInput[1];
 					for (Item each : playerInventory) {//for each item in the player's inventory
-						if (each.getName() == arg) {
+						System.out.println((arg == each.getName()));
+						System.out.println(arg);
+						System.out.println(each.getName());
+						if (arg.equals(each.getName())) {
 							player.equip(each);
+							
 							break;
-						} else if (playerInventory.indexOf(each) == playerInventory.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
+						} else if ((playerInventory.indexOf(each) == playerInventory.size()-1) && (each.getName() != arg)) {  //If we reached the last item of the list and the name is still not correct
 							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...",Color.WHITE, true);
 						}
 					}

@@ -88,7 +88,7 @@ public class Hero extends Character{
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
-					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName(), Color.WHITE, true);
+					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName() + " and put it in your inventory.", Color.WHITE, true);
 				} else {
 					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.", Color.WHITE, true);
 				}
@@ -114,7 +114,11 @@ public class Hero extends Character{
 				}
 			}
 		}
-		GuiGameWindow.GuiGameDisplay(output, Color.WHITE, true);
+		GuiGameWindow.GuiGameDisplay(output, Color.WHITE, false);
+		if (this.equippedItem != null) {
+			String output2 = "You have equipped a " + this.equippedItem.getName() + ".";
+			GuiGameWindow.GuiGameDisplay(output2, Color.WHITE, true);
+		}
 	}
 	
 	public void moveTo(Room room) {
