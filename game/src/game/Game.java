@@ -79,6 +79,7 @@ public class Game {
 		} else if (player.getPosition() == map.getEndingRoom()) {
 			//win condition
 			gameState = "victory";
+			GuiGameWindow.GuiGameDisplay("You reached the exit! A bright light shines on the path in front of you! It is now written: you will come out as a Hero! Congratulations!", Color.WHITE, true);
 			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
 			Game.event();
 		}
@@ -116,19 +117,11 @@ public class Game {
 		
 			switch (action) {
 			case "take"://Take an item in the current room
-				List<Item> roomItems = player.getPosition().getItems();
-				if (currentInput.length > 1) {//get the argument if it exists
-					String arg = currentInput[1];
-					for (Item each : roomItems) {//for each item in the room's item pool
-						if (each.getName() == arg) {
-							player.take(each);
-							break;
-						} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...", Color.WHITE, true);
-						}
-					}
-				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
+				Item item = player.getPosition().getItems().get(0);
+				if (item != null) {//get the argument if it exists
+					player.take(item);
+				} else {
+					GuiGameWindow.GuiGameDisplay("There is no item in this room", Color.WHITE, true);
 				}
 				break;
 				
@@ -145,7 +138,7 @@ public class Game {
 					
 					//case "inventory":
 						//Check inventory
-						//player.checkInventory();
+						player.checkInventory();
 						player.observe();
 						//break;
 					//}
@@ -206,15 +199,15 @@ public class Game {
 			case "move"://Move the player to another room
 				
 				if (currentInput.length > 1) {//get the argument if it exists
-					String[] arg = Arrays.copyOfRange(currentInput, 1, currentInput.length-1);
-					List<String> argList = Arrays.asList(arg);
+					//String[] arg = Arrays.copyOfRange(currentInput, 1, currentInput.length-1);
+					List<String> argList = Arrays.asList(currentInput);
 					if (argList.contains("first") || argList.contains("forward")) {//player wants to go to the first room
 						if(monsterIsPresent()) {
 							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
 							break;
 						} else {
 							//Check if there is a 'first room'
-							String targetRoomId = player.getPosition().getId() + String.valueOf(0);
+							String targetRoomId = player.getPosition().getId() + "0";
 							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
 							if (targetRoom == null) {
 								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
@@ -230,7 +223,7 @@ public class Game {
 							break;
 						} else {
 							//Check if there is a 'second room'
-							String targetRoomId = player.getPosition().getId() + String.valueOf(1);
+							String targetRoomId = player.getPosition().getId() + "1";
 							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
 							if (targetRoom == null) {
 								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
@@ -246,7 +239,7 @@ public class Game {
 							break;
 						} else {
 							//Check if there is a 'third room'
-							String targetRoomId = player.getPosition().getId() + String.valueOf(2);
+							String targetRoomId = player.getPosition().getId() + "2";
 							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
 							if (targetRoom == null) {
 								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
@@ -262,7 +255,7 @@ public class Game {
 							break;
 						} else {
 							//Check if there is a 'fourth room'
-							String targetRoomId = player.getPosition().getId() + String.valueOf(3);
+							String targetRoomId = player.getPosition().getId() + "3";
 							Room targetRoom = map.getRoom(targetRoomId, map.getStartingRoom());
 							if (targetRoom == null) {
 								GuiGameWindow.GuiGameDisplay("That room does not exist.. You might want to check your map.", Color.WHITE, true);
