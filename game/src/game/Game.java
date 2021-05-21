@@ -54,7 +54,7 @@ public class Game {
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
 		//GENERATE MAP
-		Map map = Map.generateMap(4,4,0.5, 0.5, 20, 30);
+		Map map = Map.generateMap(4, 4, 0.5, 0.5, 20, 30);
 		//GENERATE PLAYER 
 		Hero player = new Hero(playerName, map);
 		//Create game with a roaming state
@@ -90,7 +90,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			GuiGameWindow.GuiGameDisplay("waiting...", Color.WHITE, false);
+			//GuiGameWindow.GuiGameDisplay("waiting...", Color.WHITE, false);
 		
 			//Pause the game loop to wait for the user's input 
 			try {
@@ -107,8 +107,8 @@ public class Game {
 		String action = currentInput[0];
 		
 		
-		GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
-		GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
+		//GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
+		//GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
@@ -132,14 +132,14 @@ public class Game {
 					//switch (arg) {
 					//case "map":
 						//Check map
-						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
+						/*GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
 						map.displayOnGuiFromRoom(map.getStartingRoom());
 						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
-						//break;
+						*///break;
 					
 					//case "inventory":
 						//Check inventory
-						player.checkInventory();
+						//player.checkInventory();
 						player.observe();
 						break;
 						//break;

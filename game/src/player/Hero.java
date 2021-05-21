@@ -7,6 +7,7 @@ import java.util.List;
 import dungeon.Map;
 import dungeon.Room;
 import gui.GuiGameWindow;
+import javafx.util.Pair;
 
 public class Hero extends Character{
 	private String username;
@@ -152,6 +153,32 @@ public class Hero extends Character{
 		visitedRooms.remove(visitedRooms.size()-1);
 		Room previousRoom = visitedRooms.remove(visitedRooms.size()-1);
 		this.moveTo(previousRoom);
+	}
+	
+	public void moveLeft(Map map) {
+		List<Pair<String, Boolean>> neighbors = this.getPosition().getNeighbor(map);
+		if (neighbors.get(1).getValue() == false) {//Left neighbor does not exist
+			GuiGameWindow.GuiGameDisplay("The room you are in does not have a left neighbor.", Color.WHITE, true);
+		} else if(! (this.getPosition().getAccessibleRooms().contains(map.getRoom(neighbors.get(1).getKey(), map.getStartingRoom())))) {//if the list of accessible rooms does not contain the neighbor
+			GuiGameWindow.GuiGameDisplay("There is no corridor leading to the left room. You may try to find another path.", Color.WHITE, true);
+		} else {//The left room exists and is accessible
+			Room targetRoom = map.getRoom(neighbors.get(1).getKey(), map.getStartingRoom());
+			this.moveTo(targetRoom);
+			GuiGameWindow.GuiGameDisplay("You move to the room on your left.", Color.WHITE, true);
+		}
+	}
+	
+	public void moveRight(Map map) {
+		List<Pair<String, Boolean>> neighbors = this.getPosition().getNeighbor(map);
+		if (neighbors.get(0).getValue() == false) {//Left neighbor does not exist
+			GuiGameWindow.GuiGameDisplay("The room you are in does not have a right neighbor.", Color.WHITE, true);
+		} else if(! (this.getPosition().getAccessibleRooms().contains(map.getRoom(neighbors.get(0).getKey(), map.getStartingRoom())))) {//if the list of accessible rooms does not contain the neighbor
+			GuiGameWindow.GuiGameDisplay("There is no corridor leading to the right room. You may try to find another path.", Color.WHITE, true);
+		} else {//The left room exists and is accessible
+			Room targetRoom = map.getRoom(neighbors.get(0).getKey(), map.getStartingRoom());
+			this.moveTo(targetRoom);
+			GuiGameWindow.GuiGameDisplay("You move to the room on your left.", Color.WHITE, true);
+		}
 	}
 	
 	public void observe() {
