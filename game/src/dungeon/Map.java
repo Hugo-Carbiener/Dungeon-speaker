@@ -33,7 +33,6 @@ public class Map {
 		this.neighborLinkProbability = neighborLinkProbability;
 		this.fillProbability = fillProbability;
 		this.roomAmount = 1;
-		
 		//GENERATION OF THE TREE
 		this.generateBasicTree(0, this.startingRoom, fillProbability);
 		//GENERATION OF NEIGHBOR LINKS
@@ -46,12 +45,9 @@ public class Map {
 			int nbOfRoom = (int) (Math.random() * this.maxExitNumber);
 			for (int i = 0; i < nbOfRoom; i++) { 					//generate the x rooms, children of root
 				String newId = root.getId() + String.valueOf(i);	//generate the id of the room about to be created
-				//System.out.println(newId);
-				
 				root.addRoom(newId, level + 1, fillProbability);
 				this.roomAmount +=1;
 			}
-			//System.out.println("Room generated");
 			for (Room each : root.getNextRooms()) { 	//generate basic trees for each child
 				generateBasicTree(level + 1, each, fillProbability);
 			}
@@ -60,7 +56,6 @@ public class Map {
 
 	public void addNeighborLink(Room root, double probability) {
 		//Applies Room.addNeighborLink to every room of the dungeon
-		
 		for (Room each : root.getNextRooms()) { 
 			each.addNeighborLink(this, probability);
 			this.addNeighborLink(each, probability);
@@ -73,13 +68,11 @@ public class Map {
 		while (map.roomAmount < minRoomTreshold || map.roomAmount > maxRoomTreshold || map.reachesMaxLevel(map.getStartingRoom()) == false) {
 			map = new Map(endLevel, maxExitNumber, neighborLinkProbability, fillProbability);
 		}
-		
 		//SET THE ENDING ROOM
 		map.setEndingRoom(map.startingRoom);
 		while (map.endingRoom == null) {
 			map.setEndingRoom(map.startingRoom);
 		}
-		
 		return map;
 	}
 		

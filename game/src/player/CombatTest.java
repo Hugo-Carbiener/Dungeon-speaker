@@ -1,6 +1,6 @@
 package player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -15,7 +15,6 @@ public class CombatTest {
 		Monster monster = new Monster("monster", 5,5); 
 		Combat combat = new Combat(hero, monster);
 		assertSame(combat.hero, combat.getPlayer());
-		
 	}
 
 	@Test
@@ -25,8 +24,6 @@ public class CombatTest {
 		Monster monster = new Monster("monster", 5,5); 
 		Combat combat = new Combat(hero, monster);
 		assertSame(combat.monster, combat.getMonster());
-		
 	}
-
 }
 //the other functions can be tested directly on GUI

@@ -38,9 +38,6 @@ public class GuiTitleScreen implements ActionListener {
 			}
 			
 		});
-		
-		//Add titlescreen image
-		
 		//resize image
 		
 		ImageIcon imageIcon = new ImageIcon("src/res/dungeon_speaker.png");
@@ -65,7 +62,6 @@ public class GuiTitleScreen implements ActionListener {
 		//Set custom size for the button
 		buttonPanel.setPreferredSize(new Dimension(400, 800));
 		
-		
 		JPanel mainPanel = new JPanel();
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(imagePanel);
@@ -77,11 +73,8 @@ public class GuiTitleScreen implements ActionListener {
 		frame.setTitle("Dungeon Speaker");
 		frame.pack();
 		frame.setVisible(true);
-		
-		
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-	}	
+	public void actionPerformed(ActionEvent arg0) {}	
 }

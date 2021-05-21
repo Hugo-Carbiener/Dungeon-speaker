@@ -10,7 +10,6 @@ public class Weapon extends Item{
 	String name;
 	int damage;
 	
-	
 	public Weapon() {
 		super(10, true, false, false);	//set weapon weight to 10
 		String name;					//Name of the weapon generated
@@ -35,7 +34,6 @@ public class Weapon extends Item{
 		name = weaponMarker.getValue0();
 		rarityIndicator = weaponMarker.getValue1();
 		double keepLimit = (rarityIndicator / 10) - 0.1;       //Used to determine if we keep the weapon when doing the probability check
-		
 		double keepTest = Math.random();					   //Random number compared to the probability limit
 		
 		//PROBABILITY CHECK
@@ -48,7 +46,6 @@ public class Weapon extends Item{
 			keepLimit = (rarityIndicator / 10) - 0.1;
 		}
 		//_______________________________________________________
-		
 		
 		this.name = name;
 		this.damage = calculateDamage(rarityIndicator);

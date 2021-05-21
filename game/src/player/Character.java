@@ -45,7 +45,6 @@ public class Character {
 		if (this.equippedItem != null) {
 			totalDamage += this.equippedItem.itemDamage;
 		}
-		
 		// +/- 10%
 		//int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
 		//totalDamage += r;
@@ -56,7 +55,6 @@ public class Character {
 			totalDamage = totalDamage / 2;
 			target.isDefending = false;
 		}
-	
 		target.health -= totalDamage;
 		
 		//Create the message to explain the action
@@ -70,7 +68,6 @@ public class Character {
 			message = "You deal " + totalDamage + " points of damages to the " + Game.getCombat().getMonster().getName() + ".";
 			GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 		}
-		
 	}
 	
 	public void defend() {
@@ -84,7 +81,4 @@ public class Character {
 		}
 		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
-
-
-
 }

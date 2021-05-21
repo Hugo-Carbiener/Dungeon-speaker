@@ -1,6 +1,6 @@
 package player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -13,5 +13,4 @@ public class CharacterTest {
 		hero.basicAttack(target);
 		assertSame(3, target.health);
 	}
-
 }

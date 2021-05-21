@@ -19,7 +19,6 @@ public class Room {
     private String id; 											//id of the room. Generated as follows : id  = id of previous room + number of the room in the order of generation(starting at 0). e.g. the third room of room 010 will have id = 0102 
     private int level;											//Number of the floor the room belongs to. Is equal to the number of parents(including starting room)
     public boolean isEndingRoom = false;
-    
     public List<Item> items = new ArrayList<>();						//List of items in the room
     public Monster monster;											//The monster guarding the room
     
@@ -71,7 +70,6 @@ public class Room {
     	//Returns a list of 2 pairs (id, boolean) that respectively indicates if room has a left neighbor and a right neighbor. 
     	//id for the right neighbor (second pair) may be nonsense but will not be used afterwards as long as it's boolean is at false
     	
-    	
     	List<Pair<String, Boolean>> neighbors = new ArrayList<>();
     	String roomId = this.getId();
     	char curLastChar = roomId.charAt(roomId.length()-1);
@@ -99,12 +97,10 @@ public class Room {
     	} else { 
     		rightNeighbor = new Pair<>(rightId, false);
     	}
-    	
     	neighbors.add(leftNeighbor);
     	neighbors.add(rightNeighbor);
     	return neighbors;
     }
-    
     
     public List<Boolean> lastChildIndicator() {
     	//PLEASE IGNORE. Returns a list of booleans telling for each previous room to this whether or not the room is the last child of its level
@@ -113,7 +109,6 @@ public class Room {
     	int level = this.getLevel();
     	List<Boolean> indicator = new ArrayList<Boolean>(Arrays.asList(new Boolean[level]));
     	Collections.fill(indicator, Boolean.FALSE);
-
     	
     	for (int i = level - 1; i >= 0; i--) {
     		List<Room> neighborRooms = prev.nextRooms;
@@ -126,7 +121,6 @@ public class Room {
     	return indicator;
     }
     
-    
     public void addNeighborLink(Map map, double probability) {
     	//Check each room to see if it has left and right neighbors. If so it generate a links between the room and its neighbor with a probability 
     	
@@ -135,7 +129,6 @@ public class Room {
     	} else if (probability > 1) {
     		probability = 1;
     	}
-    	
     	List<Pair<String, Boolean>> neighbors = this.getNeighbor(map);
     	Room root = map.getStartingRoom();
     	Room currentNeighbor;

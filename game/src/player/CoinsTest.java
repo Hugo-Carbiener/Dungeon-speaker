@@ -1,6 +1,6 @@
 package player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -11,5 +11,4 @@ public class CoinsTest {
 		Coins coins = new Coins(10);
 		assertSame(10, coins.getAmount());
 	}
-
 }

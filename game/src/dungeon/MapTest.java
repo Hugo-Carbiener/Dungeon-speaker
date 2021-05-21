@@ -50,7 +50,7 @@ public class MapTest {
 	public void testGetRoomNumber() {
 		Map map = new Map(1,1,1,1);
 		map.roomAmount = 1;
-		assertEquals(1,map.GetRoomNumber());
+		assertEquals(1,map.getRoomNumber());
 	}
 
 	@Test

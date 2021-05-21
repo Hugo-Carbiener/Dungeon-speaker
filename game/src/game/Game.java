@@ -2,13 +2,9 @@ package game;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.awt.Image;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import dungeon.Map;
 import dungeon.Room;
@@ -37,6 +33,9 @@ public class Game {
 	public static Combat getCombat() {return Game.combat;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
+	public static void setCombat(Combat combat) {Game.combat = combat;}
+	public static void setPlayer(Hero player) {Game.player = player;}
+	public static void setMap(Map map) {Game.map = map;}
 	
 	public static void start() {
 		//Start the game by launching the Titlescreen interface in a separate thread
@@ -60,15 +59,13 @@ public class Game {
 		//GENERATE PLAYER 
 		Hero player = new Hero(playerName, map);
 		//Create game with a roaming state
-		Game.player = player;
-		Game.map = map;
+		Game.setPlayer(player);
+		Game.setMap(map);
 		Game.gameState = "roaming";
 		Game.loop();
 	}
 	
-	
 	public static void loop() {
-		
 		//MAIN LOOP
 		while (player.health > 0 && !(player.getPosition() == map.getEndingRoom())) {
 			Game.event();
@@ -190,7 +187,7 @@ public class Game {
 					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
 				} else {
 					GuiGameWindow.GuiGameDisplay("You engage the " + player.getPosition().getMonster().getName() + "! Get ready!", Color.WHITE, true);
-					combat = new Combat(player, player.getPosition().getMonster());
+					setCombat(new Combat(player, player.getPosition().getMonster()));
 					combat.start();
 				}
 				break;
@@ -317,6 +314,7 @@ public class Game {
 			break;
 		}
 	}
+	
 	public static boolean monsterIsPresent() {
 		//returns true if there is a monster on the player's current position
 		if (Game.player.getPosition().getMonster() == null) {

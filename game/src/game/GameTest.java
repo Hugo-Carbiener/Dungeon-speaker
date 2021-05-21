@@ -15,7 +15,7 @@ public class GameTest {
 	public void testGetPlayer() {
 		Map map = new Map(1,1, 1,1);
 		Hero hero = new Hero("username",map);
-		Game.player = hero;
+		Game.setPlayer(hero);
 		assertSame(hero, Game.getPlayer());
 		
 	}
@@ -23,9 +23,8 @@ public class GameTest {
 	@Test
 	public void testGetMap() {
 		Map map = new Map(1,1, 1,1);
-		Game.map = map;
+		Game.setMap(map);
 		assertSame(map, Game.getMap());
-		
 	}
 
 	@Test
@@ -34,14 +33,14 @@ public class GameTest {
 		Hero hero = new Hero("username",map);
 		Monster monster = new Monster("monster", 5, 5);
 		Combat combat = new Combat(hero, monster);
-		Game.combat = combat;
+		Game.setCombat(combat);
 		assertSame(combat, Game.getCombat());
 	}
 
 	@Test
 	public void testGetGameState() {
 		String gamestate = "gamestate";
-		Game.gameState = gamestate;
+		Game.setGameState(gamestate);
 		assertSame(gamestate, Game.getGameState());
 	}
 
@@ -49,7 +48,7 @@ public class GameTest {
 	public void testSetGameState() {
 		String gamestate = "gamestate";
 		Game.setGameState(gamestate);
-		assertSame(gamestate, Game.gameState);
+		assertSame(gamestate, Game.getGameState());
 		
 	}
 //we can test the other functions directly via GUI

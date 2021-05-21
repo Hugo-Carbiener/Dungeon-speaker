@@ -33,16 +33,11 @@ public class GuiDefeatScreen implements ActionListener {
 				} catch (FontFormatException | IOException e) {
 					e.printStackTrace();
 				}
-				
 				frame.setVisible(false);//prevent windows from overlapping and stop user from reclicking start and generating another menu window
 			}
 			
 		});
-		
-		//Add titlescreen image
-		
 		//resize image
-		
 		ImageIcon imageIcon = new ImageIcon("src/res/dungeon_speaker_death.png");
 		Image image = imageIcon.getImage();//turn it into an image
 		Image newimg = image.getScaledInstance(1420, 780,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
@@ -65,7 +60,6 @@ public class GuiDefeatScreen implements ActionListener {
 		//Set custom size for the button
 		buttonPanel.setPreferredSize(new Dimension(400, 800));
 		
-		
 		JPanel mainPanel = new JPanel();
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(imagePanel);
@@ -77,12 +71,8 @@ public class GuiDefeatScreen implements ActionListener {
 		frame.setTitle("Dungeon Speaker");
 		frame.pack();
 		frame.setVisible(true);
-		
-		
 	}
-
+	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-	}	
+	public void actionPerformed(ActionEvent arg0) {}	
 }

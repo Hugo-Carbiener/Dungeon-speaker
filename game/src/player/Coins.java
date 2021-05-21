@@ -8,8 +8,5 @@ public class Coins extends Item{
 		super(0, false, false, false);
 		this.amount = amount;
 	}
-	
 	public int getAmount() {return this.amount;}
-
-
 }
