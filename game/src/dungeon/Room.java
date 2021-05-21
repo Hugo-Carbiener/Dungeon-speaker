@@ -42,6 +42,7 @@ public class Room {
     public void setAsEndingRoom() {this.isEndingRoom = true;}
     public List<Item> getItems() {return this.items;}
     public Monster getMonster() {return this.monster;}
+    public void setMonster(Monster monster) {this.monster = monster;}
     
     public List<Room> getRoomFamily() {
     	// returns a list of the rooms coming from the same previous room, i.e. the family of rooms this is part of

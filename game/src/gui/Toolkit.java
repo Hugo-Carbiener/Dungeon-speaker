@@ -1,16 +1,15 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 
 public class Toolkit {

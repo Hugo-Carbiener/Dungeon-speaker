@@ -7,6 +7,7 @@ import java.util.List;
 import dungeon.Map;
 import dungeon.Room;
 import gui.GuiGameWindow;
+import javafx.util.Pair;
 
 public class Hero extends Character{
 	private String username;
@@ -59,12 +60,13 @@ public class Hero extends Character{
 	public void throwItem(Item item) {
 		if (this.inventory.contains(item)) { //if the designated item is in inventory we get rid of it
 			this.inventory.remove(item);
+			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".", Color.WHITE, true);
 		} else if (this.equippedItem == item) { //if the designated item is equipped we either get rid of it or use it if throwable
 			this.equippedItem = null;
 			if (item.isThrowable()) {
 				//do item action
 			}
-			GuiGameWindow.GuiGameDisplay("You throw your " + item.getName() + ".", Color.WHITE, true);
+			GuiGameWindow.GuiGameDisplay("You throw your equipped " + item.getName() + ".", Color.WHITE, true);
 		}
 		else {
 			System.out.println("The item does not exist");
@@ -72,7 +74,7 @@ public class Hero extends Character{
 	}
 	
 	public void consume() {
-		//Consume item if consumable
+		//Consume item if consummable
 	}
 	
 	
@@ -88,7 +90,7 @@ public class Hero extends Character{
 				if (this.inventory.size() < this.inventorySize) {
 					this.inventory.add((Item) item);
 					this.position.getItems().remove(item);
-					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName(), Color.WHITE, true);
+					GuiGameWindow.GuiGameDisplay("You pick up the " + ((Item) item).getName() + " and put it in your inventory.", Color.WHITE, true);
 				} else {
 					GuiGameWindow.GuiGameDisplay("Your inventory is full! Throw away something first.", Color.WHITE, true);
 				}
@@ -114,7 +116,22 @@ public class Hero extends Character{
 				}
 			}
 		}
-		GuiGameWindow.GuiGameDisplay(output, Color.WHITE, true);
+		GuiGameWindow.GuiGameDisplay(output, Color.WHITE, false);
+		if (this.equippedItem != null) {
+			String output2 = "You have equipped a " + this.equippedItem.getName() + ".";
+			GuiGameWindow.GuiGameDisplay(output2, Color.WHITE, true);
+		}
+	}
+	
+	public void checkHealth() {
+		GuiGameWindow.GuiGameDisplay("You have " + this.health + " health points out of " + this.getMaxHealth() + ".", Color.WHITE, false);
+		if (this.health >= 2 * this.getMaxHealth() / 3) {
+			GuiGameWindow.GuiGameDisplay("You are eager to fight the next battle!", Color.WHITE, true);
+		} else if (this.health < 2 * this.getMaxHealth() / 3 && this.health >= this.getMaxHealth() / 3) {
+			GuiGameWindow.GuiGameDisplay("You steps feel heavy. If only you could take some time and rest..", Color.WHITE, true);
+		} else {
+			GuiGameWindow.GuiGameDisplay("You have difficulty breathing and each step is painful. The only thing still driving you is the hope of seeing the light at the end of the tunnel.", Color.WHITE, true);
+		}
 	}
 	
 	public void moveTo(Room room) {
@@ -147,6 +164,32 @@ public class Hero extends Character{
 		visitedRooms.remove(visitedRooms.size()-1);
 		Room previousRoom = visitedRooms.remove(visitedRooms.size()-1);
 		this.moveTo(previousRoom);
+	}
+	
+	public void moveLeft(Map map) {
+		List<Pair<String, Boolean>> neighbors = this.getPosition().getNeighbor(map);
+		if (neighbors.get(1).getValue() == false) {//Left neighbor does not exist
+			GuiGameWindow.GuiGameDisplay("The room you are in does not have a left neighbor.", Color.WHITE, true);
+		} else if(this.getPosition().getAccessibleRooms().contains(map.getRoom(neighbors.get(1).getKey(), map.getStartingRoom()))) {//The left room exists and is accessible
+			Room targetRoom = map.getRoom(neighbors.get(1).getKey(), map.getStartingRoom());
+			this.moveTo(targetRoom);
+			GuiGameWindow.GuiGameDisplay("You move to the room on your left.", Color.WHITE, true);
+		} else {//if the list of accessible rooms does not contain the neighbor
+			GuiGameWindow.GuiGameDisplay("There is no corridor leading to the left room. You may try to find another path.", Color.WHITE, true);
+		}
+	}
+	
+	public void moveRight(Map map) {
+		List<Pair<String, Boolean>> neighbors = this.getPosition().getNeighbor(map);
+		if (neighbors.get(0).getValue() == false) {//Left neighbor does not exist
+			GuiGameWindow.GuiGameDisplay("The room you are in does not have a right neighbor.", Color.WHITE, true);
+		} else if(this.getPosition().getAccessibleRooms().contains(map.getRoom(neighbors.get(0).getKey(), map.getStartingRoom()))) {//The left room exists and is accessible
+			Room targetRoom = map.getRoom(neighbors.get(0).getKey(), map.getStartingRoom());
+			this.moveTo(targetRoom);
+			GuiGameWindow.GuiGameDisplay("You move to the room on your right.", Color.WHITE, true);
+		} else {//if the list of accessible rooms does not contain the neighbor
+			GuiGameWindow.GuiGameDisplay("There is no corridor leading to the right room. You may try to find another path.", Color.WHITE, true);
+		}
 	}
 	
 	public void observe() {

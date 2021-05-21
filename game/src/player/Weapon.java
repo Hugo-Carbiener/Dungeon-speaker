@@ -19,16 +19,16 @@ public class Weapon extends Item{
 		
 		Pair<String,Integer> weaponMarker;
 		List<Pair<String, Integer>> weapons = new ArrayList<>(Arrays.asList(
-				Pair.with("Club", 1),
-				Pair.with("Knife", 2),
-				Pair.with("Dagger", 3),
-				Pair.with("Bow", 4),
-				Pair.with("Sword", 5),
-				Pair.with("Axe", 6),
-				Pair.with("Whip", 7),
-				Pair.with("Claymore", 8),
-				Pair.with("Scythe", 9),
-				Pair.with("Magic AK47", 10)));	
+				Pair.with("club", 1),
+				Pair.with("knife", 2),
+				Pair.with("dagger", 3),
+				Pair.with("bow", 4),
+				Pair.with("sword", 5),
+				Pair.with("axe", 6),
+				Pair.with("whip", 7),
+				Pair.with("claymore", 8),
+				Pair.with("scythe", 9),
+				Pair.with("katana", 10)));	
 		
 		r = (int) (Math.random() * weapons.size());
 		weaponMarker = weapons.get(r);

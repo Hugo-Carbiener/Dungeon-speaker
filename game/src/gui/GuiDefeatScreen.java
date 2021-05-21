@@ -15,13 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GuiTitleScreen implements ActionListener {
+public class GuiDefeatScreen implements ActionListener {
 
-	public GuiTitleScreen() throws FontFormatException, IOException {
+	public GuiDefeatScreen() throws FontFormatException, IOException {
 		
 		JFrame frame = new JFrame();
 		//Add Start button
-		JButton button = Toolkit.simpleButton("Start", "pixelArtFont.ttf");
+		JButton button = Toolkit.simpleButton("Restart", "pixelArtFont.ttf");
 		
 		button.addActionListener(new ActionListener() {
 
@@ -43,7 +43,7 @@ public class GuiTitleScreen implements ActionListener {
 		
 		//resize image
 		
-		ImageIcon imageIcon = new ImageIcon("src/res/dungeon_speaker.png");
+		ImageIcon imageIcon = new ImageIcon("src/res/dungeon_speaker_death.png");
 		Image image = imageIcon.getImage();//turn it into an image
 		Image newimg = image.getScaledInstance(1420, 780,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);//turn it back into an imageIcon
@@ -83,5 +83,6 @@ public class GuiTitleScreen implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
 	}	
 }

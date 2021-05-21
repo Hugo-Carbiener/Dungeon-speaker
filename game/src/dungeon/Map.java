@@ -2,9 +2,6 @@ package dungeon;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Random;
-
-import javax.swing.text.BadLocationException;
 
 import game.Game;
 import gui.GuiGameWindow;

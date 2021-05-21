@@ -1,5 +1,10 @@
 package gui;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,14 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultCaret;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import NLP.NLPManager;
 import game.Game;
@@ -28,9 +26,9 @@ import game.Game;
 
 public class GuiGameWindow implements ActionListener {
 	
-	private static JFrame frame;
+	public static JFrame frame;
 	private static GridBagConstraints gbc;
-	private static JPanel topPanel;
+	public static JPanel topPanel;
 	private static JScrollPane scrollPane;
 	private static Font customFontLarge;
 	private static Font customFontMedium;
@@ -38,7 +36,6 @@ public class GuiGameWindow implements ActionListener {
 	//Variables used with nlp
 	private static String[] currentInput;
 	private static volatile boolean inputIsUpdated = false;
-	
 	
 	public static void GuiGameDisplay(String string, Color color, boolean skipALine) {
 		//Display the string on a single line. For multiple lines use the method multiple times
@@ -67,8 +64,7 @@ public class GuiGameWindow implements ActionListener {
 		//Display the string on a single line, no font, no line skip, no arrows
 		JLabel lbl = new JLabel(string);
 		lbl.setForeground(color);
-		lbl.setFont(new Font("Arial", Font.PLAIN, 25
-				));
+		lbl.setFont(new Font("Arial", Font.PLAIN, 25));
 		topPanel.add(lbl, gbc);
 		gbc.gridy++;
 		//Set scollbar focus to the bottom of the page
@@ -158,6 +154,7 @@ public class GuiGameWindow implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				//Get the content of the text field
 				String str = textField.getText();
 				textField.setText("");
@@ -193,6 +190,10 @@ public class GuiGameWindow implements ActionListener {
 			}
         });
        
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
 	}
 
 }

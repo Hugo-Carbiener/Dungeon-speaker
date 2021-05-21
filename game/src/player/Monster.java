@@ -84,7 +84,7 @@ public class Monster extends Character{
 	
 	private static int calculateDamage(int rarityIndicator) {
 		//Base damage is 5 per rarity level
-		int baseDMG = 5 * rarityIndicator;
+		int baseDMG = 2 * rarityIndicator;
 		//Add a number between +10% of baseDamage and -10% of baseDamage to randomize baseDamage amount
 		int baseDMG10 = baseDMG / 10;
 		int r = (int) (Math.random() *(2 * baseDMG10) - baseDMG10);
