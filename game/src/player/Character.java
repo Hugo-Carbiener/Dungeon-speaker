@@ -10,7 +10,7 @@ import gui.GuiGameWindow;
 public class Character {
 
 	public int health;
-	public int maxHealth;
+	private int maxHealth;
 	//Defines if the player is currently defendeing himself from an incomming attack
 	public boolean isDefending = false;
 	public int mana;
@@ -23,9 +23,12 @@ public class Character {
 	public List<Item> inventory;
 	int inventorySize;
 	
+	public int getMaxHealth() {return maxHealth;}	
+	
 	//default settings of a new character
 	public Character(int health, int mana, double speed, int baseDamage) {
 		this.health = health;
+		this.maxHealth = health;
 		this.mana = mana;
 		this.speed = speed;
 		this.baseDamage = baseDamage;
@@ -81,4 +84,7 @@ public class Character {
 		}
 		GuiGameWindow.GuiGameDisplay(message, Color.WHITE, true);
 	}
+
+
+
 }

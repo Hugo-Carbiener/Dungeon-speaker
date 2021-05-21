@@ -50,7 +50,7 @@ public class Game {
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
 		//GENERATE MAP
-		Map map = Map.generateMap(4, 4, 0.5, 0.5, 20, 30);
+		Map map = Map.generateMap(4, 4, 0.5, 1, 20, 30);
 		//GENERATE PLAYER 
 		Hero player = new Hero(playerName, map);
 		//Create game with a roaming state
@@ -139,6 +139,7 @@ public class Game {
 						player.checkInventory();
 					} else if (argList.contains("health")) {
 						//Check health
+						player.checkHealth();
 					} else {//send error message if the nlp script did not output an argument
 						GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?", Color.WHITE, true);
 						}

@@ -123,6 +123,17 @@ public class Hero extends Character{
 		}
 	}
 	
+	public void checkHealth() {
+		GuiGameWindow.GuiGameDisplay("You have " + this.health + " health points out of " + this.getMaxHealth() + ".", Color.WHITE, false);
+		if (this.health >= 2 * this.getMaxHealth() / 3) {
+			GuiGameWindow.GuiGameDisplay("You are eager to fight the next battle!", Color.WHITE, true);
+		} else if (this.health < 2 * this.getMaxHealth() / 3 && this.health >= this.getMaxHealth() / 3) {
+			GuiGameWindow.GuiGameDisplay("You steps feel heavy. If only you could take some time and rest..", Color.WHITE, true);
+		} else {
+			GuiGameWindow.GuiGameDisplay("You have difficulty breathing and each step is painful. The only thing still driving you is the hope of seeing the light at the end of the tunnel.", Color.WHITE, true);
+		}
+	}
+	
 	public void moveTo(Room room) {
 		//Move player to the chosen room if it is accessible
 		Room currentRoom = this.position;
