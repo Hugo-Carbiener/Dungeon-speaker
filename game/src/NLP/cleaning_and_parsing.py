@@ -1,7 +1,7 @@
 
 import nltk
-from nltk.corpus import stopwords	#permet d'enlever les mots inutiles
-from nltk import word_tokenize	#permet de tokeniser par mot
+from nltk.corpus import stopwords	# permet d'enlever les mots inutiles
+from nltk import word_tokenize	# permet de tokeniser par mot
 from nltk import WordNetLemmatizer
 import sys
 ##interface entree : STRING##
@@ -10,32 +10,32 @@ import sys
 
 # recuperer l'entree utilisateur depuis un fichier texte
 # Ouvrir et lire le fichier 
-#text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
-#text = text_file.read()
+# text_file = open("test_00.txt")	#mettre nom_fichier.txt entre les guillemets
+# text = text_file.read()
 
 text = ""
 for i in range(len(sys.argv) - 1):
     text += sys.argv[i + 1] + " "
 
 
-#text = input("Entrez votre action : ")
+# text = input("Entrez votre action : ")
 
 
-#print('type of text : ')
-#print(type(text))
-#print("\n")
+# print('type of text : ')
+# print(type(text))
+# print("\n")
 
 
 
-#premiere fonction : word tokenization
+# premiere fonction : word tokenization
 words = word_tokenize(text)
 
 # print('words :')
 # print(words)
 # print("\n")
 
-#deuxieme fonction : enlever la ponctuation
-#rmq : on le fait avant de tagger les mots car la fonction isalpha ne prend pas de tuples en entree
+# deuxieme fonction : enlever la ponctuation
+# rmq : on le fait avant de tagger les mots car la fonction isalpha ne prend pas de tuples en entree
 word_no_punc = []
 for w in words:
     if w.isalpha():
@@ -45,7 +45,7 @@ for w in words:
 # print(word_no_punc)
 # print("\n")
 
-#troisieme fonction : tagger les mots
+# troisieme fonction : tagger les mots
 tagged_words = []
 
 for w in word_no_punc:
@@ -55,7 +55,7 @@ for w in word_no_punc:
 # print(tagged_words)
 # print("\n")
 
-#quatrieme fonction : clean la liste
+# quatrieme fonction : clean la liste
 clean_words = []
 
 stopwords = stopwords.words("english")
@@ -65,7 +65,7 @@ for word in tagged_words:
         clean_words.append(word)
 
 
-#print(clean_words)
+# print(clean_words)
 
 final_words = []
 lemma = WordNetLemmatizer()
@@ -76,4 +76,4 @@ for word in clean_words:
         final_words.append((lemma.lemmatize(word[0], pos="n"), word[1]))
     else:
         final_words.append(word)
-#print(final_words)
+# print(final_words)
