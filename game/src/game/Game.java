@@ -2,13 +2,9 @@ package game;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.awt.Image;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import dungeon.Map;
 import dungeon.Room;
