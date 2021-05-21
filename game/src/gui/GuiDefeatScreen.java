@@ -74,5 +74,10 @@ public class GuiDefeatScreen implements ActionListener {
 		frame.setVisible(true);
 		
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
 	}	
 }

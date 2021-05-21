@@ -74,5 +74,9 @@ public class GuiTitleScreen implements ActionListener {
 		frame.setVisible(true);
 		
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
 	}	
 }

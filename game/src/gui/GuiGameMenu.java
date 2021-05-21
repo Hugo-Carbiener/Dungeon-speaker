@@ -71,5 +71,9 @@ public class GuiGameMenu implements ActionListener{
         //Fullscreen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+	}
 }
 
