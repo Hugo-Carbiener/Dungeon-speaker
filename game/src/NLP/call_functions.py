@@ -21,6 +21,17 @@ for i in cap.final_words:
 
 if verb == "":
     print("ERROR")
+
+
+#on pose le cas particulier du verbe check
+elif verb == "check":
+    result.append(verb)
+
+    #on rajoute les autres mots de l'entree utilisateur
+    for word, tag in cap.final_words:
+        result.append(word)
+    print(result)
+
 else:
 
     # verbes de référence : les premiers de chaque liste
