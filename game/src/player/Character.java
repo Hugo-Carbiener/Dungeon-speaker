@@ -36,8 +36,8 @@ public class Character {
 		}
 		
 		// +/- 10%
-		int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
-		totalDamage += r;
+		//int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));
+		//totalDamage += r;
 		
 		target.health -= totalDamage;
 	}

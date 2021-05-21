@@ -1,26 +1,38 @@
 package game;
 
+import java.awt.Color;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import dungeon.Map;
+import gui.GuiDefeatScreen;
 import gui.GuiGameMenu;
 import gui.GuiGameWindow;
 import gui.GuiTitleScreen;
+import gui.GuiVictoryScreen;
+import player.Combat;
 import player.Hero;
 import player.Item;
 
+
+
 public class Game {
 	
-	private static Hero player;
-	private static Map map;
-	private static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
+	static Hero player;
+	static Map map;
+	static Combat combat;
+	static String gameState;				//defines the occuring event within the game(roaming when the player is moving, combat when in combat)
 	public static Thread loopThread;
 	public static Thread GuiThread;
 	
-	public static Hero getHero() {return Game.getPlayer();}
+	public static Hero getPlayer() {return Game.player;}
 	public static Map getMap() {return Game.map;}
+	public static Combat getCombat() {return Game.combat;}
 	public static String getGameState() {return Game.gameState;}
 	public static void setGameState(String str) {Game.gameState = str;}
 	
@@ -56,15 +68,19 @@ public class Game {
 	public static void loop() {
 		
 		//MAIN LOOP
-		while (getPlayer().health != 0 && !(getPlayer().getPosition() == map.getEndingRoom())) {
+		while (player.health > 0 && !(player.getPosition() == map.getEndingRoom())) {
 			Game.event();
 		}
-		
-		
-		if (getPlayer().health == 0) {
+		if (player.health <= 0) {
 			//lose condition
-		} else if (getPlayer().getPosition() == map.getEndingRoom()) {
+			gameState = "defeat";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
+		} else if (player.getPosition() == map.getEndingRoom()) {
 			//win condition
+			gameState = "victory";
+			GuiGameWindow.GuiGameDisplay("<Press Enter to continue>", Color.WHITE, true);
+			Game.event();
 		}
 	}
 	
@@ -73,7 +89,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			GuiGameWindow.GuiGameDisplay("waiting...");
+			GuiGameWindow.GuiGameDisplay("waiting...", Color.WHITE, false);
 		
 			//Pause the game loop to wait for the user's input 
 			try {
@@ -89,8 +105,8 @@ public class Game {
 		String[] currentInput = GuiGameWindow.getCurrentInput();
 		String action = currentInput[0];
 		
-		GuiGameWindow.GuiGameDisplay("Went through");
-		GuiGameWindow.GuiGameDisplay(currentInput[0]);
+		GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
+		GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
@@ -107,34 +123,34 @@ public class Game {
 							player.take(each);
 							break;
 						} else if (roomItems.indexOf(each) == roomItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...", Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 				
 			case "check"://Either check the map or check the inventory
-				if (currentInput.length > 1) {//get the argument if it exists
-					String arg = currentInput[1];
-					switch (arg) {
-					case "map":
+				//if (currentInput.length > 1) {//get the argument if it exists
+				//	String arg = currentInput[1];
+					//switch (arg) {
+					//case "map":
 						//Check map
-						GuiGameWindow.GuiDefaultDisplay("______________________________________");
+						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
 						map.displayOnGuiFromRoom(map.getStartingRoom());
-						GuiGameWindow.GuiDefaultDisplay("______________________________________");
-						break;
+						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
+						//break;
 					
-					case "inventory":
+					//case "inventory":
 						//Check inventory
-						getPlayer().checkInventory();
-						break;
-					}
-				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?");
-				}
-				break;
+						player.checkInventory();
+						//break;
+					//}
+				//} else {//send error message if the nlp script did not output an argument
+				//	GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?", Color.WHITE, true, true);
+				//}
+				//break;
 				
 			case "throw"://Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory				
 				List<Item> playerItems = player.inventory;
@@ -145,11 +161,11 @@ public class Game {
 							player.throwItem(each);
 							break;
 						} else if (playerItems.indexOf(each) == playerItems.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...", Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 			
@@ -162,20 +178,33 @@ public class Game {
 							player.equip(each);
 							break;
 						} else if (playerInventory.indexOf(each) == playerInventory.size()-1 && each.getName() != arg) {  //If we reached the last item of the list and the name is still not correct
-							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...");
+							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...",Color.WHITE, true);
 						}
 					}
 				} else {//send error message if the nlp script did not output an argument
-					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?");
+					GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to take ?", Color.WHITE, true);
 				}
 				break;
 			
 			case "look"://Look at your surroundings 
-				getPlayer().observe();
+				player.observe();
+				break;
+				
+			case "attack":
+				//Cheeck if there is a monster in the room
+				if (player.getPosition().getMonster() == null) {//There is no monster
+					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
+				} else {
+					GuiGameWindow.GuiGameDisplay("You engage the " + player.getPosition().getMonster().getName() + "! Get ready!", Color.WHITE, true);
+					combat = new Combat(player, player.getPosition().getMonster());
+					combat.start();
+				}
 				break;
 			
 			case "move":
-				getPlayer().moveForward();
+				player.moveForward();
+				//player.backtrack();
+				//player.moveBackwards();
 				break;
 			
 				
@@ -183,12 +212,29 @@ public class Game {
 			break;
 			
 		case "combat":
-			//player is stuck in combat 
+			//player is in Combat. For now, due to the limited amount of possible actions during battles, we have chosen to let them run automatically
 			break;
 			
+		case "defeat":
+			try {
+				new GuiDefeatScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case "victory":
+			try {
+				new GuiVictoryScreen();
+			} catch (FontFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
-	public static Hero getPlayer() {
-		return player;
-	}
 }
+
+
+

@@ -2,7 +2,7 @@ package player;
 
 public class Item {
 
-	private String name;
+	String name;
 	int weight;
 	boolean equipable;
 	boolean consummable;

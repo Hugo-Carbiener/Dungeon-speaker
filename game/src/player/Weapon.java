@@ -7,8 +7,8 @@ import java.util.List;
 import org.javatuples.Pair;
 
 public class Weapon extends Item{
-	private String name;
-	private int damage;
+	String name;
+	int damage;
 	
 	
 	public Weapon() {
@@ -57,13 +57,13 @@ public class Weapon extends Item{
 	public String getName() {return this.name;}
 	public int getDamage() {return this.damage;}
 
-	private int calculateDamage(int rarityIndicator) {
+		int calculateDamage(int rarityIndicator) {
 		//Base damage is 5 per rarity level
 		int DMG = 5 * rarityIndicator;
 		//Add a number between +10% of baseDamage and -10% of baseDamage to randomize baseDamage amount
-		int DMG10 = DMG / 10;
-		int r = (int) (Math.random() *(2 * DMG10) - DMG10);
-		DMG += r * DMG10;
+		//int DMG10 = DMG / 10;
+		//int r = (int) (Math.random() *(2 * DMG10) - DMG10);
+		//DMG += r * DMG10;
 		return DMG;
 	}
 }
