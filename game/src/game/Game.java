@@ -132,15 +132,15 @@ public class Game {
 					//switch (arg) {
 					//case "map":
 						//Check map
-						/*GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
+						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
 						map.displayOnGuiFromRoom(map.getStartingRoom());
 						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
-						*///break;
+						//break;
 					
 					//case "inventory":
 						//Check inventory
 						//player.checkInventory();
-						player.observe();
+						//player.observe();
 						break;
 						//break;
 					//}
@@ -268,7 +268,11 @@ public class Game {
 							}
 							break;
 						}
-					} else if (argList.contains("back")){//player wants to go back the their previous position
+					} else if (argList.contains("right")) {//player wants to go to the right neighboring room
+						player.moveRight(map);
+					} else if (argList.contains("left")) {//player wants to go to the left neighboring room
+						player.moveLeft(map);
+					} else if (argList.contains("back")) {//player wants to go back the their previous position
 						GuiGameWindow.GuiGameDisplay("You follow your steps back and find yourself in the room previously visited.", Color.WHITE, true);
 						player.backtrack();
 						break;
