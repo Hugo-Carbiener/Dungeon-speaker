@@ -92,8 +92,8 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			//GuiGameWindow.GuiGameDisplay("waiting...", Color.WHITE, false);
-		
+			GuiGameWindow.GuiGameDisplay("Waiting for instructions...", Color.WHITE, false);
+			
 			//Pause the game loop to wait for the user's input 
 			try {
 				synchronized(loopThread) {
@@ -102,24 +102,17 @@ public class Game {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
 		String[] currentInput = GuiGameWindow.getCurrentInput();
 		List<String> argList = Arrays.asList(currentInput);
 		String action = currentInput[0];
 		
-		
-		//GuiGameWindow.GuiGameDisplay("Went through",  Color.WHITE, false);
-		//GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
-		
-		
 		switch (Game.gameState) {
-		case "roaming":
 		
+		case "roaming":
 			//Case where input is empty
 			if (currentInput[0].equals("RR")) {
 				GuiGameWindow.GuiGameDisplay("You did not write a command or the game could not interprete it. Please try another phrasing.", Color.RED, true);
@@ -177,7 +170,6 @@ public class Game {
 					for (Item each : playerInventory) {//for each item in the player's inventory;
 						if (arg.equals(each.getName())) {
 							player.equip(each);
-							
 							break;
 						} else if ((playerInventory.indexOf(each) == playerInventory.size()-1) && (each.getName() != arg)) {  //If we reached the last item of the list and the name is still not correct
 							GuiGameWindow.GuiGameDisplay("You do not have such an item in your inventory...",Color.WHITE, true);
@@ -193,7 +185,6 @@ public class Game {
 				break;
 				
 			case "attack"://Start the combat
-				
 				//Cheeck if there is a monster in the room
 				if (player.getPosition().getMonster() == null) {//There is no monster
 					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
@@ -205,7 +196,6 @@ public class Game {
 				break;
 			
 			case "move"://Move the player to another room
-				
 				if (currentInput.length > 1) {//get the argument if it exists
 					//String[] arg = Arrays.copyOfRange(currentInput, 1, currentInput.length-1);
 					if (argList.contains("first") || argList.contains("forward")) {//player wants to go to the first room
@@ -327,8 +317,13 @@ public class Game {
 			break;
 		}
 	}
-	public static Hero getPlayer() {
-		return player;
+	public static boolean monsterIsPresent() {
+		//returns true if there is a monster on the player's current position
+		if (Game.player.getPosition().getMonster() == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
 
