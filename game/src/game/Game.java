@@ -55,7 +55,7 @@ public class Game {
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
 		//GENERATE MAP
-		Map map = Map.generateMap(4, 4, 0.5, 1, 20, 30);
+		Map map = Map.generateMap(4, 4, 0.5, 0.5, 20, 30);
 		//GENERATE PLAYER 
 		Hero player = new Hero(playerName, map);
 		//Create game with a roaming state
@@ -89,7 +89,7 @@ public class Game {
 		//Required to wait for the user's input
 		//---------------------------------------------------------------
 		if (! GuiGameWindow.getInputUpdateState()) {
-			GuiGameWindow.GuiGameDisplay("Waiting for instructions...", Color.WHITE, false);
+			GuiGameWindow.GuiGameDisplay("Waiting for instructions...", Color.WHITE, true);
 			
 			//Pause the game loop to wait for the user's input 
 			try {

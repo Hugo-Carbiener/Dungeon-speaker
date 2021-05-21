@@ -8,7 +8,6 @@ public class Item {
 	boolean consummable;
 	boolean throwable;
 	boolean equipped = false;
-	int itemDamage;
 	
 	public Item(int weight, boolean equipable, boolean consummable, boolean throwable) {
 		this.weight = weight;

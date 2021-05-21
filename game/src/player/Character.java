@@ -43,7 +43,7 @@ public class Character {
 		int totalDamage = this.baseDamage;
 		// + weapon damages
 		if (this.equippedItem != null) {
-			totalDamage += this.equippedItem.itemDamage;
+			totalDamage += ((Weapon)(this.equippedItem)).damage;
 		}
 		// +/- 10%
 		//int r = (int) ((Math.random() * (2 * totalDamage / 10)) - (totalDamage/10));

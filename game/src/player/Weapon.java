@@ -8,7 +8,7 @@ import org.javatuples.Pair;
 
 public class Weapon extends Item{
 	String name;
-	int damage;
+	public int damage;
 	
 	public Weapon() {
 		super(10, true, false, false);	//set weapon weight to 10
@@ -49,6 +49,7 @@ public class Weapon extends Item{
 		
 		this.name = name;
 		this.damage = calculateDamage(rarityIndicator);
+		
 	}
 	
 	public String getName() {return this.name;}
