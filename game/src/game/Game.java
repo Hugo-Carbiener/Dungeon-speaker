@@ -269,9 +269,19 @@ public class Game {
 							break;
 						}
 					} else if (argList.contains("right")) {//player wants to go to the right neighboring room
-						player.moveRight(map);
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							player.moveRight(map);
+						}
 					} else if (argList.contains("left")) {//player wants to go to the left neighboring room
-						player.moveLeft(map);
+						if(monsterIsPresent()) {
+							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
+							break;
+						} else {
+							player.moveLeft(map);
+						}
 					} else if (argList.contains("back")) {//player wants to go back the their previous position
 						GuiGameWindow.GuiGameDisplay("You follow your steps back and find yourself in the room previously visited.", Color.WHITE, true);
 						player.backtrack();
