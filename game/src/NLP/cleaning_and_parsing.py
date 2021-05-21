@@ -52,7 +52,7 @@ for w in word_no_punc:
     tagged_words = nltk.pos_tag(word_no_punc)
 
 # print('tagged words :')
-# print(tagged_words)
+print(tagged_words)
 # print("\n")
 
 #quatrieme fonction : clean la liste
@@ -65,7 +65,7 @@ for word in tagged_words:
         clean_words.append(word)
 
 
-#print(clean_words)
+print(clean_words)
 
 final_words = []
 lemma = WordNetLemmatizer()
@@ -76,4 +76,4 @@ for word in clean_words:
         final_words.append((lemma.lemmatize(word[0], pos="n"), word[1]))
     else:
         final_words.append(word)
-#print(final_words)
+print(final_words)

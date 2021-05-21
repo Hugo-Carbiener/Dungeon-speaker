@@ -57,6 +57,12 @@ else:
                for lemma in words.lemmas():
                     tmp.append(lemma.name())
         syn_vbs.append(tmp)
+    
+    #il manque 'move to' dans les synonymes de move, on le rajoute ici
+    syn_vbs[0].append('move to')
+
+    print(syn_vbs[0])
+
     # construction de la liste de synonymes des items
     syn_items = []
     for item in items:
