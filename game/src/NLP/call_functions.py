@@ -13,10 +13,10 @@ monsters = ["zombie", "skeleton", "ghost", "undead", "wolf", "spider", "slime", 
 #on commnence par les verbes
 # on considère qu'il n'y a qu'un verbe dans la phrase, on le récupère dans la liste
 verb = ""
-for i in cap.clean_words:
+for i in cap.final_words:
     if 'V' in i[1]:
         verb = i[0]
-        cap.clean_words.remove(i)
+        cap.final_words.remove(i)
         break
 
 if verb == "":
@@ -74,6 +74,6 @@ else:
         result.append("ERROR")
     
     # on rajoute les mots restants en argument
-    for word, tag in cap.clean_words:
+    for word, tag in cap.final_words:
         result.append(word)
     print(result)

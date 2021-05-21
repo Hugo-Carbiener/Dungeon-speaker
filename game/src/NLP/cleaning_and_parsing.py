@@ -64,16 +64,16 @@ for word in tagged_words:
     if word[0] not in stopwords:
         clean_words.append(word)
 
-# print('clean_words :')
-# print(clean_words)
-# print("\n")
 
+print(clean_words)
 
-
-
-
-
-
-
-
-
+final_words = []
+lemma = WordNetLemmatizer()
+for word in clean_words:
+    if 'V' in word[1]:
+        final_words.append((lemma.lemmatize(word[0], pos="v"), word[1]))
+    elif 'N' in word[1]:
+        final_words.append((lemma.lemmatize(word[0], pos="n"), word[1]))
+    else:
+        final_words.append(word)
+print(final_words)
