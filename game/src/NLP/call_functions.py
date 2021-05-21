@@ -10,11 +10,11 @@ result = []
 items = ["club", "knife", "dagger", "bow", "sword", "axe", "whip", "claymore", "scythe", "katana"]
 monsters = ["zombie", "skeleton", "ghost", "undead", "wolf", "spider", "slime", "ghoul", "necromancer", "dragon"]
 
-#on commnence par les verbes
+# on commnence par les verbes
 # on considère qu'il n'y a qu'un verbe dans la phrase, on le récupère dans la liste
 verb = ""
 for i in cap.final_words:
-    if 'V' in i[1]:
+    if 'V' in i[1]or i[0] == "move":
         verb = i[0]
         cap.final_words.remove(i)
         break
@@ -23,11 +23,11 @@ if verb == "":
     print("ERROR")
 
 
-#on pose le cas particulier du verbe check
+# on pose le cas particulier du verbe check
 elif verb == "check":
     result.append(verb)
 
-    #on rajoute les autres mots de l'entree utilisateur
+    # on rajoute les autres mots de l'entree utilisateur
     for word, tag in cap.final_words:
         result.append(word)
     print(result)
@@ -58,11 +58,6 @@ else:
                     tmp.append(lemma.name())
         syn_vbs.append(tmp)
     
-    #il manque 'move to' dans les synonymes de move, on le rajoute ici
-    syn_vbs[0].append('move to')
-
-    print(syn_vbs[0])
-
     # construction de la liste de synonymes des items
     syn_items = []
     for item in items:
@@ -71,6 +66,7 @@ else:
             for lemma in w.lemmas():
                 tmp.append(lemma.name())
         syn_items.append(tmp)
+
     # construction de la liste de synonymes des monstres
     syn_monsters = []
     for monster in monsters:
