@@ -100,6 +100,7 @@ public class Game {
 		}
 		
 		String[] currentInput = GuiGameWindow.getCurrentInput();
+		List<String> argList = Arrays.asList(currentInput);
 		String action = currentInput[0];
 		
 		
@@ -107,6 +108,11 @@ public class Game {
 		//GuiGameWindow.GuiGameDisplay(currentInput[0], Color.WHITE, true);
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
+		
+		//Case where input is empty
+		if (currentInput[0].equals("RR")) {
+			GuiGameWindow.GuiGameDisplay("You did not write a command or the game could not interprete it. Please try another phrasing.", Color.RED, true);
+		}
 		
 		switch (Game.gameState) {
 		case "roaming":
@@ -122,28 +128,21 @@ public class Game {
 				}
 				break;
 				
-			case "look"://Either check the map or check the inventory
-				//if (currentInput.length > 1) {//get the argument if it exists
-				//	String arg = currentInput[1];
-					//switch (arg) {
-					//case "map":
+			case "check"://Either check the map or check the inventory
+					if (argList.contains("map")) {
 						//Check map
 						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
 						map.displayOnGuiFromRoom(map.getStartingRoom());
 						GuiGameWindow.GuiRawDisplay("______________________________________", Color.WHITE);
-						//break;
-					
-					//case "inventory":
+					} else if (argList.contains("inventory")) {
 						//Check inventory
-						//player.checkInventory();
-						//player.observe();
-						break;
-						//break;
-					//}
-				//} else {//send error message if the nlp script did not output an argument
-				//	GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?", Color.WHITE, true, true);
-				//}
-				//break;
+						player.checkInventory();
+					} else if (argList.contains("health")) {
+						//Check health
+					} else {//send error message if the nlp script did not output an argument
+						GuiGameWindow.GuiGameDisplay("Your instruction was unclear. What did you want to check ?", Color.WHITE, true);
+						}
+				break;
 				
 			case "throw"://Either uses a throwable weapon (not implemented) or throw away items to clear space in the inventory				
 				List<Item> playerItems = player.inventory;
@@ -180,11 +179,12 @@ public class Game {
 				}
 				break;
 			
-			/*case "look"://Look at your surroundings 
+			case "look"://Look at your surroundings 
 				player.observe();
-				break;*/
+				break;
 				
-			case "attack":
+			case "attack"://Start the combat
+				
 				//Cheeck if there is a monster in the room
 				if (player.getPosition().getMonster() == null) {//There is no monster
 					GuiGameWindow.GuiGameDisplay("There is nothing to attack here...", Color.WHITE, true);
@@ -199,7 +199,6 @@ public class Game {
 				
 				if (currentInput.length > 1) {//get the argument if it exists
 					//String[] arg = Arrays.copyOfRange(currentInput, 1, currentInput.length-1);
-					List<String> argList = Arrays.asList(currentInput);
 					if (argList.contains("first") || argList.contains("forward")) {//player wants to go to the first room
 						if(monsterIsPresent()) {
 							GuiGameWindow.GuiGameDisplay("You cannot go to the next room. A " + Game.player.getPosition().getMonster().getName() + " is blocking the way!", Color.WHITE, true);
