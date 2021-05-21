@@ -109,14 +109,16 @@ public class Game {
 		GuiGameWindow.setInputState(false);
 		//-----------------------------------------------------------------
 		
-		//Case where input is empty
-		if (currentInput[0].equals("RR")) {
-			GuiGameWindow.GuiGameDisplay("You did not write a command or the game could not interprete it. Please try another phrasing.", Color.RED, true);
-		}
+		
 		
 		switch (Game.gameState) {
 		case "roaming":
 		
+			//Case where input is empty
+			if (currentInput[0].equals("RR")) {
+				GuiGameWindow.GuiGameDisplay("You did not write a command or the game could not interprete it. Please try another phrasing.", Color.RED, true);
+			}
+			
 			switch (action) {
 			case "take"://Take an item in the current room
 				List<Item> roomItem = player.getPosition().getItems();
