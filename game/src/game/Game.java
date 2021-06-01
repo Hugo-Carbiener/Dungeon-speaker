@@ -55,7 +55,7 @@ public class Game {
 		//prompt playerName
 		String playerName = GuiGameMenu.username;
 		//GENERATE MAP
-		Map map = Map.generateMap(4, 4, 0.5, 0.5, 20, 30);
+		Map map = Map.generateMap(4, 4, 0.75, 0.75, 20, 30);
 		//GENERATE PLAYER 
 		Hero player = new Hero(playerName, map);
 		//Create game with a roaming state
