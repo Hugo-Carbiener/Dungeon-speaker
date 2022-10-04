@@ -5,6 +5,7 @@
 **Dungeon Speaker** is a student project for the sake of the first year of engineering cursus at [Telecom Sudparis](https://www.telecom-sudparis.eu/).  
 It is inspired from the amazing game [AI dungeon](https://play.aidungeon.io/main/landing). As such, in Dungeon Speaker, the player can *wander around the dungeon*, *fight off foes* and *loot some items* by typing instructions in the text field. 
 
+The game has been entirely developed in Java using no major librairy. The **Natural language processing** part was made in Python.  
 
  ## Our objectives :
 
